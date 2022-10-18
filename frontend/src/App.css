@@ -1,38 +1,173 @@
-.App {
-  text-align: center;
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
+body {
+  background: darkseagreen !important;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
+}
+
+.tab {
+  overflow: auto;
+  padding: 30px;
+  scrollbar-width: none;
+}
+
+.tab img {
+  width: 250px;
+  height: 300px;
+}
+
+a {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.logo a {
+  color: darkgreen !important;
+}
+
+.cart-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cart-flex img {
+  width: 200px;
+  height: 200px;
+}
+
+.cart-flex button {
+  border: none;
+  background: darkcyan;
+  padding: 0 10px;
+}
+
+.product-details-details {
+  width: 100% !important;
+}
+
+.imgSelection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.tabImg {
+  width: 100px;
+  height: 100px;
+}
+
+.contentImg {
+  display: none;
+  width: 150px;
+  height: 100%;
+}
+
+.imgScroll {
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 250px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form input {
+  border: none;
+  padding: 5px 10px;
+}
+
+form .d-show {
+  display: block;
+}
+
+form .d-hide {
+  display: none;
+}
+
+.d-hide {
+  opacity: 0;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.customer-details {
+  -webkit-box-orient: vertical !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: column !important;
+          flex-direction: column !important;
+}
+
+@media (min-width: 720px) {
+  .Product-details {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.colors-btn {
+  border: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (min-width: 1020px) {
+  .d-hide {
+    opacity: 1;
+    pointer-events: auto;
+    width: 300px;
+    padding: 0 10px;
   }
-  to {
-    transform: rotate(360deg);
+  .phone-product {
+    gap: 10px;
+  }
+  .phone-product > div {
+    margin: auto 10px;
+  }
+  .product-details-details {
+    width: 50% !important;
+    padding: 0 10px;
+  }
+  .tabImg {
+    width: 250px;
+    height: 200px;
+  }
+  .imgScroll {
+    width: 500px;
+  }
+  .contentImg {
+    width: 350px;
+    height: 350px;
+  }
+  .imgSelection {
+    width: 100%;
   }
 }
+/*# sourceMappingURL=App.css.map */

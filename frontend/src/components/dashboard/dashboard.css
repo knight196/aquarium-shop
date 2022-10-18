@@ -1,0 +1,167 @@
+.active-tabs{
+    border-top:3px solid black;
+    color:white;
+    background:darkcyan;
+    margin:0 10px;
+    padding:5px 10px;
+}
+.tabs{
+    background:darkcyan;
+    margin:10px;
+    padding:5px 10px;
+}
+
+.tabs-block{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+.content{
+    border-top: 2px solid black;
+    display:none;
+}
+.content-tabs{
+    text-align: center;
+    margin-top:10px;
+}
+.active-content{
+    display:block;
+}
+
+.uploadproduct p{
+      font-size: 12px;
+    }
+
+.user-orders{
+    position:relative;
+    overflow:hidden;
+}
+
+
+.user-order-option{
+    position:absolute;
+    right:0;
+}
+
+.user-order-option  button{
+    z-index:10;
+    position: relative;
+    float:right;
+}
+
+
+.order-cancelled,.delivered,.returned,.refunded{
+position:absolute;
+background-color: lightgray;
+width:100%;
+height:100%;
+display:flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+font-size: 30px;
+opacity:0;
+top:0;
+transition:0.5s all;
+}
+.order-cancelled.show, .delivered.show, .returned.show, .refunded.show{
+    opacity:0.5;
+}
+
+.order-details{
+    flex-direction: column;
+}
+
+.order-details > div:nth-child(2){
+    margin:10px 0;
+}
+
+.orders-date{
+    flex-wrap:wrap;
+    text-align:center;
+}
+
+.orders-list{
+    flex-direction: column;
+}
+
+.orders-list img{
+    width:200px;
+}
+.orders-info{
+    position:relative;
+    overflow:hidden;
+}
+
+.user-orders-card img{
+    width:100px !important;
+    height:100px !important;
+}
+.user-orders-card-info{
+    font-size: 12px;
+}
+.user-orders-card-info-date{
+    font-size: 12px;
+}
+.replymsg,.user_replymsg{
+    font-size: 12px;
+}
+
+@media screen and (min-width:720px){
+.tabs-block{
+    flex-direction: row;
+}
+.uploadproduct p{
+      font-size: 15px;
+}
+
+.orders-date{
+    flex-direction: row;
+}
+
+.order-details{
+    justify-content:space-between;
+    flex-direction:row;
+}
+
+.order-details > div:nth-child(2){
+    margin:0 0;
+    border-left:1px solid darkgray;
+}
+
+.orders-info{
+    width:100%;
+}
+
+.orders-address{
+    width:50%;
+    height:50%;
+    margin:0 10px;
+}
+
+.orders-list{
+    flex-direction: row;
+}
+
+.orders-list img{
+    width:100px;
+}
+
+
+.user-orders-card img{
+    width:200px !important;
+    height:200px !important;
+}
+.user-orders-card-info{
+    font-size: 15px;
+}
+.user-orders-card-info-date{
+    font-size: 15px;
+}
+
+.replymsg, .user_replymsg{
+    font-size: 15px;
+}
+  
+}

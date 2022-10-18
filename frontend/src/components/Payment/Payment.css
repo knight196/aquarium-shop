@@ -1,0 +1,118 @@
+.payment {
+  background-color: white;
+}
+
+.payment__container > h1 {
+  text-align: center;
+  padding: 10px;
+  font-weight: 400;
+  background-color: #eaeded;
+  border-bottom: 1px solid lightgray;
+}
+
+.payment__container > h1 a {
+  text-decoration: none;
+}
+
+.payment__section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px;
+  margin: 0 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.payment__title {
+  -webkit-box-flex: 0.2;
+      -ms-flex: 0.2;
+          flex: 0.2;
+}
+
+.payment__address, .payment__items, .payment__details {
+  -webkit-box-flex: 0.8;
+      -ms-flex: 0.8;
+          flex: 0.8;
+}
+
+.payment__details > form {
+  max-width: 400px;
+}
+
+.payment__details > h3 {
+  padding-bottom: 20px;
+}
+
+.payment__details > form > div > button {
+  background: #f0c14b;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  font-weight: bolder;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+}
+
+.checkout-form {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+.billing-address input {
+  border: none;
+  padding: 5px 10px;
+}
+
+.address-input input, p, span {
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 1020px) {
+  .billing-address {
+    margin-top: 10px;
+  }
+  .cart-list {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 720px) {
+  .checkout-form {
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+            flex-direction: row !important;
+  }
+  .billing-address {
+    width: 1000px;
+    margin: 0;
+  }
+  .cart-list {
+    margin: 0 5px;
+  }
+}
+
+@media (min-width: 1020px) {
+  .checkout-form {
+    width: 80% !important;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .billing-address {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .cart-list {
+    width: 50%;
+  }
+}
+/*# sourceMappingURL=Payment.css.map */

@@ -1,0 +1,137 @@
+nav button {
+  border: none;
+  padding: 10px;
+  background: transparent;
+  font-size: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+.mobile-cart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.desktop-cart, .desktop-icon {
+  display: none;
+}
+
+.imggrid {
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.imggrid img {
+  width: 300px;
+  height: 250px;
+}
+
+@media screen and (max-width: 1020px) {
+  .navlist {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 100;
+    top: 60px;
+    height: 0%;
+    width: 0%;
+    right: 0;
+    text-align: center;
+    background: darkcyan;
+    left: 0;
+    -webkit-transition: 1s all;
+    transition: 1s all;
+  }
+  .navlist ul {
+    list-style-type: none;
+    font-size: 30px;
+    font-weight: bold;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 50vh;
+  }
+  .navlist ul a {
+    color: black;
+    text-decoration: underline !important;
+  }
+  .navlist ul a:hover {
+    color: white !important;
+  }
+  .navlist ul a:focus {
+    color: tomato !important;
+  }
+  .navlist.show {
+    pointer-events: auto;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (min-width: 1020px) {
+  nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 0 10px;
+  }
+  .menu-bar {
+    display: none;
+  }
+  .navlist {
+    display: block;
+  }
+  .navlist ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .navlist ul a {
+    color: white !important;
+  }
+  .navlist ul a:hover {
+    color: grey !important;
+  }
+  .navlist ul a:focus {
+    color: tomato !important;
+  }
+  .navlist ul li {
+    margin: 10px 0  0 10px;
+    border: 2px solid black;
+    background: darkcyan;
+    color: white;
+    padding: 5px 10px;
+  }
+  .mobile-cart {
+    display: none;
+  }
+  .desktop-cart, .desktop-icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+/*# sourceMappingURL=Header.css.map */
