@@ -1,7 +1,7 @@
 const slideshow = [
 {
 image:'https://res.cloudinary.com/personal-use-only/image/upload/v1666434403/aquariumShop/qup3qpbyxleaqvidnjlm.jpg',
-title:'D-D Aqua pro 600',
+title:'Build your own scape in our meidum-size tank D-D Aqua pro 600',
 price:'£500',
 link:'/D&D'
 },
