@@ -37,8 +37,6 @@ useEffect(() => {
           <div className="user-orders-card-info">
           <p>Name: {item.title}</p>
           <p>Price: £{item.price}</p>
-          <p>Color: {item.color}</p>
-     
           </div>
 
           <div className="user-orders-card-info-date">
