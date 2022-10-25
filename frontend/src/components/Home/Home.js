@@ -211,7 +211,6 @@ export default function Home() {
                             <h6>Company Info</h6>
                             <p>About Us</p>
                             <p>Blog</p>
-                            <p>Competitions</p>
                         </div>
 
                         <div>
