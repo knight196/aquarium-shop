@@ -20,44 +20,8 @@ let navigate = useNavigate();
         setProduct(props.detail)
       }, [props.detail])
       
-      let minPrice=Product.variants?.map((p) => p.price)
-      .sort((a,b)=>a-b)[0]
-
-const [color, setColor] = React.useState();
-const [storage, setStorage] = React.useState();
-
-// const [price, setPrice] = React.useState();
-
-const colorOptions = Product.variants?.map((p) => p.color)
-.filter((v, i, a) => a.indexOf(v) === i)
-.map((color) => ({ label: color, value:color }))
-
-const storageOptions = Product.variants?.filter((p) => color && p.color === color.value)
-.map((p) => p.storage)
-.filter((v, i, a) => a.indexOf(v) === i)
-.map((size) => ({ label:size, value:size }));
-
-
-
-const priceOptions = Product.variants?.filter((p) => storage && p.storage === storage.value && color && p.color=== color.value)
-.map((p) => p.price)
-.filter((v, i, a) => a.indexOf(v) === i)
-.map((price) => ({ label: price, value:price }));
-
-let priceFinal={};
-if (priceOptions?.length === 1){priceFinal=priceOptions[0].value}
-else {priceFinal=minPrice}
-
-
 const addToBasket=(e) =>{
-  if (!color.value){
-    e.preventDefault();
-     alert('Please select a Color')
-   } else if(!storage.value){
-    e.preventDefault()
-    alert('Please select the storage')
-   }
-     else {
+    
   //dispatch the item into the data layer
      dispatch ({
       type:'ADD_TO_BASKET',
@@ -65,141 +29,29 @@ const addToBasket=(e) =>{
         slug: props.detail.slug, 
         title: props.detail.title,
         image: props.detail.image,
-        price: priceFinal,
-        color: color?.value,
-        storage:storage?.value
+        price: props.detail.price
       },
-    })}
-
+    })
 };
 
-const [toggleState,setToggleState] = useState(0)
-
-const toggleTab = (index) => {
-  setToggleState(index)
-}
 
 
 return (
-  <div className="py-5">
-  <div className="Product-details text-center w-100 px-2">
-
-<div className="imgSelection">
-
-<div className="px-5">
+  <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
   
-  <div className="d-flex align-items-center justify-content-center">
-{Product.images?.map((item,index)=> (
-      <img className={toggleState === index ? "active-content contentImg" : 'contentImg'} src={ item.url} alt=""/>
-   ))}
-  </div>
+  <div className="d-flex justify-content-between align-items-center product-info">
 
-<div className="imgScroll">
-{Product.images?.map((item,index)=> (
-    <img className={toggleState === index ? "active-tabs tabImg" : 'tabs tabImg'} src={ item.url} onClick={()=>toggleTab(index)} alt=""/>
-  ))}
-  </div>
-
+<div className="product-img">
+<img  src={Product.image?.url} alt={Product.title}/>
 </div>
 
-  </div>
+  <div className="product-details p-4">
+    <h5>{Product.title}</h5>
+    <hr></hr>
+    <p>{Product.description}</p>
+    <h5>£{Product.price}</h5>
 
-  <div className="product-details-details">
-    <h1>{Product.title}</h1>
-
-      
-      <p className='prod__desc'>Color</p>
-      <div >
-      <Select value={color} onChange={setColor} options={colorOptions} isClearable/>
-      </div>
-
-
-
-      <p className='prod__desc'>Storage</p>
-      <div >
-      <Select value={storage} onChange={setStorage} options={storageOptions} isClearable/>
-      </div>
-
-
-
-  <hr></hr>
-
-  <div className="d-flex text-left w-100 justify-content-between">
-    <ul style={{listStyle:'none'}}>
-      <li>Price (inc VAT)</li>
-      <li>Delivery</li>
-    </ul>
-    <ul style={{listStyle:'none'}}>
-      <li className="h5"><strong>£{Product.price}</strong></li>
-      <li>Free</li>
-    </ul>
-    <ul style={{listStyle:'none'}}>
-      <li><strong>What's included?</strong></li>
-      <li>12 Months Warranty</li>
-      <li>Free Next Day Delivery</li>
-    </ul>
-  </div>
-
-  </div>
-  </div>
-
-  <hr></hr>
-
-  <div className="text-center">
-    <h5>Product Specification</h5>
-  <table className="w-100">
-<tr>
-  <td>Name</td>
-    
-  <td>{Product.title}</td>
-</tr>
-<tr>
-  <td>Operating System</td>
-    
-  <td>{Product.Operating}</td>
-</tr>
-<tr>
-  <td>Camera</td>
-  <td>{Product.Camera}</td>
-</tr>
-<tr>
-  <td>Battery</td>
-  <td>{Product.Battery}</td>
-</tr>
-<tr>
-  <td>Dimensions</td>
-  <td>{Product.Dimension}</td>
-</tr>
-<tr>
-  <td>Weight</td>
-  <td>{Product.Weight}</td>
-</tr>
-<tr>
-  <td>Connectivity</td>
-  <td>{Product.Connectivity}</td>
-</tr>
-<tr>
-  <td>Signal</td>
-  <td>{Product.Signal}</td>
-</tr>
-<tr>
-  <td>Screen-Size</td>
-  <td>{Product.ScreenSize}</td>
-</tr>
-<tr>
-  <td>Processor</td>
-  <td>{Product.Processor}</td>
-</tr>
-<tr>
-  <td>Sim - Type</td>
-  <td>{Product.SimType}</td>
-</tr>
-<tr>
-  <td>Memory Card</td>
-  <td>{Product.MemoryCard}</td>
-</tr>
-</table>
-<div className="d-flex mt-1 justify-content-center">
+<div className="d-flex py-2 justify-content-center">
 
 
 <button className="border-0 text-white p-2 mx-2 px-3 rounded-1 bg-primary" onClick={()=> navigate('/product')}>Back To Store</button>
@@ -214,13 +66,28 @@ return (
     </div>
   </Link>
   
-   
-</div>
 
   </div>
 
   </div>
 
+
+  </div>
+
+  <hr></hr>
+
+  <div className="text-center">
+    <h5>Features</h5>
+    {Product.details?.map((item)=> (
+      <ul>
+        <li>{item.featureDetails}</li>
+      </ul>
+    ))}
+  </div>
+
+  
+
+</motion.div>
 )
 }
 

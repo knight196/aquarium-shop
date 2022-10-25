@@ -97,14 +97,18 @@ const Signup = () => {
 	 * RENDERER
 	 ***************************/
 	return (
-		<div className='signup-container'>
-			<div className='row px-3 vh-100'>
-				<div className='col-md-5 mx-auto align-self-center'>
+				<div className="d-flex justify-content-center vh-100 align-items-center">
+				
+					
+		<div className="bg-success bg-opacity-50 account-box">
+			
+		<img  src="../../../images/angel&discusfish.webp" alt=""/>
+				
 					{successMsg && showSuccessMsg(successMsg)}
 					{errorMsg && showErrorMsg(errorMsg)}
 					<form className='signup-form' onSubmit={handleSubmit} noValidate>
 			{/* username */}
-			<div className='form-group input-group'>
+			<div  className='form-group input-group'>
 				<div className='input-group-prepend'>
 					<span className='input-group-text h-100 rounded-0'>
 						<i className='fa fa-user'></i>
@@ -113,7 +117,7 @@ const Signup = () => {
 				<input
 					name='username'
 					value={username}
-					className='form-control'
+				
 					placeholder='Username'
 					type='text'
 					onChange={handleChange}
@@ -121,7 +125,7 @@ const Signup = () => {
 			</div>
 			<br></br>
 			{/* email */}
-			<div className='form-group input-group'>
+			<div  className='form-group input-group'>
 				<div className='input-group-prepend'>
 					<span className='input-group-text h-100 rounded-0'>
 						<i className='fa fa-envelope'></i>
@@ -130,7 +134,7 @@ const Signup = () => {
 				<input
 					name='email'
 					value={email}
-					className='form-control'
+				
 					placeholder='Email address'
 					type='email'
 					onChange={handleChange}
@@ -147,7 +151,7 @@ const Signup = () => {
 				<input
 					name='password'
 					value={password}
-					className='form-control'
+				
 					placeholder='Create password'
 					type='password'
 					onChange={handleChange}
@@ -164,7 +168,7 @@ const Signup = () => {
 				<input
 					name='password2'
 					value={password2}
-					className='form-control'
+				
 					placeholder='Confirm password'
 					type='password'
 					onChange={handleChange}
@@ -182,8 +186,9 @@ const Signup = () => {
 				Have an account? <Link to='/login'>Log In</Link>
 			</p>
 		</form>
+				
 				</div>
-			</div>
+
 		</div>
 	);
 };

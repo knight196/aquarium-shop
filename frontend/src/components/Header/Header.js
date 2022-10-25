@@ -1,9 +1,12 @@
-import React from 'react'
+import {useState} from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import {useStateValue} from '../../StateProvider'
 import {isAuthenticated, logout} from '../../helpers/auth'
 import  {toast} from 'react-toastify'
 import './Header.css'
+import Submenulist from './Submenulist'
+import data from './submenu'
+
 export default function Header(props) {
 
   const [{ basket, user }, dispatch] = useStateValue();
@@ -20,31 +23,34 @@ export default function Header(props) {
       toast.success('you have logout successfully')
     })
   };
+
+  
+  const [list,setlist] = useState(data);
     
       // menubar for navbar
-const [click, setClick] = React.useState(false);
+const [click, setClick] = useState(false);
 const handleClick = () => setClick(!click);
 
 
   return (
-    <nav>
+    <nav className="bg-dark">
 
     <div className="d-flex justify-content-between align-items-center px-2 py-1">
-    <h3 className="logo"><NavLink to="/">Phones4Life</NavLink></h3>
+    <h3 className="logo"><NavLink to="/">AquaticNature</NavLink></h3>
 
 
     <div className="mobile-cart">
-    <div className="my-auto text-center">
+    <div className="my-auto text-center text-dark">
     {!isAuthenticated() ? (
-            <NavLink className="text-dark" to="/Login">
+            <NavLink to="/Login">
             
             <h5>Sign In</h5>
             </NavLink>
 ):
            (
-            <div className="d-flex flex-column">
+            <div className="d-flex text-white flex-column">
             <small>{user.username}</small>
-           <button className="btn" onClick={signOut}>Sign Out</button>
+           <button className="btn text-white" onClick={signOut}>Sign Out</button>
             </div> 
            )        
 }
@@ -55,25 +61,25 @@ const handleClick = () => setClick(!click);
         <span>{basket?.length}</span>
     </NavLink>
     </button>
-    <button onClick={handleClick} className="menu-bar"><i className={click ? "fas fa-times" : "fas fa-bars"}></i></button>
+    <button onClick={handleClick} className="menu-bar text-white"><i className={click ? "fas fa-times" : "fas fa-bars"}></i></button>
     </div>
     </div>
     
     <div className={click ? "navlist show" : "navlist"}>
     
-            <ul>
+            <div className="navoption">
             <div className="desktop-cart">
             <div className="my-auto text-center">
             {!isAuthenticated() ? (
-            <NavLink className="text-dark" to="/Login">
+            <NavLink to="/Login">
            
             <h5>Sign In</h5>
             </NavLink>
 ):
            ( 
             <div className="d-flex flex-column">
-            <small>{user?.username}</small>
-           <small onClick={signOut}>Sign Out</small>
+            <small className="text-white">{user?.username}</small>
+           <small className="text-white" onClick={signOut}>Sign Out</small>
             </div> 
            )        
 }
@@ -84,27 +90,38 @@ const handleClick = () => setClick(!click);
         <span>{basket?.length}</span>
     </NavLink>
     </button>
-              <li><NavLink style={{textDecoration:'none'}}  to="/Product">Product</NavLink></li>
+
+    {
+      list.map((question) => {
+        return <Submenulist key={question.id} {...question} />
+      })
+    }
+
+
+
             
             
-      
+      <div className="accordion px-2">
       {isAuthenticated() && isAuthenticated().role === 0 && (
-        <li>
+        <p>
        <NavLink to="/user/dashboard">Dashboard</NavLink>
-    </li>
+    </p>
   )}
   {isAuthenticated() && isAuthenticated().role === 1 && (
-    <li>
+    <p>
        <NavLink to="/admin/dashboard">Dashboard</NavLink>
     
-       </li>
+       </p>
   )}
+  </div>
 
-<li><NavLink style={{textDecoration:'none'}}  to="/Contact">Contact</NavLink></li>
+<div className="px-2">
+<p><NavLink style={{textDecoration:'none'}}  to="/Contact">Contact</NavLink></p>
+</div>
             
 
 
-            </ul>
+            </div>
     
     
     </div>

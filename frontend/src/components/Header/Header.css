@@ -1,3 +1,13 @@
+nav a {
+  color: white !important;
+}
+
+nav a :hover {
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+  color: grey;
+}
+
 nav button {
   border: none;
   padding: 10px;
@@ -5,7 +15,7 @@ nav button {
   font-size: 20px;
 }
 
-nav ul {
+nav .navoption {
   list-style-type: none;
 }
 
@@ -13,6 +23,7 @@ nav ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  color: white;
 }
 
 .desktop-cart, .desktop-icon {
@@ -39,13 +50,12 @@ nav ul {
     height: 0%;
     width: 0%;
     right: 0;
-    text-align: center;
-    background: darkcyan;
+    background: #828ab4;
     left: 0;
     -webkit-transition: 1s all;
     transition: 1s all;
   }
-  .navlist ul {
+  .navlist .navoption {
     list-style-type: none;
     font-size: 30px;
     font-weight: bold;
@@ -56,32 +66,17 @@ nav ul {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    height: 50vh;
-  }
-  .navlist ul a {
-    color: black;
-    text-decoration: underline !important;
-  }
-  .navlist ul a:hover {
-    color: white !important;
-  }
-  .navlist ul a:focus {
-    color: tomato !important;
   }
   .navlist.show {
     pointer-events: auto;
     opacity: 1;
     height: 100%;
     width: 100%;
-    text-align: center;
     opacity: 1;
     pointer-events: auto;
+  }
+  .accordion {
+    border-bottom: 2px solid black;
   }
 }
 
@@ -104,25 +99,22 @@ nav ul {
   .navlist {
     display: block;
   }
-  .navlist ul {
+  .navlist .navoption {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
-  .navlist ul a {
+  .navlist .navoption a {
     color: white !important;
   }
-  .navlist ul a:hover {
+  .navlist .navoption a:hover {
     color: grey !important;
+    text-decoration: underline !important;
+    -webkit-transition: 0.5s all;
+    transition: 0.5s all;
   }
-  .navlist ul a:focus {
-    color: tomato !important;
-  }
-  .navlist ul li {
+  .navlist .navoption p {
     margin: 10px 0  0 10px;
-    border: 2px solid black;
-    background: darkcyan;
-    color: white;
     padding: 5px 10px;
   }
   .mobile-cart {
@@ -132,6 +124,9 @@ nav ul {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+  .accordion button {
+    display: none;
   }
 }
 /*# sourceMappingURL=Header.css.map */

@@ -1,27 +1,28 @@
+const { truncate } = require('fs')
 var mongoose = require('mongoose')
 
 var addProductSchema = new mongoose.Schema(
     {
-       slug:{type:String,require:true,unique:true},
-        image:{type:String},
-        title:{type:String,unique:true,required:true},
-        images:[{
-            public_id:{
-                type:String
-            },
-            url:{
-                type:String
-            }
-        }],
-        Company:{type:String,required:true},
-        price:{type:Number,required:true},
-        variants:[
-            {
-                color:{type:String},
-                size:{type:String},
-                price:{type:Number}
-            }
-        ]
+       slug:{type:String,required:true},
+       title:{type:String,required:true},
+       category:{type:String,required:true},
+       description:{type:String},
+       Company:{type:String},
+       price:{type:Number},
+       image:{
+        public_id:{
+            type:String,
+            require:true
+        },
+        url:{
+            type:String,
+            required:true
+        }
+       },
+       position:{type:String},
+       difficulty:{type:String},
+       CompanyProductName:{type:String},
+       details:[{featureDetails:{type:String}}],
     },
     {
         timestamps:true

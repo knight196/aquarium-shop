@@ -11,6 +11,8 @@ const Userdashboard = require('./Userdashboard/Userorders')
 const Admindashboard = require('./Admindashboard/AdminOrders')
 const cloudinary = require('cloudinary').v2
 
+
+
 const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
 
 
@@ -33,19 +35,18 @@ app.use('/orders', Userdashboard)
 app.use('/api/', Admindashboard)
 
 
-//cloudinary config
-cloudinary.config({
-    cloud_name:process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-   })
-   
-
 
 //connection url
 
 //mongoose
 mongoose.connect(process.env.MONGODB_URI)
+
+//cloudinary config
+cloudinary.config({
+  cloud_name:process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+ })
 
 
 // API for PAYMENT
@@ -81,38 +82,42 @@ app.get("/config", (req, res) => {
   // cloudinary image upload 
 app.post('/newproducts/add', async (req,res) => {
 
+  const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details} = req.body
+
   try{
-    
-    let images = [...req.body.images];
-    let imagesBuffer = [];
-  
-    for(let i =0; i<images.length; i++){
-      const result = await cloudinary.uploader.upload(images[i], {
-        folder:'aquarium-shop-images',
-        width:1920,
-        crop:'scale'
-      })
 
-      imagesBuffer.push({
-        public_id:result.public_id,
+    const result = await cloudinary.uploader.upload(image, {
+      folder:'aquariumShop',
+      width:1920,
+      crop:'scale'
+    })
+
+
+    const listproducts = await addProduct.create({
+      slug,
+      title,
+      category,
+      description,
+      Company,
+      price,
+      image:{
+        public_id: result.public_id,
         url:result.secure_url
-      })
-
-    }
-
-    req.body.images = imagesBuffer
-
-
-    const listproducts = await addProduct.create(req.body)
-
+      },
+      position,
+      difficulty,
+      CompanyProductName,
+      details      
+    })
+  
     res.status(201).json({
       success:true,
       listproducts
     })
-
-  }catch (err){
+  }catch(err){
     console.log(err)
   }
+
 
 })
 

@@ -4,25 +4,6 @@
   margin:0;
 }
 
-// media queries
-@mixin for-size($size){
-
-  @if $size == tablet{
-      @media (min-width:720px){
-          @content;
-      }
-  }
-      @else if $size == med-screen{
-          @media (min-width:1020px){
-              @content;
-          }
-      }
-          @else if $size == desktop{
-              @media (min-width:1440px){
-                  @content;
-              }
-  }
-  }
 
 body{
   background:darkseagreen !important;
@@ -30,136 +11,50 @@ body{
   scroll-behavior: smooth;
 }
 
-
-.tab{
-  overflow:auto;
-  padding:30px;
-  scrollbar-width:none;
-  img{
-    width:250px;
-    height:300px;
-  }
-}
 a{
   color:black !important;
   text-decoration: none !important;
 }
 .logo{
   a{
-    color:darkgreen !important;
+    color:white !important;
   }
 }
-.cart-flex{
+
+
+.product{
   display:flex;
-  justify-content: space-between;
-  width:100%;
-  text-align: center;
-  align-items: center;
-  img{
-    width:200px;
-    height:200px;
+  flex-wrap: wrap;
+  align-items:center;
+  justify-content: center;
+  gap:10px;
+  margin:20px auto;
+}
+.product-card{
+  background:whitesmoke;
+  text-align:center;
+  padding:10px;
+  p{
+    font-size: 12px;
+    width:300px;
   }
-  button{
-    border:none;
-    background:darkcyan;
+  img{
+    width:400px;
+    object-fit: cover;
+    height:400px;
+  }
+}
+
+.customer-details{
+  flex-direction:column !important;
+}
+
+
+@media screen and (min-width:1020px){
+  .product-details-details{
+    width:50% !important;
     padding:0 10px;
   }
 }
-.product-details-details{
-  width:100% !important;
-}
-.imgSelection{
-display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.tabImg{
-  width:100px;
-  height:100px;
-}
-.contentImg{
-  display:none;
-  width:150px;
-  height:100%;
-}
-.imgScroll{
-  overflow-x:scroll;
-  scroll-behavior: smooth;
-  display:flex;
-  width:250px;
-  align-items: center;
-}
 
 
-  form{
-    input{
-      border:none;
-      padding:5px 10px;
-    }
-    .d-show{
-      display:block;
-    }
-    .d-hide{
-      display:none;
-    }
-    
-  }
-  .d-hide{
-    opacity:0;
-    pointer-events: none;
-  }
-
-  .customer-details{
-    flex-direction:column !important;
-  }
-  
-  @include for-size(tablet){
-    .Product-details{
-      display:flex;
-      justify-content:space-between;
-      align-items: center;
-    }
-
-  
-
-  }
- .colors-btn{
-  border:none;
- }
-
-  @include for-size(med-screen){
-  
-    
-        .d-hide{
-          opacity:1;
-          pointer-events:auto;
-          width:300px;
-          padding:0 10px;
-        }
-        .phone-product{
-          gap:10px;
-          > div{
-            margin:auto 10px;
-          }
-        }
-    
-.product-details-details{
-  width:50% !important;
-  padding:0 10px;
-}
-.tabImg{
-  width:250px;
-  height:200px;
-}
-.imgScroll{
-  width:500px;
-}
-.contentImg{
-  width:350px;
-  height:350px;
-}
-.imgSelection{
-  width:100%;
-}
-
-    }

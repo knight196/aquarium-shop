@@ -21,20 +21,27 @@
 
   // navbar
   nav{
-  
+  a{
+    color:white !important;
+    :hover{
+      transition:0.5s all;
+      color:grey;
+    }
+  }
     button{
       border:none;  
       padding:10px;
       background:transparent;
       font-size: 20px;
     }  
-    ul{
+    .navoption{
         list-style-type: none;
       }  
     
 }      
 .mobile-cart{
-  display: flex;  
+  display: flex; 
+  color:white 
 }  
 .desktop-cart,.desktop-icon{
   display:none;  
@@ -59,30 +66,15 @@
         height:0%;
         width:0%;
         right:0;
-        text-align: center;
-        background:darkcyan;
+        background:rgb(130, 138, 180);
         left:0;
         transition: 1s all;
-        ul{
+        .navoption{
           list-style-type: none;
           font-size: 30px;
           font-weight: bold;
           display:flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          height:50vh;
-    
-          a{
-            color:black;
-            text-decoration: underline !important;
-            &:hover{
-              color:white !important;
-            }
-            &:focus{
-              color:tomato !important;
-            }
-          }
         }
       }
       .navlist.show{
@@ -90,12 +82,13 @@
         opacity:1;
         height:100%;
         width:100%;
-        text-align: center;
         opacity:1;
         pointer-events: auto;
       }
-  
-    }
+  .accordion{
+    border-bottom:2px solid black;
+  }
+}
 
     @include for-size(med-screen){
   
@@ -110,24 +103,20 @@
                 }
                 .navlist{
                   display:block;
-               ul{
+               .navoption{
                  display:flex;
                  a{
                    color:white !important;
                    &:hover{
                      color:grey !important;
-                   }
-                   &:focus{
-                      color:tomato !important;
+                     text-decoration: underline !important;
+              transition:0.5s all;
                    }
                  }
-                 li{
-                   margin: 10px 0  0 10px;
-                   border:2px solid black;
-                   background:darkcyan;
-                   color:white;
-                   padding:5px 10px;
-                 }
+                 p{
+                  margin: 10px 0  0 10px;
+                  padding:5px 10px;
+                }
                }
               }
               .mobile-cart{
@@ -136,5 +125,11 @@
               .desktop-cart,.desktop-icon{
                 display:flex;
               }
+              .accordion{
+                button{
+                  display:none;
+                }
+              }
+            
             }      
   

@@ -23,5 +23,14 @@ productRouter.get('/products/slug/:slug', async (req, res) => {
     }
   })
 
+//products without product variants
+productRouter.get('/aquariumproduct/slug/:slug', async (req,res)=> {
+  const product = await Product.findOne({slug: req.params.slug})
+  if(product){
+    res.send(product)
+  }else{
+    res.status(404).send({message:'Product Not Found'})
+  }
+})
 
 module.exports = productRouter

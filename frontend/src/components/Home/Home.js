@@ -5,32 +5,44 @@ import {motion} from 'framer-motion'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import axios from 'axios'
-import {toast} from 'react-toastify'
-export default function Home(props) {
+import slideshow from './data'
 
-    const {products} = props
+export default function Home() {
+
+
+    const [products,setproducts] = useState([])
+
+    const fetchdata = async () => {
+        const res = await axios.get('/api/newproducts')
+        setproducts(res.data.newproducts)
+    }
+    
+    useEffect(() => {
+        fetchdata()
+    },[])
+
 
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const [current, setCurrent] = useState(0);
-    const [slide] = useState(products);
+ 
 
-    const [email,setemail] = useState('')
+    useEffect(()=> {
+        AOS.init()
+    },[])
 
-    const subscribebtn = async (e) => {
-        e.preventDefault()
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
 
-        await axios.post('/api/subscribe', {
-            email
-        })
-        .then(()=> {
-            setemail('')
-            toast.success('Thank you for joining with us')
-            window.location.href="/"
-        })
-    }
+    const filtered = !searchTerm
+        ? products
+        : products.filter((y) =>
+            y.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
+        const [current, setCurrent] = useState(0);
+    const [slide] = useState(slideshow);
 
     const length = slide.length
 
@@ -53,10 +65,6 @@ export default function Home(props) {
 
     },[current,length])
 
-    useEffect(()=> {
-        AOS.init()
-    },[])
-
     const nextSlide = () => {
         if(timeout.current){
             clearTimeout(timeout.current)
@@ -76,25 +84,8 @@ export default function Home(props) {
     }
 
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-    const filtered = !searchTerm
-        ? products
-        : products.filter((y) =>
-            y.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
 
 
-    function left() {
-        document.getElementById('scroll').scrollLeft -= 350;
-    }
-
-    function right() {
-        document.getElementById('scroll').scrollLeft += 350;
-    }
-   
 
     return (
         <motion.div initial={{opacity:0}} animate={{opacity:1,transition:{duration:0.5}}}>
@@ -104,7 +95,7 @@ export default function Home(props) {
             {filtered.map((filterproduct) => {
                 return (
                     <div className={!searchTerm ? "d-none" : "d-block m-4 text-center search-filter"}>
-                        <img style={{width:'200px',height:'200px'}} src={filterproduct.image} alt="" />
+                        <img style={{width:'250px',height:'300px'}} src={filterproduct.image.url} alt="" />
                         <p key={filterproduct.slug}>{filterproduct.title}</p>
                         <p>£ {filterproduct.price}</p>
                         <button onClick={() => {
@@ -114,93 +105,102 @@ export default function Home(props) {
                 )
             })}
 
-            <div className={!searchTerm ? "d-block" : "d-none"}>
+            <div animate={{opacity:1, transition:'0.5s all'}} className={!searchTerm ? "d-block" : "d-none"}>
 
-                <section className="section mb-4">
+                <div className="parallax">
+                    <div>
+                        <h5>Bring Aquatic Nature to your Home</h5>
+                        </div>
+
+                        <div className="arrow">
+                     <i className="bi bi-arrow-down"></i>
+                        </div>
+                </div>
+            
+
+
+                <section className="section">
                     <button className="left-arrow" onClick={prevSlide}><i className="fas fa-chevron-left"></i></button>
                     <button className="right-arrow" onClick={nextSlide}><i className="fas fa-chevron-right"></i></button>
-                    {products.map((slides, index) => (
+                    {slideshow.map((slides, index) => (
                         (
-                            <div className="text-center slideshow mt-5">
+                            <>
                                 {index === current && (
-                                    <motion.div className="slideshow-flex" initial={{transform:'translateX(-100%)',opacity:0}} animate={{transform:'translateX(0%)',opacity:1, transition:{duration:1}}} exit={{transform:'translateX(100%)'}}>
+                                    <motion.div className="slideshow-flex" initial={{opacity:0}} animate={{opacity:1}}>
                                         
-                                        <div className="slideshow-img" data-aos="zoom-in"  data-aos-delay="1000">
-                                        <img src={slides.image} alt="" />
+                                        
+                                            <img className="img-fluid" src={slides.image} alt={slides.title}/>
+                                        
+                                    
+                                        <div className="my-3 slideshow-details">
+
+
+                                        <div className="title">
+                                        <p>{slides.title}</p>
+                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:0.5}} className="title-reveal"></motion.div>
                                         </div>
 
-                                        <div className="my-3">
-                                        <h5>{slides.title}</h5>
-                                        <p>{slides.description}</p>
-                                        <p>£{slides.price}</p>
-                                        <span style={{border:'2px solid black'}} className="btn bg-white bg-opacity-50" key={slides.slug}><Link className="text-dark" to={`/api/products/slug/${slides.slug}`}>View More</Link></span>
+
+                                        <div className="price">
+                                        <h5 style={{fontWeight:'bold'}}>{slides.price}</h5>
+                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:1}} className="price-reveal"></motion.div>
                                         </div>
 
+                                        <br></br>
+                                        <motion.span initial={{transform:'scale(0)'}} animate={{transform:'scale(1.2)'}} transition={{delay:1.5}} className="btn bg-white rounded-0"><Link className="text-dark" to={slides.link}>View More</Link></motion.span>
+                                        </div>                                    
                                     </motion.div>
                                 )}
-                            </div>
+                                </>
                         )
                     ))}
                 </section>
 
 
-               
+                <div className="slider-scroll bg-success bg-opacity-50 p-2">
 
+        <h5  className="text-white">Featured Categories</h5>
+                    <div className="grid p-2 mb-5">
+     
+     <div className="product-grid" data-aos="zoom-in">
+      <img src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
+      <br></br>
+      <div className="product-view">
+      <p>TANKS</p>
+      <button className="btn bg-white"><Link to="/Tanks">View Products</Link></button>
+      </div>
+     </div>
 
-                <div data-aos="zoom-in"
-     data-aos-delay="500"
-      className="slider-scroll bg-success bg-opacity-50 p-2">
-
-                    <h4>Our top selling product</h4>
-
-                    <div className="slide-option p-2 mb-5">
-
-
-                        <div className="slide-container" id="scroll" >
-                            <button onClick={left} className="left"><i className="bi bi-chevron-left"></i></button>
-                            {products.map((item) => (
-                                <div>
-                                    <img src={item.image} alt="" />
-                                    <p>{item.title}</p>
-                                    <button className="px-2 border-1 border-dark" key={item.slug}><Link to={`/api/products/slug/${item.slug}`}>View More</Link></button>
-                                </div>
-                            ))}
-                            <button onClick={right} className="right"><i className="bi bi-chevron-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-<div className="bg-dark" data-aos="zoom-in"   data-aos-delay="600">
-
-<h4 className="pt-2 px-2 text-white">New Arrival</h4>
-
-                <div className="show-product">
-                    {products.map((item) => (
-                        <div className="card text-center" data-aos="flip-left"
-                        data-aos-easing="ease-out-cubic"
-                        data-aos-duration="2000">
-                            <h6>{item.title}</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis tincidunt lorem.</p>
-                            <button className="border-1 px-2 border-dark" key={item.slug}><Link to={`/api/products/slug/${item.slug}`}>View More</Link></button>
-                            <img className="img-fluid" alt="" src={item.image} />
-                        </div>
-                    ))}
-                </div>
-
+     <div className="product-grid" data-aos="zoom-in">
+     <img src="https://storefeederimages.blob.core.windows.net/realaquaticsltd/Products/35d46c7b-a3ab-415e-b818-e527a968ece2/Full/khpy4qymvfo.jpg" alt="foreground"/>
+<br></br>
+<div className="product-view">
+<p>Plants</p>
+<button className="btn bg-white"><Link to="/foreground">View products</Link></button>
 </div>
+     </div>
 
-                <div className="save-price px-2 py-1 bg-white d-flex justify-content-between align-items-center">
-                    <img style={{ width: '100px', height: '100px' }} alt="" src="./images/pixel6.png" />
+     <div className="product-grid" data-aos="zoom-in">
+     <img  src="https://www.aquasabi.com/media/image/product/27669/lg/twinstar-led-light-iii-sp.jpg" alt="lighting"/>
+<br></br>
+<div className="product-view">
+<p>LIGHTING</p>
+<button className="btn bg-white"><Link to="/lighting">View Products</Link></button>
+</div>
+     </div>
 
-                    <div className="d-flex justify-content-between save-details text-center">
-                        <h4>Great Phones</h4>
-                        <h4 className="text-success">Amazing Prices.</h4>
-                        <h4>Shop Now</h4>
-                        <h4>------&gt;</h4>
-                    </div>
 
-                    <button className="border-0 py-2 bg-primary shop-now-btn text-white px-2">
-                        <Link className="text-white" to="/Product">Shop At Us</Link></button>
+     <div className="product-grid" data-aos="zoom-in">
+    <img src="https://www.azaqua.nl/img/cms/hardscape-aquascaping.jpg" alt="ornaments"/>
+    <br></br>
+    <div className="product-view">
+    <p>HARDSCAPING</p>
+    <button className="btn bg-white"><Link to="/woodsrocks">View Products</Link></button>
+    </div>
+     </div>
+
+     </div>
+
                 </div>
 
                 <div className="containerfluid bg-secondary">
@@ -224,14 +224,12 @@ export default function Home(props) {
                         </div>
 
                         <div>
-                            <h6>Security & Privacy</h6>
-                            <p>Terms and Conditions</p>
-                            <p>Privacy Policy</p>
-                            <p>Cookie Policy</p>
+                            <h5>Get in touch with us on</h5>
                             <i className="h2 fab fa-instagram"></i>
                             <i className="h2  mx-2 fab fa-youtube"></i>
                             <i className="h2 fab fa-facebook"></i>
                             <br></br>
+                            <h5>Accept</h5>
                             <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="mastercard"/>
                             <img src="https://img.icons8.com/fluency/48/000000/bank-card-front-side.png" alt="debit card"/>
                         </div>

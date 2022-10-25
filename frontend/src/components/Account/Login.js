@@ -7,6 +7,7 @@ import { setAuthentication, isAuthenticated } from '../../helpers/auth';
 import {useStateValue} from '../../StateProvider'
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import './Account.css'
 export default function Login() {
 
 	const [{}, dispatch] = useStateValue();
@@ -100,12 +101,14 @@ export default function Login() {
 
 
   return (
-   <div className='Login'>
-	<div className='row px-3 vh-100'>
-		<div className='col-md-5 mx-auto align-self-center'>
-		{errorMsg && showErrorMsg(errorMsg)}
+		<div className="d-flex justify-content-center vh-100 align-items-center account">
 		
-					<form onSubmit={handleSubmit} noValidate>
+		<div className="bg-success bg-opacity-50 account-box">
+
+		<img  src="../../../images/angel&discusfish.webp" alt=""/>
+
+					<form  onSubmit={handleSubmit} noValidate>
+		{errorMsg && showErrorMsg(errorMsg)}
 		
 		{/* email */}
 		<div className='form-group input-group'>
@@ -117,7 +120,6 @@ export default function Login() {
 			<input
 				name='email'
 				value={email}
-				className='form-control'
 				placeholder='Email address'
 				type='email'
 				onChange={handleChange}
@@ -134,7 +136,7 @@ export default function Login() {
 			<input
 				name='password'
 				value={password}
-				className='form-control'
+	
 				placeholder='Create password'
 				type='password'
 				onChange={handleChange}
@@ -151,8 +153,7 @@ export default function Login() {
 			Have an account? <Link to='/signup'>Signup</Link>
 		</p>
 	</form>
-	</div>
-	</div>
+		</div>
 </div>
   )
 }

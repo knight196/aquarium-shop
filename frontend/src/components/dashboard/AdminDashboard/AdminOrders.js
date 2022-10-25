@@ -31,14 +31,14 @@ useEffect(() => {
           <div className="d-flex align-items-center justify-content-between user-orders-card px-2">
           
           <div>
-          <img style={{width:'200px', height:'200px'}} src={ item.image} alt={item.title}/>
+          <img style={{width:'200px', height:'200px'}} src={ item.image.url} alt={item.title}/>
           </div>
           
           <div className="user-orders-card-info">
           <p>Name: {item.title}</p>
           <p>Price: £{item.price}</p>
           <p>Color: {item.color}</p>
-          <p>Storage: {item.storage}</p>
+     
           </div>
 
           <div className="user-orders-card-info-date">

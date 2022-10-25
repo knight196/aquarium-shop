@@ -3,7 +3,6 @@ import ProductInfo from './ProductInfo';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 
-
 function ProductDetail(props) {
 
     const {products} = props;

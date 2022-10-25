@@ -17,7 +17,7 @@ const [{basket}, dispatch] = useStateValue()
     <div className='checkoutProduct'>
 
       <div className="bg-white mx-1">
-      <img className='checkoutProduct__image img-fluid' src={image} alt=""/>
+      <img className='checkoutProduct__image img-fluid' src={image.url} alt=""/>
       </div>
     
     <div className='checkoutProduct__info'>

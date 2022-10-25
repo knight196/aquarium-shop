@@ -106,7 +106,7 @@ export default function OrdersInfo() {
           <div style={{border:'1px solid darkgray'}} className="d-flex my-1 px-2 align-items-center justify-content-between orders-list">
 
           <div className="py-2">
-            <img src={item.image} alt=""/>
+            <img src={item.image.url} alt=""/>
           </div>
 
             <div className="w-50 px-2 text-center">
@@ -118,11 +118,6 @@ export default function OrdersInfo() {
             <div className="w-50 text-center">
               <p5>Price</p5>
               <p>£{item.price}</p>
-            </div>
-
-            <div className="text-center">
-              <p5>Storage</p5>
-              <p>{item.storage}</p>
             </div>
 
           </div>

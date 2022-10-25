@@ -9,10 +9,13 @@ export default function Createproducts() {
     const [title,settitle] = useState('')
     const [Company,setCompany] = useState('')
     const [price,setprice] = useState(0)
-    const [images,setimages] = useState([])
-    const [variants,setvariants] = useState([{color:'',storage:'',price:''}])
-    
-    
+    const [category,setcategory] = useState('')
+    const [description,setdescription] = useState('')
+    const [difficulty,setdifficulty] = useState('')
+    const [position,setposition] = useState('')
+    const [details,setdetails] = useState([{featureDeatils:''}])
+    const [CompanyProductName,setCompanyProductName] = useState('')
+     
     const handleImage = (e) => {
       const file = e.target.files[0]
       setFileToBase(file)
@@ -29,57 +32,49 @@ export default function Createproducts() {
     }
 
     const handleAdd = () => {
-      setvariants([...variants,{color:'',storage:'',price:''}])
+      setdetails([...details,{featureDetails: ''}])
     }
-    
 
     const handlechange = (e,index) => {
       const {name,value} = e.target;
-      const list=[...variants]
+      const list=[...details]
       list[index][name] = value;
-      setvariants(list)
+      setdetails(list)
+    }
+
+    const deletedetails = (i) => {
+      const deleteVal = [...details]
+      deleteVal.splice(i,1)
+      setdetails(deleteVal)
     }
     
-    const deleteImage = (i) => {
-      const deleteVal = [...variants]
-      deleteVal.splice(i,1)
-      setvariants(deleteVal)
-    }
+ 
     
     const submitform = async (e) => {
       e.preventDefault();
     
       axios
-      .post('/newproducts/add', {slug,title,images,Company,image,variants,price})
+      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category})
       .then(() => {
         setslug('')
         settitle('')
         setCompany('')
         setprice(0)
-        setimage('')        
-        setimages([])
-        setvariants([{color:'',size:'',price:''}])
+        setdifficulty('')
+        setposition('')
+        setimage('')
+        setdetails([{featureDetails:''}])        
+        setdescription('')
+        setcategory('')
+        setCompanyProductName('')
         toast.success('product added successfully')
         setTimeout(function() {
           window.location.reload();
-        },3000)
+        },1500)
       })
       .catch((err) => alert(err))
       
     }
-
-    const listimages = (e) => {
-        const files = Array.from(e.target.files)
-        files.forEach(file => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file)
-          reader.onloadend = () => {
-            setimages(oldArray => [...oldArray, reader.result])
-          }
-        })
-    }
-
-    console.log(images)
  
 
   return (
@@ -88,32 +83,38 @@ export default function Createproducts() {
     <h5>Slug</h5>
     <input type="text" value={slug} onChange={(e) => setslug(e.target.value)}/>
 
-    <div className="m-1 d-flex flex-column align-items-center">
-
     <h5>Image</h5>
     <input  onChange={handleImage} type="file"/>
 
-<h5>Variation Images</h5>
-<input type="file" onChange={listimages} multiple/>
+    
 
-    <button className="px-3 py-1 border-0 bg-primary m-1 rounded-1" onClick={()=>handleAdd()}>Add</button>
-{variants.map((x,i)=> (
+<h5>Description</h5>
+    <textarea className="w-100" style={{height:'200px'}} type="text" value={description} onChange={(e) => setdescription(e.target.value)}/>
+
+<h5>Features&Details</h5>
+
+<div className="d-flex flex-column align-items-center">
+
+<button className="px-3 py-1 border-0 bg-primary m-1 rounded-1" onClick={()=>handleAdd()}>Add</button>
+{details.map((x,i)=> (
   <>
-  <input type="text" name="color" placeholder="color" onChange={e=> handlechange(e,i)}/>
-  <input type="text" name="storage" placeholder="size" onChange={e=> handlechange(e,i)}/>
-  <input type="text" name="price" placeholder="price" onChange={e=> handlechange(e,i)}/>
-  {variants.length!==1 &&
-  <button onClick={()=> deleteImage(i)}>Remove</button>
-  }
-  </>
-  )
-  )  
+<textarea type="text" className="w-50"  name='featureDetails' placeholder="details" onChange={e=> handlechange(e,i)}/>
+{details.length!==1 &&
+  <button onClick={()=> deletedetails(i)}>Remove</button>
 }
+</>
+))}
 
-    </div>
+</div>
+
+    <h5>Company-ProductName</h5>
+    <input type="text" value={CompanyProductName} onChange={(e) => setCompanyProductName(e.target.value)}/>
+
 
     <h5>Title</h5>
     <input type="text" value={title} onChange={(e) => settitle(e.target.value)}/>
+
+
 
     <h5>Company</h5>
     <input type="textarea" value={Company} onChange={(e) => setCompany(e.target.value)}/>
@@ -121,7 +122,14 @@ export default function Createproducts() {
     <h5>Price</h5>
     <input type="text" value={price} onChange={(e) => setprice(e.target.value)}/>
 
+  <h5>Difficulty</h5>
+    <input type="text" value={difficulty} onChange={(e) => setdifficulty(e.target.value)}/>
 
+  <h5>Position</h5>
+    <input type="text" value={position} onChange={(e) => setposition(e.target.value)}/>
+
+    <h5>Category</h5>
+    <input type="text" value={category} onChange={(e) => setcategory(e.target.value)}/>
 
     <br></br>
 

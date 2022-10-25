@@ -115,7 +115,7 @@ console.log('client secret is', clientSecret)
         
         
         
-                <div className="cart-list bg-white bg-opacity-50 h-50 border-2 rounded-1">
+                <div className="cart-list bg-white bg-opacity-50 h-50 px-2 border-2 rounded-1">
         
                     <div className="d-flex h5 my-2 pb-3 justify-content-between px-2">
                         <span>Your Cart</span>

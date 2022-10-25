@@ -5,9 +5,6 @@ const adminmessage = require('../Schema/adminmessage')
 
 const router = express.Router();
 
-const stripe = require('stripe')('sk_test_51LYBvZKrhOmzE877f3gvsPSSYd9YZeCd9UMPx6Fj6y1eAyXqBnYTh7jFLILcpWg8enJSPcTF6SnA8KArps4H0FZg0020zioRJb')
-
-
 //finding specific order by one id from user
 router.get('/get/_id/:id', async (req,res)=> {
   const orderId = await Orders.findOne({_id:req.params.id})
