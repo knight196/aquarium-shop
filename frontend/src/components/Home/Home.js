@@ -147,7 +147,7 @@ export default function Home() {
                                         </div>
 
                                         <br></br>
-                                        <motion.span initial={{transform:'scale(0)'}} animate={{transform:'scale(1.2)'}} transition={{delay:1.5}} className="btn bg-white h6 rounded-0"><Link className="text-dark" to={slides.link}>View More</Link></motion.span>
+                                        <motion.span initial={{transform:'scale(0)'}} animate={{transform:'scale(1.2)'}} transition={{delay:1.5}} className="btn bg-white rounded-0"><Link className="text-dark" to={slides.link}>View More</Link></motion.span>
                                         </div>                                    
                                     </motion.div>
                                 )}

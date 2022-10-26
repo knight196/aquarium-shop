@@ -15,7 +15,7 @@ price:'£5.00'
 image:'https://twinstareu.com/wp-content/uploads/2019/08/gallery_S_5_d_c.jpg',
 link:'/lighting',
 title:'Brighten up your aquatic nature with our wide range of lighting',
-price:'starting from £89 - £300'
+price:'starting from £89 - £400'
 },
 {
 image:'https://static.wixstatic.com/media/71621e_54ff7a20341043579a0bf08de9016b27~mv2.jpg/v1/fill/w_1600,h_1200,al_c,q_85/71621e_54ff7a20341043579a0bf08de9016b27~mv2.jpg',
