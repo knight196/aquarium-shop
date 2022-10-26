@@ -230,7 +230,7 @@ export default function Home() {
                             <p>SAT & SUN: CLOSED</p>
 
                         <h6>Contact No</h6>
-                        <p>01327 777777</p>
+                        <p>01211 000000</p>
                         </div>
                         <div>
 
