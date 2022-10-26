@@ -1,5 +1,14 @@
 
-
+.search-filter{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+  >div{
+    background:whitesmoke;
+    padding:10px;
+  }
+}
 
 .footer-details{
   flex-direction: column !important;

@@ -6,6 +6,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import axios from 'axios'
 import slideshow from './data'
+import {gsap} from 'gsap'
+import CSSRulePlugin from 'gsap/CSSRulePlugin'
 
 export default function Home() {
 
@@ -84,26 +86,25 @@ export default function Home() {
     }
 
 
-
-
-
     return (
         <motion.div initial={{opacity:0}} animate={{opacity:1,transition:{duration:0.5}}}>
 
             <input className="w-100 p-1 border-0" type="text" placeholder="SEARCH YOUR PRODUCT" value={searchTerm} onChange={handleSearch} />
 
+            <div className="search-filter">
             {filtered.map((filterproduct) => {
                 return (
-                    <div className={!searchTerm ? "d-none" : "d-block m-4 text-center search-filter"}>
-                        <img style={{width:'250px',height:'300px'}} src={filterproduct.image.url} alt="" />
+
+                    <div className={!searchTerm ? "d-none" : "d-block m-4 text-center"}>
+                           
+                        <img style={{width:'300px',height:'300px'}} src={filterproduct.image.url} alt="" />
                         <p key={filterproduct.slug}>{filterproduct.title}</p>
                         <p>£ {filterproduct.price}</p>
-                        <button onClick={() => {
-
-                        }} className="bg-primary px-2 rounded-1 py-1 text-white border-0"><Link to={`/api/products/slug/${filterproduct.slug}`}>View More</Link></button>
-                    </div>
+                        <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/products/slug/${filterproduct.slug}`}>View More</Link></button>
+                           </div> 
                 )
             })}
+            </div>
 
             <div animate={{opacity:1, transition:'0.5s all'}} className={!searchTerm ? "d-block" : "d-none"}>
 
@@ -162,8 +163,8 @@ export default function Home() {
         <h5  className="text-white">Featured Categories</h5>
                     <div className="grid p-2 mb-5">
      
-     <div className="product-grid" data-aos="zoom-in">
-      <img src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
+     <div  className="product-grid" data-aos="zoom-in">
+      <img  src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
       <br></br>
       <div className="product-view">
       <p>TANKS</p>
