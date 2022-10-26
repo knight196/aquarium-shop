@@ -36,7 +36,7 @@ const handleClick = () => setClick(!click);
     <nav className="bg-dark">
 
     <div className="d-flex justify-content-between align-items-center px-2 py-1">
-    <h3 className="logo"><NavLink to="/">AquaLandscape</NavLink></h3>
+    <h3 className="logo"><NavLink to="/">Aquature</NavLink></h3>
 
 
     <div className="mobile-cart">
