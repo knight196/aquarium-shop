@@ -223,8 +223,18 @@ export default function Home() {
                             <p>FAQ's</p>
                         </div>
 
+
                         <div>
-                            <h5>Get in touch with us on</h5>
+                        <h6>Opening Times</h6>
+                            <p>MON-FRI: 9:00AM - 3:00PM</p>
+                            <p>SAT & SUN: CLOSED</p>
+
+                        <h6>Contact No</h6>
+                        <p>01327 777777</p>
+                        </div>
+                        <div>
+
+                            <h6>Get in touch with us on</h6>
                             <i className="h2 fab fa-instagram"></i>
                             <i className="h2  mx-2 fab fa-youtube"></i>
                             <i className="h2 fab fa-facebook"></i>

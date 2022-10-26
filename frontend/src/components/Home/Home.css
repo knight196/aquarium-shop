@@ -20,6 +20,8 @@
       -ms-flex-direction: column !important;
           flex-direction: column !important;
   text-align: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .footer-details h6 {
