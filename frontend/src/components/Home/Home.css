@@ -257,6 +257,72 @@
   width: 100%;
 }
 
+.slide-option {
+  position: relative;
+}
+
+.slide-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-x: auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.slide-container > div {
+  background: whitesmoke;
+  text-align: center;
+  margin: 0 10px;
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.slide-container > div img {
+  width: 300px;
+  height: 250px;
+}
+
+.slide-container button {
+  position: absolute;
+  border: none;
+  z-index: 2;
+  top: 50%;
+  padding: 10px 10px;
+  border-radius: 10%;
+}
+
+.slide-container button:hover {
+  background: black;
+  color: white;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+}
+
+.right {
+  right: 0;
+}
+
+.plants-card2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+  margin: 10px;
+}
+
+.plants-card2:hover {
+  opacity: 1;
+}
+
 @media screen and (min-width: 720px) {
   .parallax {
     min-height: 600px;
@@ -310,6 +376,13 @@
   }
   .price h5 {
     font-size: 20px;
+  }
+  .slide-container > div {
+    height: 350px;
+  }
+  .slide-container > div img {
+    height: 300px;
+    width: 350px;
   }
 }
 /*# sourceMappingURL=Home.css.map */

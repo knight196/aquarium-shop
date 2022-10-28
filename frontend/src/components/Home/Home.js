@@ -1,13 +1,13 @@
 import React,{useState,useRef,useEffect} from 'react'
-import {Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import './Home.css'
 import {motion} from 'framer-motion'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import axios from 'axios'
 import slideshow from './data'
-import {gsap} from 'gsap'
-import CSSRulePlugin from 'gsap/CSSRulePlugin'
+import plants from './Plantsdata'
+
 
 export default function Home() {
 
@@ -18,13 +18,13 @@ export default function Home() {
         const res = await axios.get('/api/newproducts')
         setproducts(res.data.newproducts)
     }
+
     
     useEffect(() => {
         fetchdata()
     },[])
 
-
-
+    
     const [searchTerm, setSearchTerm] = useState('');
 
  
@@ -84,6 +84,15 @@ export default function Home() {
     if (!Array.isArray(slide) || slide.length <= 0) {
         return null;
     }
+
+    function left() {
+        document.getElementById('scroll').scrollLeft -= 350;
+    }
+
+    function right() {
+        document.getElementById('scroll').scrollLeft += 350;
+    }
+   
 
 
     return (
@@ -157,14 +166,49 @@ export default function Home() {
                     ))}
                 </section>
 
+                <div data-aos="zoom-in">
+
+                <h4 className="text-white px-2 py-2">Browse our range of Aquatic plants</h4>
+                
+                <div className="slide-option py-2">
+
+
+<div className="slide-container" id="scroll" >
+    <button onClick={left} className="left"><i className="fas fa-chevron-left"></i></button>
+   {plants.map((item)=> (
+    
+    <div>
+
+<Link to={item.link}>
+    <div className="plants-card rounded-0">
+    <img src={item.image} alt=""/>
+    </div>
+
+    <div className="plants-card2 rounded-0">
+        <img src={item.doubleimg} alt=""/>
+    </div>
+</Link>
+
+    <small>{item.title}</small>
+    </div>
+
+   ))}
+    <button onClick={right} className="right"><i className="fas fa-chevron-right"></i></button>
+</div>
+
+                </div>
+
+                </div>
+
 
                 <div className="slider-scroll bg-success bg-opacity-50 p-2">
 
         <h5  className="text-white">Featured Categories</h5>
                     <div className="grid p-2 mb-5">
      
+
      <div  className="product-grid" data-aos="zoom-in">
-      <img  src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
+      <img src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
       <br></br>
       <div className="product-view">
       <p>TANKS</p>
