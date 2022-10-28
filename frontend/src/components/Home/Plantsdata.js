@@ -7,7 +7,7 @@ const plants = [
     },
     {
         title:'Rotala Rotundifolia',
-        link:'/api/products/slug//api/products/slug/Rotala-rotundifolia',
+        link:'/api/products/slug/Rotala-rotundifolia',
         image:'https://i.ebayimg.com/images/g/5yQAAOSwWxNYrMck/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/PosAAOSwOgdYrMcr/s-l1600.jpg'
     },

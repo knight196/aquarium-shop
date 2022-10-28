@@ -179,7 +179,6 @@ export default function Home() {
     
     <div>
 
-<Link to={item.link}>
     <div className="plants-card rounded-0">
     <img src={item.image} alt=""/>
     </div>
@@ -187,9 +186,10 @@ export default function Home() {
     <div className="plants-card2 rounded-0">
         <img src={item.doubleimg} alt=""/>
     </div>
-</Link>
 
     <small>{item.title}</small>
+    <br></br>
+<Link className="btn border-1 border-secondary rounded-0" to={item.link}>View More</Link>
     </div>
 
    ))}
