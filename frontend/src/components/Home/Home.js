@@ -7,6 +7,9 @@ import 'aos/dist/aos.css'
 import axios from 'axios'
 import slideshow from './data'
 import plants from './Plantsdata'
+import {gsap,Power2} from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 
 export default function Home() {
@@ -24,7 +27,8 @@ export default function Home() {
         fetchdata()
     },[])
 
-    
+
+      
     const [searchTerm, setSearchTerm] = useState('');
 
  
@@ -139,7 +143,7 @@ export default function Home() {
                                     <motion.div className="slideshow-flex" initial={{opacity:0}} animate={{opacity:1}}>
                                         
                                         
-                                            <img className="img-fluid" src={slides.image} alt={slides.title}/>
+                                            <motion.img initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.5}} className="img-fluid" src={slides.image} alt={slides.title}/>
                                         
                                     
                                         <div className="my-3 slideshow-details">
@@ -147,13 +151,13 @@ export default function Home() {
 
                                         <div className="title">
                                         <p>{slides.title}</p>
-                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:0.5}} className="title-reveal"></motion.div>
+                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:1}} className="title-reveal"></motion.div>
                                         </div>
 
 
                                         <div className="price">
                                         <h5 style={{fontWeight:'bold'}}>{slides.price}</h5>
-                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:1}} className="price-reveal"></motion.div>
+                                        <motion.div initial={{height:'100%'}} animate={{height:0}} transition={{delay:1.5}} className="price-reveal"></motion.div>
                                         </div>
 
                                         <br></br>
