@@ -1,4 +1,3 @@
-const { truncate } = require('fs')
 var mongoose = require('mongoose')
 
 var addProductSchema = new mongoose.Schema(
@@ -23,6 +22,13 @@ var addProductSchema = new mongoose.Schema(
        difficulty:{type:String},
        CompanyProductName:{type:String},
        details:[{featureDetails:{type:String}}],
+       variants:[
+        {
+            packaging:{type:String},
+            price:{type:Number}
+
+    }
+]
     },
     {
         timestamps:true

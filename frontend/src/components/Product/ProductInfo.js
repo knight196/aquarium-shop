@@ -20,18 +20,39 @@ let navigate = useNavigate();
         setProduct(props.detail)
       }, [props.detail])
       
+const [packaging,setpackaging] = useState();
+
+const packageOptions = Product.variants?.map((p) => p.packaging)
+  .filter((v, i, a) => a.indexOf(v) === i)
+  .map((packaging) => ({ label: packaging, value:packaging }))
+
+   const priceOptions = Product.variants?.filter((p) =>  packaging && p.packaging=== packaging.value)
+  .map((p) => p.price)
+  .filter((v, i, a) => a.indexOf(v) === i)
+  .map((price) => ({ label: price, value:price }));
+
+
+  let priceFinal = {}
+  if(priceOptions?.length===1){priceFinal=priceOptions[0].value}
+
+
 const addToBasket=(e) =>{
-    
-  //dispatch the item into the data layer
-     dispatch ({
+    if(!packaging.value){
+      alert('Please select a packaging')
+    }
+    else{
+      //dispatch the item into the data layer
+      dispatch ({
       type:'ADD_TO_BASKET',
       item: {
         slug: props.detail.slug, 
         title: props.detail.title,
         image: props.detail.image,
-        price: props.detail.price
+        packaging:packaging?.value,
+        price: priceFinal
       },
     })
+  }
 };
 
 
@@ -48,6 +69,7 @@ return (
   <div className="product-details p-4">
     <h5>{Product.title}</h5>
     <hr></hr>
+    <Select value={packaging} onChange={setpackaging} options={packageOptions} isClearable/>
     <p>{Product.description}</p>
     <h5>£{Product.price}</h5>
 

@@ -67,7 +67,7 @@ useEffect(() => {
 
     <div className="product">
     {filteredlist.map((item)=> {
-if(item.position=== 'foreground'){
+if(item.position=== 'Foreground'){
 return(
 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
 <img  src={item.image.url} alt={item.title}/>

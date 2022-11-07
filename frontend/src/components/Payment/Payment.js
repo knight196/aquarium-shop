@@ -70,7 +70,7 @@ console.log('client secret is', clientSecret)
     return (
         <>
 
-        {basket.length === 0 && (window.location.href="/")}
+        {basket.length === 0 && (window.location.href="/") &&  (window.localStorage.removeItem('basket'))}
         
                 <h2 className="text-center">Checkout Form</h2>
         
@@ -105,8 +105,7 @@ console.log('client secret is', clientSecret)
                             title={item.title}
                             image={item.image}
                             price={item.price}
-                            color={item.color}
-                            storage={item.storage}
+                            packaging={item.packaging}
                             />
                         ))}
         </div>

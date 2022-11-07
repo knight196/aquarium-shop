@@ -66,7 +66,7 @@
         height:0%;
         width:0%;
         right:0;
-        background:rgb(130, 138, 180);
+        background:grey;
         left:0;
         transition: 1s all;
         .navoption{
@@ -87,6 +87,13 @@
       }
   .accordion{
     border-bottom:2px solid black;
+
+  p{
+    a:hover{
+      color:black !important;
+      transition:0.5s all;
+    }
+  }
   }
 }
 

@@ -13,13 +13,13 @@ const plants = [
     },
     {
         title:'Microsorum pteropus',
-        link:'/api/products/slug/java-fern',
+        link:'/api/products/slug/Microsorum-pteropus',
         image:'https://i.ebayimg.com/images/g/Qg0AAOSwx6pYpOA3/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/~8MAAOSw~AVYpOBF/s-l1600.jpg'   
     },
     {
         title:'Cryptocoryne beckettii petchii',
-        link:'/api/products/slug/Cryptocoryne-beckettii-petchii',
+        link:"/api/products/slug/Cryptocoryne-beckettii-'Petchii'",
         image:'https://i.ebayimg.com/images/g/qr4AAOSw4A5YrMHF/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/hyMAAOSwTuJYrMHI/s-l1600.jpg'
     },
@@ -37,13 +37,13 @@ const plants = [
     },
     {
          title:"Alternanthera-reineckii-'Pink'",
-        link:"/api/products/slug/Alternanthera-reineckii-'Pink'",
+        link:"/api/products/slug/Alternanthera reineckii 'Pink'",
         image:'https://i.ebayimg.com/images/g/xZ0AAOSwjI5azfso/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/KrQAAOSwhjRazfsx/s-l1600.jpg'
     },
     {
         title:"Pogostemon-stellatus",
-       link:"/api/products/slug/Pogostemonstellatus",
+       link:"/api/products/slug/Pogostemon-stellatus",
        image:'https://tropica.com/imagegen.ashx?height=720&image=/Plants/053G/1.JPG&crop=resize&class=product',
        doubleimg:'https://tropica.com/imagegen.ashx?height=720&image=/Plants/053G/4.JPG&crop=resize&class=product'
    },

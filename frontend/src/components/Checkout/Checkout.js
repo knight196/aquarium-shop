@@ -34,8 +34,7 @@ function Checkout() {
           slug={item.slug}
           title={item.title}
             image={item.image}
-            color={item.color}
-            storage={item.storage}
+            packaging={item.packaging}
             price={item.price}
           />
           ))}

@@ -50,7 +50,7 @@ nav .navoption {
     height: 0%;
     width: 0%;
     right: 0;
-    background: #828ab4;
+    background: grey;
     left: 0;
     -webkit-transition: 1s all;
     transition: 1s all;
@@ -77,6 +77,11 @@ nav .navoption {
   }
   .accordion {
     border-bottom: 2px solid black;
+  }
+  .accordion p a:hover {
+    color: black !important;
+    -webkit-transition: 0.5s all;
+    transition: 0.5s all;
   }
 }
 

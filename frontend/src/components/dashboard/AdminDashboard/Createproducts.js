@@ -13,8 +13,9 @@ export default function Createproducts() {
     const [description,setdescription] = useState('')
     const [difficulty,setdifficulty] = useState('')
     const [position,setposition] = useState('')
-    const [details,setdetails] = useState([{featureDeatils:''}])
+    const [details,setdetails] = useState([{featureDetails:''}])
     const [CompanyProductName,setCompanyProductName] = useState('')
+    const [variants,setvariants] = useState([{packaging:'',price:'' }])
      
     const handleImage = (e) => {
       const file = e.target.files[0]
@@ -35,6 +36,27 @@ export default function Createproducts() {
       setdetails([...details,{featureDetails: ''}])
     }
 
+    // adding plants variants starts here
+
+    const plantsAdd = () => {
+      setvariants([...variants,{packaging: ''}])
+    }
+
+    const plantshandlechange = (e,index) => {
+      const {name,value} = e.target
+      const list = [...variants]
+      list[index][name] = value;
+      setvariants(list)
+    }
+
+    const deleteplants = (i) => {
+      const deleteVal = [...variants]
+      deleteVal.splice(i,1)
+      setvariants(deleteVal)
+    }
+
+    //end of adding plants variants
+
     const handlechange = (e,index) => {
       const {name,value} = e.target;
       const list=[...details]
@@ -54,7 +76,7 @@ export default function Createproducts() {
       e.preventDefault();
     
       axios
-      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category})
+      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants})
       .then(() => {
         setslug('')
         settitle('')
@@ -67,6 +89,7 @@ export default function Createproducts() {
         setdescription('')
         setcategory('')
         setCompanyProductName('')
+        setvariants([{packaging:'', price:''}])
         toast.success('product added successfully')
         setTimeout(function() {
           window.location.reload();
@@ -104,6 +127,22 @@ export default function Createproducts() {
 }
 </>
 ))}
+
+<div className="d-flex flex-column align-items-center">
+
+<h5>Plants variants</h5>
+<button className="px-3 py-1 border-0 bg-primary m-1 rounded-1" onClick={()=>plantsAdd()}>Add</button>
+<br></br>
+{variants.map((x,i) => (
+  <>
+  <input type="text" name="packaging" placeholder="packaging" onChange={e=> plantshandlechange(e,i)}/>
+  <input type="text" name="price" placeholder="price" onChange={e=> plantshandlechange(e,i)} className="my-1"/>
+  {variants.length!== 1 && <button onClick={()=> deleteplants(i)}>Remove</button>}
+  </>
+))}
+</div>
+
+
 
 </div>
 
