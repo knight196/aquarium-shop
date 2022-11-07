@@ -69,7 +69,9 @@ return (
   <div className="product-details p-4">
     <h5>{Product.title}</h5>
     <hr></hr>
-    <Select value={packaging} onChange={setpackaging} options={packageOptions} isClearable/>
+    {Product.variants?.length === 1 && (
+      <Select value={packaging} onChange={setpackaging} options={packageOptions} isClearable/>
+      )}
     <p>{Product.description}</p>
     <h5>£{Product.price}</h5>
 
