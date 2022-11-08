@@ -42,6 +42,55 @@ td {
       flex-wrap: wrap;
 }
 
+.product-details-details {
+  width: 100% !important;
+}
+
+.imgSelection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.tabImg {
+  width: 100px;
+  height: 100px;
+}
+
+.contentImg {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.imgScroll {
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 400px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (min-width: 720px) {
+  .contentImg {
+    width: 300px;
+    height: 300px;
+  }
+  .imgScroll {
+    width: 300px;
+  }
+}
+
 @media (min-width: 1020px) {
   .custom-select {
     -webkit-box-orient: vertical;
@@ -68,6 +117,24 @@ td {
   .checkboxes {
     position: relative;
     width: 20%;
+  }
+  .product-details-details {
+    width: 50% !important;
+    padding: 0 10px;
+  }
+  .tabImg {
+    width: 250px;
+    height: 200px;
+  }
+  .imgScroll {
+    width: 600px;
+  }
+  .contentImg {
+    width: 350px;
+    height: 350px;
+  }
+  .imgSelection {
+    width: 100%;
   }
 }
 /*# sourceMappingURL=Tank.css.map */

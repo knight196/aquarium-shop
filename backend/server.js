@@ -82,7 +82,7 @@ app.get("/config", (req, res) => {
   // cloudinary image upload 
 app.post('/newproducts/add', async (req,res) => {
 
-  const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants} = req.body
+  const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants,images,colors} = req.body
 
   try{
 
@@ -91,6 +91,26 @@ app.post('/newproducts/add', async (req,res) => {
       width:1920,
       crop:'scale'
     })
+
+
+    let images = [...req.body.images];
+    let imagesBuffer = []
+
+    for(let i=0; i<images.length; i++){
+     const result = await cloudinary.uploader.upload(images[i], {
+        folder:'aquariumvariants',
+        width:1920,
+        crop:'scale'
+      })
+      
+      imagesBuffer.push({
+        public_id:result.public_id,
+        url:result.secure_url
+      })
+      
+    }
+      
+    req.body.images = imagesBuffer
 
 
     const listproducts = await addProduct.create({
@@ -108,7 +128,9 @@ app.post('/newproducts/add', async (req,res) => {
       difficulty,
       CompanyProductName,
       details,
-      variants      
+      variants,
+      images:imagesBuffer,
+      colors
     })
   
     res.status(201).json({

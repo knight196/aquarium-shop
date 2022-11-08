@@ -120,6 +120,19 @@ export default function OrdersInfo() {
               <p>£{item.price}</p>
             </div>
 
+            {!item.color ? (
+            <>
+            </>
+          ): (
+            <div className="w-50 text-center">
+              <p5>Color</p5>
+              <br></br>
+              <p5>{item.color}</p5>
+            </div>
+          )
+          }
+
+
           {!item.packaging ? (
             <>
             </>

@@ -32,7 +32,7 @@ const handleOnClick = (type,att) =>{
 
 
 
-const colors = Product.variants?.map(item => item.color)
+const colors = Product.colors?.map(item => item.colors)
     .filter((v, i, a) => a.indexOf(v) === i)
     .map((color, index) => {
       return (
@@ -63,6 +63,11 @@ const addToBasket=(e) =>{
     }
 };
 
+const [toggleState, setToggleState] = useState(0)
+
+const toggleTab = (index) => {
+  setToggleState(index)
+}
 
 
 return (
@@ -70,8 +75,24 @@ return (
   
   <div className="d-flex justify-content-between align-items-center product-info">
 
-<div className="product-img">
-<img  src={Product.image?.url} alt={Product.title}/>
+  <div className="imgSelection">
+
+<div className="px-5">
+
+  <div className="d-flex align-items-center justify-content-center">
+    {Product.images?.map((item, index) => (
+      <img className={toggleState === index ? "active-content contentImg" : 'contentImg'} src={item.url} alt="" />
+    ))}
+  </div>
+
+  <div className="imgScroll">
+    {Product.images?.map((item, index) => (
+      <img className={toggleState === index ? "active-tabs tabImg" : 'tabs tabImg'} src={item.url} onClick={() => toggleTab(index)} alt="" />
+    ))}
+  </div>
+
+</div>
+
 </div>
 
   <div className="product-details p-4">

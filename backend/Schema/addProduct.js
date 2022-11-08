@@ -11,13 +11,21 @@ var addProductSchema = new mongoose.Schema(
        image:{
         public_id:{
             type:String,
-            require:true
+            
         },
         url:{
             type:String,
-            required:true
+            
         }
        },
+       images:[{
+        public_id:{
+            type:String
+        },
+        url:{
+            type:String
+        }
+       }],
        position:{type:String},
        difficulty:{type:String},
        CompanyProductName:{type:String},
@@ -28,7 +36,8 @@ var addProductSchema = new mongoose.Schema(
             price:{type:Number}
 
     }
-]
+],
+colors:[{colors:{type:String}}]
     },
     {
         timestamps:true

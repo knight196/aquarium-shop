@@ -141,6 +141,31 @@ setTimeout(function(){
                   <p5>Price</p5>
                   <p>£{item.price}</p>
                 </div>
+
+                {!item.color ? (
+            <>
+            </>
+          ): (
+            <div className="w-50 text-center">
+              <p5>Color</p5>
+              <br></br>
+              <p5>{item.color}</p5>
+            </div>
+          )
+          }
+
+
+          {!item.packaging ? (
+            <>
+            </>
+          ): (
+            <div className="w-50 text-center">
+              <p5>Packaging</p5>
+              <br></br>
+              <p5>{item.packaging}</p5>
+            </div>
+          )
+          }
     
               </div>
          ))}

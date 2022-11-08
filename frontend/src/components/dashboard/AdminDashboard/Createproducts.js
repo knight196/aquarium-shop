@@ -16,6 +16,8 @@ export default function Createproducts() {
     const [details,setdetails] = useState([{featureDetails:''}])
     const [CompanyProductName,setCompanyProductName] = useState('')
     const [variants,setvariants] = useState([{packaging:'',price:'' }])
+    const [images,setimages] = useState([])
+    const [colors,setcolors] = useState([{colors:''}]) 
      
     const handleImage = (e) => {
       const file = e.target.files[0]
@@ -41,7 +43,6 @@ export default function Createproducts() {
     const plantsAdd = () => {
       setvariants([...variants,{packaging: ''}])
     }
-
     const plantshandlechange = (e,index) => {
       const {name,value} = e.target
       const list = [...variants]
@@ -70,13 +71,31 @@ export default function Createproducts() {
       setdetails(deleteVal)
     }
     
+    //adding colors
+const colorsAdd = () => {
+  setcolors([...colors,{colors: ''}])
+}
+
+const handlecolorchange = (e,index) => {
+  const {name,value} = e.target;
+  const list=[...colors]
+  list[index][name] = value;
+  setcolors(list)
+}
+
+const deletecolor = (i) => {
+  const deleteVal = [...colors]
+  deleteVal.splice(i,1)
+  setcolors(deleteVal)
+}
+
  
     
     const submitform = async (e) => {
       e.preventDefault();
     
       axios
-      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants})
+      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants,images,colors})
       .then(() => {
         setslug('')
         settitle('')
@@ -90,6 +109,8 @@ export default function Createproducts() {
         setcategory('')
         setCompanyProductName('')
         setvariants([{packaging:'', price:''}])
+        setimages([])
+        setcolors([{colors:''}])
         toast.success('product added successfully')
         setTimeout(function() {
           window.location.reload();
@@ -98,6 +119,17 @@ export default function Createproducts() {
       .catch((err) => alert(err))
       
     }
+
+    const listimages = (e) => {
+      const files = Array.from(e.target.files)
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+          setimages(oldArray => [...oldArray, reader.result])
+        }
+      })
+  }
  
 
   return (
@@ -109,6 +141,8 @@ export default function Createproducts() {
     <h5>Image</h5>
     <input  onChange={handleImage} type="file"/>
 
+<h5>Variants Images</h5>
+<input type="file" onChange={listimages} multiple/>
     
 
 <h5>Description</h5>
@@ -138,6 +172,19 @@ export default function Createproducts() {
   <input type="text" name="packaging" placeholder="packaging" onChange={e=> plantshandlechange(e,i)}/>
   <input type="text" name="price" placeholder="price" onChange={e=> plantshandlechange(e,i)} className="my-1"/>
   {variants.length!== 1 && <button onClick={()=> deleteplants(i)}>Remove</button>}
+  </>
+))}
+</div>
+
+<div className="d-flex flex-column align-items-center">
+
+<h5>Color variants</h5>
+<button className="px-3 py-1 border-0 bg-primary m-1 rounded-1" onClick={()=>colorsAdd()}>Add</button>
+<br></br>
+{colors.map((x,i) => (
+  <>
+  <input type="text" name="colors" placeholder="color" onChange={e=> handlecolorchange(e,i)}/>
+  {colors.length!== 1 && <button onClick={()=> deletecolor(i)}>Remove</button>}
   </>
 ))}
 </div>
