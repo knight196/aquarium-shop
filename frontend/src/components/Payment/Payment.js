@@ -124,14 +124,14 @@ console.log('client secret is', clientSecret)
         
                     <div className="text-center d-flex justify-content-between px-2 align-items-center">
           <p>Subtotal</p> 
-        <p>£{getBasketTotal(basket)}</p>
+        <p>£{getBasketTotal(basket).toFixed(2)}</p>
           </div>
         <hr/>
            
         
         <div className="text-center d-flex justify-content-between px-2 align-items-center">
           <p>Total Price</p> 
-          <p>£{getBasketTotal(basket)}</p>
+          <p>£{getBasketTotal(basket).toFixed(2)}</p>
           </div>
         
             <hr/>
