@@ -24,7 +24,7 @@ useEffect(() => {
             <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product-card">
         <img src={item.image.url} alt={item.title}/>
         <p>{item.title}</p>
-        <button className="btn bg-dark text-white"><Link className="text-white" to={`/api/products/slug/${item.slug}`}>View More</Link></button>
+        <button className="btn bg-dark text-white"><Link className="text-white" to={`/api/tanks/slug/${item.slug}`}>View More</Link></button>
       </motion.div>
         )
       }

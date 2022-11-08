@@ -2,7 +2,7 @@ import React from 'react'
 import './CheckoutProduct.css'
 import { useStateValue } from '../../StateProvider'
 
-function CheckoutProduct({slug,image,title,price,packaging}) {
+function CheckoutProduct({slug,image,title,price,packaging,color}) {
 
 const [{basket}, dispatch] = useStateValue()
 
@@ -23,6 +23,7 @@ const [{basket}, dispatch] = useStateValue()
     <div className='checkoutProduct__info'>
         <p className='checkoutProduct__title'>{title}</p>
         <p>{packaging}</p>
+        <p>{color}</p>
         <p className='checkoutProduct__price'>
             <small>£</small>
             <strong>{price}</strong>

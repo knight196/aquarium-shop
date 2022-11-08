@@ -28,6 +28,8 @@ import Oase from '../components/Aquarium/Tanks/Oase'
 import Nano from '../components/Aquarium/Tanks/Nano'
 import DD from '../components/Aquarium/Tanks/DD'
 
+import TanksDetail from '../components/Aquarium/Tanks/TanksDetail'
+
 // end of subpath tank
 
 // end of tanks
@@ -112,6 +114,8 @@ export default function RootChange() {
 
     {/* tanks */}
           <Route path="/tanks" element={<Tanks/>}></Route>
+
+          <Route path="/api/tanks/slug/:slug" element={<TanksDetail/>}/>
 
 {/* subpath of tanks */}
 

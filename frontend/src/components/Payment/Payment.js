@@ -106,6 +106,7 @@ console.log('client secret is', clientSecret)
                             image={item.image}
                             price={item.price}
                             packaging={item.packaging}
+                            color={item.color}
                             />
                         ))}
         </div>

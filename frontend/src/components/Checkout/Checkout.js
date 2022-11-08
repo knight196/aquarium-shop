@@ -35,7 +35,7 @@ function Checkout() {
           image={item.image}
          packaging={item.packaging}
           price={item.price}
-       
+          color={item.color}
           />
           ))}
         

@@ -279,7 +279,11 @@ export default function Home() {
 
                         <h6>Contact No</h6>
                         <p>01211 000000</p>
+
+                        <h6>Contact Detail</h6>
+                        <p>aquature@gmail.com</p>
                         </div>
+                        
                         <div>
 
                             <h6>Get in touch with us on</h6>
