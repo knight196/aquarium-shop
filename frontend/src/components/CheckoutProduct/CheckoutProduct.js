@@ -26,6 +26,7 @@ const [{basket}, dispatch] = useStateValue()
         <p className='checkoutProduct__price'>
             <small>£</small>
             <strong>{price}</strong>
+
         </p>
 
 <div>

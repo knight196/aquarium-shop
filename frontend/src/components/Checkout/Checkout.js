@@ -27,17 +27,18 @@ function Checkout() {
       
     
         <h2 className="checkout__title">Your shopping basket</h2>
-      
 
         {basket.map(item => (
           <CheckoutProduct
           slug={item.slug}
           title={item.title}
-            image={item.image}
-            packaging={item.packaging}
-            price={item.price}
+          image={item.image}
+         packaging={item.packaging}
+          price={item.price}
+       
           />
           ))}
+        
 
       
 

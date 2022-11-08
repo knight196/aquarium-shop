@@ -7,6 +7,8 @@ import Products from '../components/Product/Product'
 // start of plants section
 import Plants from '../components/Aquarium/Plants/Plants'
 
+import PlantsProductDetail from '../components/Aquarium/Plants/PlantsProductDetail'
+
 import Foreground from '../components/Aquarium/Plants/Foreground'
 import Midground from '../components/Aquarium/Plants/Midground'
 import Background from '../components/Aquarium/Plants/Background'
@@ -133,6 +135,7 @@ export default function RootChange() {
           <Route path="/user/dashboard" element={<Userdashboard/>}/>
           <Route path="/admin/dashboard" element={<Admindashboard/>}/>
            <Route  path="/api/products/slug/:slug" element={<ProductDetail/>}/>
+          <Route paht="/api/plants/slug/:slug" element={<PlantsProductDetail/>}/>
            <Route  path="/orders/get/_id/:id" element={<UserOrderInfo/>}/>
            <Route  path="/orders/addcontactmsg/_id/:id" element={<Usercontactmsg/>}/>
            <Route  path="/api/addcontactmsg/_id/:id" element={<AdminContactmsg/>}/>
