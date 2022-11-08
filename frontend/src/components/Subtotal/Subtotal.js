@@ -13,7 +13,7 @@ const navigate = useNavigate();
 
   return (
     <div className='subtotal'>
-        <p>Subtotal ({basket.length} items): <strong>Total:£{getBasketTotal(basket)}</strong></p>
+        <p>Subtotal ({basket.length} items): <strong>Total:£{getBasketTotal(basket).toFixed(2)}</strong></p>
         <Link to={!user ? '/Login' : '/Address'} className="d-flex justify-content-center">
       <button className="border-0 bg-primary text-white p-1" onClick={e => navigate('/Address')}>Procced to Checkout</button>
         </Link>
