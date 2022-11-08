@@ -37,24 +37,18 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 
 const addToBasket=(e) =>{
-    // if(!packaging?.value){
-    // e.preventDefault();
-    //   alert('Please select a packaging')
-    // }
-    // else{
-      //dispatch the item into the data layer
+   
+     //dispatch the item into the data layer
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
         slug: props.detail.slug, 
         title: props.detail.title,
         image: props.detail.image,
-        // packaging:packaging?.value,
-        // price: priceFinal,
         price:props.detail.price
       },
     })
-  
+    
 };
 
 
@@ -72,7 +66,6 @@ return (
     <h5>{Product.title}</h5>
     <hr></hr>
 
-{/* <Select value={packaging} onChange={setpackaging} options={packageOptions} isClearable/> */}
 
     <p>{Product.description}</p>
     <h5>£{Product.price}</h5>
