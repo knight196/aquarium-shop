@@ -59,7 +59,7 @@ return (
   <div className="d-flex justify-content-between align-items-center product-info">
 
 <div className="product-img">
-<img  src={Product.image?.url} alt={Product.title}/>
+<img src={Product.image?.url} alt={Product.title}/>
 </div>
 
   <div className="product-details p-4">

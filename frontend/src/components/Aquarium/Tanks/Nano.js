@@ -24,7 +24,7 @@ export default function Nano() {
       if(item.category === 'Nano-tanks'){
         return(
           <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
-      <img  src={item.image.url} alt={item.title}/>
+      <img src={item.image.url} alt={item.title}/>
       <p>{item.title}</p>
       <button className="btn bg-dark"><Link className="text-white" to={`/api/products/slug/${item.slug}`}>View More</Link></button>
     </motion.div>
