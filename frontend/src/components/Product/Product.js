@@ -19,6 +19,12 @@ export default function Product() {
      </div>
 
      <div className="product-card">
+<img className="img-fluid" src="https://i.ebayimg.com/images/g/RKsAAOSwIfFjBLD6/s-l1600.png" alt="heater"/>
+<br></br>
+<button className="btn"><Link to="/heater">Heater</Link></button>
+     </div>
+
+     <div className="product-card">
      <img className="img-fluid" src="https://www.aquasabi.com/media/image/product/27669/lg/twinstar-led-light-iii-sp.jpg" alt="lighting"/>
 <br></br>
 <button className="btn"><Link to="/lighting">Lighting</Link></button>

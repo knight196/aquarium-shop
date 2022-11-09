@@ -19,6 +19,10 @@ import Background from '../components/Aquarium/Plants/Background'
 
 import Filter from '../components/Aquarium/Filter/Filter'
 
+
+//heater
+import Heater from '../components/Aquarium/Heater/Heater'
+
 // tanks
 import Tanks from '../components/Aquarium/Tanks/Tanks'
 
@@ -129,6 +133,10 @@ export default function RootChange() {
 
 
           <Route path="/filter" element={<Filter/>}></Route>
+          
+          <Route path="/heater" element={<Heater/>}></Route>
+
+          
 
            {/*aquarium product ends here  */}
 
