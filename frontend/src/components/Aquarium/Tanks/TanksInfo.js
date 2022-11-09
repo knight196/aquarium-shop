@@ -5,6 +5,7 @@ import { useStateValue } from '../../../StateProvider';
 import {Link,useNavigate} from "react-router-dom";
 import {motion} from 'framer-motion'
 import SelectorButton from './SelectorButton';
+import './Tanks.css'
 // import { useAlert } from 'react-alert';
 
 function TanksInfo(props) {
@@ -73,15 +74,15 @@ const toggleTab = (index) => {
 return (
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
   
-  <div className="d-flex justify-content-between align-items-center product-info">
+  <div className="d-flex justify-content-between align-items-center product-details-details">
 
   <div className="imgSelection">
 
-<div className="px-5">
+<div className="w-100 d-flex align-items-center justify-content-center">
 
-  <div className="d-flex align-items-center justify-content-center">
+  <div>
     {Product.images?.map((item, index) => (
-      <img className={toggleState === index ? "active-content contentImg" : 'contentImg'} src={item.url} alt="" />
+      <img   className={toggleState === index ? "active-content contentImg" : 'contentImg'} src={item.url} alt="" />
     ))}
   </div>
 

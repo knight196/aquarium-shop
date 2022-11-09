@@ -1,5 +1,5 @@
 import React from 'react'
-import './Tank.css'
+import './Tanks.css'
 
 export default function SelectorButton({att, active, type, handleClick}) {
   return (
