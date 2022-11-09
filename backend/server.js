@@ -83,7 +83,6 @@ app.get("/config", (req, res) => {
 app.post('/newproducts/add', async (req,res) => {
 
   const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants,images,colors} = req.body
-
   try{
 
     const result = await cloudinary.uploader.upload(image, {
@@ -130,7 +129,8 @@ app.post('/newproducts/add', async (req,res) => {
       details,
       variants,
       images:imagesBuffer,
-      colors
+      colors,
+  
     })
   
     res.status(201).json({

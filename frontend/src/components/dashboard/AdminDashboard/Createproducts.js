@@ -111,6 +111,7 @@ const deletecolor = (i) => {
         setvariants([{packaging:'', price:''}])
         setimages([])
         setcolors([{colors:''}])
+       
         toast.success('product added successfully')
         setTimeout(function() {
           window.location.reload();

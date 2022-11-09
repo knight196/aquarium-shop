@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
 var addProductSchema = new mongoose.Schema(
     {
        slug:{type:String,required:true},
-       title:{type:String,required:true},
+       title:{type:String},
        category:{type:String,required:true},
        description:{type:String},
        Company:{type:String},

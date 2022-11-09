@@ -113,7 +113,20 @@ export default function Home() {
                         <img style={{width:'300px',height:'300px'}} src={filterproduct.image.url} alt="" />
                         <p key={filterproduct.slug}>{filterproduct.title}</p>
                         <p>£ {filterproduct.price}</p>
-                        <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/products/slug/${filterproduct.slug}`}>View More</Link></button>
+                        {filterproduct.category === 'Tanks' ? (
+                            <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/tanks/slug/${filterproduct.slug}`}>View More</Link></button>
+                            ):(
+                            filterproduct.category === 'plants' ?
+                            <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/plants/slug/${filterproduct.slug}`}>View More</Link></button>
+                            
+                            :
+                            <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/products/slug/${filterproduct.slug}`}>View More</Link></button>
+                           
+
+                            )
+                            }
+
+                      
                            </div> 
                 )
             })}
