@@ -101,7 +101,7 @@ console.log('client secret is', clientSecret)
                           <h6>Order History</h6>
            {basket.map(item => (
                             <CheckoutProduct
-                            id={item.id}
+                            slug={item.slug}
                             title={item.title}
                             image={item.image}
                             price={item.price}
