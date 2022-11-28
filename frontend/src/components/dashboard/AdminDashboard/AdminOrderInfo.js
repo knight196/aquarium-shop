@@ -202,7 +202,7 @@ setTimeout(function(){
     </div>
 
     <div>
-{orders.paymentCreate.map((item) => (
+{orders.paymentCreate?.map((item) => (
   <>
   <hr></hr>
   <small style={{fontWeight:'bold'}}>Payment Info</small>
