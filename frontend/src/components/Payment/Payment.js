@@ -78,21 +78,21 @@ function Payment() {
   const stripe = useStripe();
 
 
-  // useEffect(() => {
-  //   const fetchClientSecret = async () => {
-  //     const data = await axios.post('/payment/create', {
-  //       amount: getBasketTotal(basket)
-  //     })
-  //     setClientSecret(data.data.clientSecret)
-  //   }
-  //   fetchClientSecret()
-  //   console.log('client secret is ', clientSecret)
-  // })
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const data = await axios.post('/payment/create', {
+        amount: getBasketTotal(basket)
+      })
+      setClientSecret(data.data.clientSecret)
+    }
+    fetchClientSecret()
+    console.log('client secret is ', clientSecret)
+  })
 
   const handlePayment = async (e) => {
       e.preventDefault();
 
-     const PaymentMethod = await stripe.confirmCardPayment(clientSecret, {
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method:{
           card:elements.getElement(CardElement)
         }
@@ -104,7 +104,6 @@ function Payment() {
               email: user?.email,
               username:user?.username,
               address: address,
-              payment:PaymentMethod.PaymentMethod
             });
       
             dispatch({
