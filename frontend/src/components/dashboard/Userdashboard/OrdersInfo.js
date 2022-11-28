@@ -192,6 +192,19 @@ export default function OrdersInfo() {
   <p>£{orders.amount}</p>
 </div>
 
+<div>
+{orders.paymentCreate.map((item) => (
+  <>
+  <hr></hr>
+  <small style={{fontWeight:'bold'}}>Payment Info</small>
+  <div className="d-flex justify-content-between align-items-center">
+  <small>Card: <i className={`h6 fa-brands fa-cc-${item.card.brand}`}></i></small>
+  <small>Ending in: {item.card.last4}</small>
+  </div>
+  </>
+))}
+</div>
+
 <hr></hr>
 
 

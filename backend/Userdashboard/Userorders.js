@@ -55,11 +55,11 @@ router.post("/add", async(req, res) => {
   const email = req.body.email;
   const username = req.body.username
   const address = req.body.address;
-  const paymentMethod = req.body.paymentMethod
+  const paymentCreate = req.body.paymentCreate
 
   const orderDetail = {
     products: products,
-    paymentMethod,
+    paymentCreate,
     amount: amount,
     address: address,
     email: email,

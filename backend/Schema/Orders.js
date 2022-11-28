@@ -7,7 +7,7 @@ const OrderSchema = mongoose.Schema(
   products: Array,
   email: String,
   address: Object,
-  paymentMethod:Array,
+  paymentCreate:Array,
   Cancel:{type:Boolean,default:false},
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},

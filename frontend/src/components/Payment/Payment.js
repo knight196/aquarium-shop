@@ -92,11 +92,16 @@ function Payment() {
   const handlePayment = async (e) => {
       e.preventDefault();
 
-      await stripe.confirmCardPayment(clientSecret, {
+ await stripe.confirmCardPayment(clientSecret, {
         payment_method:{
           card:elements.getElement(CardElement)
         }
       })
+
+  const paymentCreate = await stripe.createPaymentMethod({
+    type:'card',
+    card:elements.getElement('card')
+  })
 
            axios.post("/orders/add", {
               basket: basket,
@@ -104,6 +109,7 @@ function Payment() {
               email: user?.email,
               username:user?.username,
               address: address,
+              paymentCreate:paymentCreate.paymentMethod
             });
       
             dispatch({

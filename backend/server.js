@@ -58,15 +58,16 @@ app.get("/config", (req, res) => {
   });
 
   app.post("/payment/create", async (req, res) => {
-    const total = req.body.amount;
+    const {amount} = req.body
     try {
-      const paymentIntent = await stripe.paymentIntents.create({
+
+      const paymentIntent = await stripe.paymentIntents.create({    
         currency: "GBP",
-        amount: total * 100,
+        amount: amount * 100,
       });
   
       // Send publishable key and PaymentIntent details to client
-      res.send({clientSecret: paymentIntent.client_secret});
+      res.json({clientSecret: paymentIntent.client_secret});
     } catch (e) {
       return res.status(400).send({
         error: {
