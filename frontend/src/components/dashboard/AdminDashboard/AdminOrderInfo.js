@@ -198,7 +198,7 @@ setTimeout(function(){
     
     <div className="d-flex justify-content-between align-items-center">
       <h5>TotalPrice</h5>
-      <p>£{orders.price}</p>
+      <p>£{orders.amount}</p>
     </div>
     
     <hr></hr>

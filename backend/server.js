@@ -57,19 +57,16 @@ app.get("/config", (req, res) => {
     });
   });
 
-  app.post("/create-payment-intent", async (req, res) => {
+  app.post("/payment/create", async (req, res) => {
     const total = req.body.amount;
     try {
       const paymentIntent = await stripe.paymentIntents.create({
         currency: "GBP",
-        amount: total*100,
-        payment_method_types:['card','klarna']
+        amount: total * 100,
       });
   
       // Send publishable key and PaymentIntent details to client
-      res.send({
-        clientSecret: paymentIntent.client_secret,
-      });
+      res.send({clientSecret: paymentIntent.client_secret});
     } catch (e) {
       return res.status(400).send({
         error: {

@@ -73,7 +73,14 @@ import Contact from '../components/Contact/Contact.js'
 import Usercontactmsg from '../components/dashboard/Userdashboard/Usercontactmsg'
 import AdminContactmsg from '../components/dashboard/AdminDashboard/AdminContactmsg'
 
+import {Elements} from '@stripe/react-stripe-js'
+import {loadStripe} from '@stripe/stripe-js'
+
 export default function RootChange() {
+
+  const stripePromise = loadStripe('pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37')
+
+
 
   return (
     <div>
@@ -152,7 +159,7 @@ export default function RootChange() {
            <Route  path="/orders/addcontactmsg/_id/:id" element={<Usercontactmsg/>}/>
            <Route  path="/api/addcontactmsg/_id/:id" element={<AdminContactmsg/>}/>
            <Route  path="/api/orders/_id/:id" element={<AdminOrderInfo/>}/>
-           <Route  path="/payment" element={<Payment/>}/>
+           <Route  path="/payment" element={<Elements stripe={stripePromise}><Payment/></Elements>}/>
            <Route  path="/Contact" element={<Contact/>}/>
         
         </Routes>

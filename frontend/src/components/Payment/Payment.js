@@ -5,38 +5,45 @@ import CheckoutProduct from "../CheckoutProduct/CheckoutProduct";
 import { Link,useNavigate } from "react-router-dom";
 import { getBasketTotal } from '../../reducer'
 import CheckoutForm from './Checkoutform'
+import {toast} from 'react-toastify'
 
-import { loadStripe } from "@stripe/stripe-js";
-import {useElements,CardElement,Elements,useStripe} from '@stripe/react-stripe-js'
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import {CardElement,useElements,useStripe} from '@stripe/react-stripe-js'
+import axios from 'axios'
 
 function Payment() {
     const [{address, basket,user}, dispatch] = useStateValue();
 
-    const [stripePromise, setStripePromise] = useState(null);
+    // const [stripePromise, setStripePromise] = useState(null);
     const [clientSecret, setClientSecret] = useState("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("/config").then(async (r) => {
-      const { publishableKey } = await r.json();
-      setStripePromise(loadStripe(publishableKey));
-    });
-  }, []);
+  // // useEffect(() => {
+  // //   fetch("/config").then(async (r) => {
+  // //     const { publishableKey } = await r.json();
+  // //     setStripePromise(loadStripe(publishableKey));
+  // //   });
+  // // }, []);
 
 
-  useEffect(() => {
-const fecthClientSecret = async () => {
-  const data = await axios.post("/create-payment-intent", {
-    amount: getBasketTotal(basket)
-  })
-  setClientSecret(data.data.clientSecret)
-}
-fecthClientSecret();
-console.log('client secret is', clientSecret)
-  },[])
+  // useEffect(() => {
+  //   // const fecthClientSecret = async () => {
+  //   //   const data = await axios.post("/create-payment-intent", {
+  //   //     amount: getBasketTotal(basket)
+  //   //   })
+  //   //   setClientSecret(data.data.clientSecret)
+  //   // }
+  //   // fecthClientSecret();
+
+  //   fetch('/api/payment', {
+  //     method:'POST',
+  //     body:JSON.stringify({})
+  //   }).then(async (result) => {
+  //     var {clientSecret} = await result.json()
+  //     console.log('client secret is', clientSecret)
+  //   })
+  //     },[])
+    
 
 
   // const handlePayment = async (e) => {
@@ -67,6 +74,50 @@ console.log('client secret is', clientSecret)
   //   .catch((err) => console.warn(err));
   // }
 
+  const elements = useElements();
+  const stripe = useStripe();
+
+
+  // useEffect(() => {
+  //   const fetchClientSecret = async () => {
+  //     const data = await axios.post('/payment/create', {
+  //       amount: getBasketTotal(basket)
+  //     })
+  //     setClientSecret(data.data.clientSecret)
+  //   }
+  //   fetchClientSecret()
+  //   console.log('client secret is ', clientSecret)
+  // })
+
+  const handlePayment = async (e) => {
+      e.preventDefault();
+
+     const PaymentMethod = await stripe.confirmCardPayment(clientSecret, {
+        payment_method:{
+          card:elements.getElement(CardElement)
+        }
+      })
+
+           axios.post("/orders/add", {
+              basket: basket,
+              amount: getBasketTotal(basket),
+              email: user?.email,
+              username:user?.username,
+              address: address,
+              payment:PaymentMethod.PaymentMethod
+            });
+      
+            dispatch({
+              type: "EMPTY_BASKET",
+            });
+            navigate("/");
+            toast.success('Payment successful')
+            window.localStorage.removeItem('basket')
+
+
+        
+          .catch((err) => console.warn(err));
+  }
     return (
         <>
 
@@ -139,14 +190,14 @@ console.log('client secret is', clientSecret)
 
             <div className="text-center ">
 
-            {clientSecret && stripePromise && (
+            {/* {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <CheckoutForm />
         </Elements>
-      )}
+      )} */}
 
-{/* <CardElement/>
-<button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button> */}
+<CardElement/>
+<button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
 
 </div>
         

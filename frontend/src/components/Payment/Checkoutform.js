@@ -1,4 +1,4 @@
-import { PaymentElement } from "@stripe/react-stripe-js";
+import { CardElement, Elements, PaymentElement } from "@stripe/react-stripe-js";
 import { useState,useEffect } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useStateValue } from "../../StateProvider";
@@ -23,19 +23,20 @@ export default function Checkoutform() {
     
   const handlePayment = async (e) => {
     e.preventDefault();
-    await stripe.confirmPayment({
+   const paymentMethod = await stripe.confirmPayment({
       elements,
       confirmParams:{
         return_url:'/'
       }
     })
-    .then((result) => {
+   
      axios.post("/orders/add", {
         basket: basket,
-        price: getBasketTotal(basket),
+        amount: getBasketTotal(basket),
         email: user?.email,
         username:user?.username,
         address: address,
+        payment:paymentMethod
       });
 
       dispatch({
@@ -46,7 +47,7 @@ export default function Checkoutform() {
 
      window.localStorage.removeItem('basket')
 
-    })
+  
     .catch((err) => console.warn(err));
   }
   
