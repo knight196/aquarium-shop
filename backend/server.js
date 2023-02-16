@@ -12,7 +12,6 @@ const Admindashboard = require('./Admindashboard/AdminOrders')
 const cloudinary = require('cloudinary').v2
 
 
-
 const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
 
 
@@ -64,6 +63,7 @@ app.get("/config", (req, res) => {
       const paymentIntent = await stripe.paymentIntents.create({    
         currency: "GBP",
         amount: amount * 100,
+      payment_method_types:['card']
       });
   
       // Send publishable key and PaymentIntent details to client
@@ -142,10 +142,7 @@ app.post('/newproducts/add', async (req,res) => {
 
 })
 
-
-  
     
-
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
 

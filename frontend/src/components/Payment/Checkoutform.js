@@ -13,7 +13,7 @@ export default function Checkoutform() {
     const elements = useElements();
     const stripe = useStripe();
   
-  
+  const [clientSecret,setClientSecret] = useState('')
 
     const [{address, basket,user}, dispatch] = useStateValue();
 
@@ -24,7 +24,7 @@ export default function Checkoutform() {
   const handlePayment = async (e) => {
     e.preventDefault();
    const paymentMethod = await stripe.confirmPayment({
-      elements,
+     elements,
       confirmParams:{
         return_url:'/'
       }

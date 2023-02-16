@@ -1,49 +1,36 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Payment.css';
 import { useStateValue } from "../../StateProvider";
 import CheckoutProduct from "../CheckoutProduct/CheckoutProduct";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getBasketTotal } from '../../reducer'
 import CheckoutForm from './Checkoutform'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { loadStripe } from '@stripe/stripe-js'
+import emailjs from '@emailjs/browser';
 
-import {CardElement,useElements,useStripe} from '@stripe/react-stripe-js'
+import { CardElement, useElements, Elements, useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios'
 
 function Payment() {
-    const [{address, basket,user}, dispatch] = useStateValue();
+  const [{ address, basket, user }, dispatch] = useStateValue();
 
-    // const [stripePromise, setStripePromise] = useState(null);
-    const [clientSecret, setClientSecret] = useState("");
+  console.log(basket)
+
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState("");
 
   const navigate = useNavigate();
 
-  // // useEffect(() => {
-  // //   fetch("/config").then(async (r) => {
-  // //     const { publishableKey } = await r.json();
-  // //     setStripePromise(loadStripe(publishableKey));
-  // //   });
-  // // }, []);
+  useEffect(() => {
+    fetch("/config").then(async (r) => {
+      const { publishableKey } = await r.json();
+      setStripePromise(loadStripe(publishableKey));
+    });
+  }, []);
 
 
-  // useEffect(() => {
-  //   // const fecthClientSecret = async () => {
-  //   //   const data = await axios.post("/create-payment-intent", {
-  //   //     amount: getBasketTotal(basket)
-  //   //   })
-  //   //   setClientSecret(data.data.clientSecret)
-  //   // }
-  //   // fecthClientSecret();
 
-  //   fetch('/api/payment', {
-  //     method:'POST',
-  //     body:JSON.stringify({})
-  //   }).then(async (result) => {
-  //     var {clientSecret} = await result.json()
-  //     console.log('client secret is', clientSecret)
-  //   })
-  //     },[])
-    
 
 
   // const handlePayment = async (e) => {
@@ -87,113 +74,119 @@ function Payment() {
     }
     fetchClientSecret()
     console.log('client secret is ', clientSecret)
-  })
+  }, [])
+
 
   const handlePayment = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
- await stripe.confirmCardPayment(clientSecret, {
-        payment_method:{
-          card:elements.getElement(CardElement)
-        }
-      })
+    await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement)
+      }
+    })
 
-  const paymentCreate = await stripe.createPaymentMethod({
-    type:'card',
-    card:elements.getElement('card')
-  })
+    const paymentCreate = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement('card')
+    })
 
-           axios.post("/orders/add", {
-              basket: basket,
-              amount: getBasketTotal(basket),
-              email: user?.email,
-              username:user?.username,
-              address: address,
-              paymentCreate:paymentCreate.paymentMethod
-            });
-      
-            dispatch({
-              type: "EMPTY_BASKET",
-            });
-            navigate("/");
-            toast.success('Payment successful')
-            window.localStorage.removeItem('basket')
+    axios.post("/orders/add", {
+      basket: basket,
+      amount: getBasketTotal(basket),
+      email: user?.email,
+      username: user?.username,
+      address: address,
+      paymentCreate: paymentCreate.paymentMethod
+    });
 
 
-        
-          .catch((err) => console.warn(err));
+
+    dispatch({
+      type: "EMPTY_BASKET",
+    });
+    navigate("/");
+    toast.success('Payment successful')
+    window.localStorage.removeItem('basket')
+
+
+
+      .catch((err) => console.warn(err));
+
   }
-    return (
-        <>
 
-        {basket.length === 0 && (window.location.href="/") &&  (window.localStorage.removeItem('basket'))}
-        
-                <h2 className="text-center">Checkout Form</h2>
-        
-        <hr></hr>
 
-            <div className="container-fluid checkout-form py-4">
-        
-                <div className="billing-address h-100 bg-white rounded-1 bg-opacity-50 px-2">
+  return (
+    <>
 
-      <div className="px-1 mt-2 address-input">
-        <h5>Shipping Address</h5>
-        <hr></hr>
-        <p><span>FullName:</span> {user?.username}</p>
-        <p><span>Street:</span> {address.street}</p>
-        <p><span>City:</span> {address.city}</p>
-        <p><span>PostCode:</span> {address.postcode}</p>
-        <p><span>Email:</span> {!user ? 'Guest@this.com' : user?.email}</p>
-        <p><span>PhoneNumber:</span> {address.phone}</p>
-      </div>
+      {basket.length === 0 && (window.location.href = "/") && (window.localStorage.removeItem('basket'))}
+
+      <h2 className="text-center">Checkout Form</h2>
 
       <hr></hr>
 
+      <div className="container-fluid checkout-form py-4">
+
+        <div className="billing-address h-100 bg-white rounded-1 bg-opacity-50 px-2">
+
+          <div className="px-1 mt-2 address-input">
+            <h5>Shipping Address</h5>
+            <hr></hr>
+            <p><span>FullName:</span> {user?.username}</p>
+            <p><span>Street:</span> {address.street}</p>
+            <p><span>City:</span> {address.city}</p>
+            <p><span>PostCode:</span> {address.postcode}</p>
+            <p><span>Email:</span> {!user ? 'Guest@this.com' : user?.email}</p>
+            <p><span>PhoneNumber:</span> {address.phone}</p>
+          </div>
+
+          <hr></hr>
 
 
-                        <div className="mt-2">
-        
-        
-                          <h6>Order History</h6>
-           {basket.map(item => (
-                            <CheckoutProduct
-                            slug={item.slug}
-                            title={item.title}
-                            image={item.image}
-                            price={item.price}
-                            packaging={item.packaging}
-                            color={item.color}
-                            />
-                        ))}
+
+          <div className="mt-2">
+
+
+            <h6>Order History</h6>
+            {basket.map(item => (
+              <CheckoutProduct
+                slug={item.slug}
+                title={item.title}
+                image={item.image}
+                price={item.price}
+                packaging={item.packaging}
+                color={item.color}
+              />
+            ))}
+          </div>
         </div>
-                </div>
-        
-        
-        
-        
-                <div className="cart-list bg-white bg-opacity-50 h-50 px-2 border-2 rounded-1">
-        
-                    <div className="d-flex h5 my-2 pb-3 justify-content-between px-2">
-                        <span>Your Cart</span>
-                <span>{basket.length === 0 ? "" : basket.length}</span>
-                    </div>
-                        <hr></hr>
-        
-                    <div className="text-center d-flex justify-content-between px-2 align-items-center">
-          <p>Subtotal</p> 
-        <p>£{getBasketTotal(basket).toFixed(2)}</p>
-          </div>
-        <hr/>
-           
-        
-        <div className="text-center d-flex justify-content-between px-2 align-items-center">
-          <p>Total Price</p> 
-          <p>£{getBasketTotal(basket).toFixed(2)}</p>
-          </div>
-        
-            <hr/>
 
-            <div className="text-center ">
+
+
+
+        <div className="cart-list bg-white bg-opacity-50 h-50 px-2 border-2 rounded-1">
+
+          <div className="d-flex h5 my-2 pb-3 justify-content-between px-2">
+            <span>Your Cart</span>
+            <span>{basket.length === 0 ? "" : basket.length}</span>
+          </div>
+          <hr></hr>
+
+          <div className="text-center d-flex justify-content-between px-2 align-items-center">
+            <p>Subtotal</p>
+            <p>£{getBasketTotal(basket).toFixed(2)}</p>
+          </div>
+          <hr />
+
+
+          <div className="text-center d-flex justify-content-between px-2 align-items-center">
+            <p>Total Price</p>
+            <p>£{getBasketTotal(basket).toFixed(2)}</p>
+          </div>
+
+          <hr />
+
+          <div className="text-center ">
 
             {/* {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
@@ -201,19 +194,18 @@ function Payment() {
         </Elements>
       )} */}
 
-<CardElement/>
-<button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
+            <CardElement />
+            <button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
+        
+          </div>
 
-</div>
-        
-        
-            </div>
-        
-                    </div>
-            </>
-    )
+
+        </div>
+
+      </div>
+    </>
+  )
 }
 
 export default Payment
 
-                       

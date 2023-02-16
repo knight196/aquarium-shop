@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+
+<style>
+
+.order-container{
+    border:1px solid grey;
+    padding:10px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="bg-primary bg-opacity-50 p-2" id="Order-container"></div>
+<div id="Order-address" class="bg-secondary bg-opacity-50"></div>
+    
+<script>
+
+const orderContainer = document.getElementById('Order-container');
+const orderAddress = document.getElementById('Order-address');
+
+const orderData  = async () => {
+   await axios.post('http://localhost:5000/orders/get', {email:'test222@gmail.com'})
+    .then(res=> {
+    orderDataAll(res.data)
+    customerAddress(res.data)
+    })
+}
+orderData()
+
+
+function orderDataAll(data){
+
+console.log(data)
+
+    orderContainer.innerHTML = ""
+
+    data.map(item => {
+
+    const orderContainerDiv = document.createElement('Div')
+
+    orderContainerDiv.classList.add('order-container')
+
+    orderContainerDiv.innerHTML = `
+    <p>${item._id}</p>
+    
+    ${item.products?.map(item => {
+        return  `
+        <div class="p-2 d-flex align-items-center justify-content-between">
+            <div>
+                <p>${item.title}</p>
+                <img style="width:100px;height:100px;" src=${item.image.url} alt=${item.title}/>
+                </div>
+
+                ${!item.color ? `` : `<p>Color:${item.color}</p>`}
+                ${!item.packaging ? `` : `<p>Color:${item.packaging}</p>`}
+
+        <p>Price: £${item.price}</p>
+            
+        
+        </div>
+
+        `
+        
+    })}
+
+    <p>TotalPrice: £${item.amount}</p>
+    
+
+    `
+
+    orderContainer.appendChild(orderContainerDiv)
+
+    })
+
+}
+
+function customerAddress(data){
+
+orderAddress.innerHTML = ""
+
+data.slice(0,1).map(item => {
+
+const orderContainerDiv = document.createElement("Div")
+
+orderContainerDiv.innerHTML = `
+<div class="p-2">
+    <h5>Order Address:</h5>
+    <hr>
+    <p>Name: ${item.username}</p>
+<p>StreetName: ${item.address.street}</p>
+<p>City: ${item.address.city}</p>
+<p>PostCode: ${item.address.postcode}</p>
+</div>
+`
+
+orderAddress.appendChild(orderContainerDiv)
+
+})
+
+}
+
+
+
+
+</script>
+
+</body>
+</html>

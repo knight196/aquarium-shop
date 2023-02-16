@@ -3,54 +3,12 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-
-export default function Background() {
-
-    const [addedproducts,setaddedproducts] = useState([])
-
-    const [filteredlist,setfilteredlist] = useState([])
-
-    const getadded = async () => {
-      const res = await axios.get('/api/products')
-      setfilteredlist(res.data.products)
-    }
-    const filteredata = async () => {
-      const res = await axios.get('/api/newproducts')
-      setaddedproducts(res.data.newproducts)
-    }
-    
-    useEffect(() => {
-      getadded();
-      filteredata();
-    },[])
-
-       
-    const [selectedBrand, setSelectedBrand] = useState("");
-
-const filterByBrand = (filteredData) => {
-  // Avoid filter for empty string
-  if (!selectedBrand) {
-    return filteredData;
-  }
-
-  const filteredCars = filteredData.filter(
-    (car) => car.difficulty.split(" ").indexOf(selectedBrand) !== -1
-  );
-  return filteredCars;
-};
-
-// Update seletedBrand state
-const handleBrandChange = (event) => {
-  setSelectedBrand(event.target.value);
-};
-
-useEffect(() => {
-  var filteredData = filterByBrand(addedproducts);
-  setfilteredlist(filteredData);
-}, [selectedBrand]);
+import UpdatedComponent from '../../HOC'
 
 
+function Background({selectedBrand,handleBrandChange,filteredlist}) {
 
+  
   return (
     <>
 
@@ -83,3 +41,6 @@ return(
 </>
   )
 }
+
+
+export default UpdatedComponent(Background)

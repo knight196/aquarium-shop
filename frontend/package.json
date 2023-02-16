@@ -1,8 +1,10 @@
 {
   "name": "frontend",
+
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@stripe/react-stripe-js": "^1.13.0",
     "@stripe/stripe-js": "^1.41.0",
     "@testing-library/jest-dom": "^5.16.5",
