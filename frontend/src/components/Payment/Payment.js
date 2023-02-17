@@ -1,21 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef,useMemo } from 'react';
 import './Payment.css';
 import { useStateValue } from "../../StateProvider";
 import CheckoutProduct from "../CheckoutProduct/CheckoutProduct";
 import { Link, useNavigate } from "react-router-dom";
 import { getBasketTotal } from '../../reducer'
-import CheckoutForm from './Checkoutform'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import emailjs from '@emailjs/browser';
 
-import { CardElement, useElements, Elements, useStripe } from '@stripe/react-stripe-js'
+
+import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
 import axios from 'axios'
 
 function Payment() {
   const [{ address, basket, user }, dispatch] = useStateValue();
-
-  console.log(basket)
 
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -67,7 +65,7 @@ function Payment() {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const data = await axios.post('/payment/create', {
+      const data = await axios.post('/create-payment-intent', {
         amount: getBasketTotal(basket)
       })
       setClientSecret(data.data.clientSecret)
@@ -80,15 +78,15 @@ function Payment() {
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    await stripe.confirmCardPayment(clientSecret, {
+    await stripe.confirmCardPayment(clientSecret,{
       payment_method: {
-        card: elements.getElement(CardElement)
-      }
+        card:elements.getElement(CardNumberElement), 
+    }  
     })
 
     const paymentCreate = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement('card')
+      card: elements.getElement(CardNumberElement),
     })
 
     axios.post("/orders/add", {
@@ -188,15 +186,31 @@ function Payment() {
 
           <div className="text-center ">
 
-            {/* {clientSecret && stripePromise && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
-        </Elements>
-      )} */}
 
-            <CardElement />
+  
+            {/* {stripePromise && clientSecret && (
+              <Elements stripe={stripePromise} options={{clientSecret}}>
+              <form id="payment-form" onSubmit={handlePayment}>
+    <PaymentElement id="payment-element"/>
+    <button className="p-2 bg-primary btn text-white border-0 m-2 rounded-1">Pay Now</button>
+  </form>
+              </Elements>
+    )} */}
+<div className="bg-white bg-opacity-50 p-2">
+
+<CardNumberElement className="bg-white p-2"/>
+<br></br>
+<div className="d-flex justify-content-between">
+            <CardExpiryElement className="bg-white p-2 w-50"/> 
+            <CardCvcElement className="bg-white p-2 w-50"/>
+</div>
+         
+
+</div>
+
+            {/* <CardElement /> */}
             <button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
-        
+            
           </div>
 
 
