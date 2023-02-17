@@ -221,7 +221,9 @@ function Payment() {
 </div>
 
             {/* <CardElement /> */}
+            <div className="text-center">
             <button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
+            </div>
             
           </div>
 
