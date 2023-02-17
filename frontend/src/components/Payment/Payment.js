@@ -86,6 +86,7 @@ function Payment() {
 
     const paymentCreate = await stripe.createPaymentMethod({
       type: 'card',
+
       card: elements.getElement(CardNumberElement),
     })
 
@@ -112,6 +113,8 @@ function Payment() {
       .catch((err) => console.warn(err));
 
   }
+
+  
 
 
   return (
@@ -184,7 +187,7 @@ function Payment() {
 
           <hr />
 
-          <div className="text-center ">
+          <div>
 
 
   
@@ -198,11 +201,20 @@ function Payment() {
     )} */}
 <div className="bg-white bg-opacity-50 p-2">
 
-<CardNumberElement className="bg-white p-2"/>
-<br></br>
+<small>Card Number</small>
+<CardNumberElement className="bg-white rounded-1 p-2"/>
+
 <div className="d-flex justify-content-between">
-            <CardExpiryElement className="bg-white p-2 w-50"/> 
-            <CardCvcElement className="bg-white p-2 w-50"/>
+  <div className="w-50">
+
+  <small>Expiry</small>
+            <CardExpiryElement className="bg-white p-2 rounded-1"/> 
+  </div>
+    
+            <div style={{marginLeft:'10px'}} className="w-50">
+            <small>CVC</small>
+            <CardCvcElement className="bg-white p-2 rounded-1"/>
+            </div>
 </div>
          
 
