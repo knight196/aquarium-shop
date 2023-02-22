@@ -16,12 +16,9 @@ const [orders,setOrders] = useState([]);
     const res = await axios.post('/orders/get', {email:user.email})
     setOrders(res.data)
   }
-
   useEffect(() => {
   getorders();
 },[])
-
-
 
   return (
     <div>
@@ -34,6 +31,7 @@ const [orders,setOrders] = useState([]);
      
      <div>
        <h5>Product Detail</h5>
+     
      {order.products.slice(0,1).map((item) => (
 
        <Link to={`/orders/get/_id/${order._id}`}>

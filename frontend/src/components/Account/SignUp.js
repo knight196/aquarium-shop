@@ -4,7 +4,9 @@ import isEmail from 'validator/lib/isEmail';
 import equals from 'validator/lib/equals';
 import { showErrorMsg, showSuccessMsg } from './message';
 import { Link, useNavigate } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import axios from 'axios'
+
 const Signup = () => {
 	let navigate = useNavigate();
 
@@ -89,8 +91,22 @@ const Signup = () => {
 					});
 				});
 		}
-	};
 
+		const confirmEmail = {
+			to:email,
+			from:'Aquature@gmail.com',
+			subject:'Account Creation Success',
+			message:'Your account has been created successfully.Thank you for joining with us'
+		}
+	
+		emailjs.send('service_up8w1d8','template_04q541r',confirmEmail,'7m-wDYaixpjQ84rRb')
+		.then((result) => {
+		  console.log(result.text)
+		}, (err) => {
+		  console.log(err.text)
+		})
+	};
+	
 	
 
 	/****************************
@@ -183,7 +199,7 @@ const Signup = () => {
 			</div>
 			{/* already have account */}
 			<p className='text-center text-white'>
-				Have an account? <Link to='/login'>Log In</Link>
+				Already Have an account? <Link to='/login'>Log In</Link>
 			</p>
 		</form>
 				

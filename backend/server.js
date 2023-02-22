@@ -10,6 +10,8 @@ const path = require('path')
 const Userdashboard = require('./Userdashboard/Userorders')
 const Admindashboard = require('./Admindashboard/AdminOrders')
 const cloudinary = require('cloudinary').v2
+const nodemailer = require('nodemailer')
+const hbs = require('nodemailer-express-handlebars')
 
 
 const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
@@ -56,7 +58,7 @@ app.get("/config", (req, res) => {
     });
   });
 
-  app.post("/create-payment-intent", async (req, res) => {
+  app.post("/create-payment", async (req, res) => {
     const {amount} = req.body
     try {
 
@@ -139,6 +141,54 @@ app.post('/newproducts/add', async (req,res) => {
     console.log(err)
   }
 
+
+})
+
+app.post('/api/sendemail', async (req,res) => {
+
+const {email,result,totalAmount,address,paymentCreate}  = req.body;
+
+
+try{
+
+  var transporter = nodemailer.createTransport({
+    service:'outlook',
+  auth : {  
+    user:'Aquature@outlook.com',
+    pass:'Aqua1234@'
+  }
+})
+
+const handlebarOptions = {
+  viewEngine:{
+    extName: '.handlebars',
+    partialDir: path.resolve('./views'),
+    defaultLayout:false
+  },
+  viewPath:path.resolve('./views'),
+  extName:'.handlebars'
+}
+
+transporter.use('compile', hbs(handlebarOptions))
+
+var mailOptions = {
+  from:'Aquature@outlook.com',
+  to:email,
+  subject:'Order confirmation',
+  template:'email',
+  context:{
+    items:result,
+    totalAmount:totalAmount,
+    address:address,
+    paymentCreate:paymentCreate,
+  }
+}
+
+await transporter.sendMail(mailOptions)
+res.status(200).json({success:true,message:'Email sent'})
+}catch(err){
+res.status(500).json(err.message)
+}
 
 })
 

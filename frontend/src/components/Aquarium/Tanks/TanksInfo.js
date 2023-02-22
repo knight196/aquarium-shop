@@ -16,10 +16,11 @@ function TanksInfo(props) {
 
 let navigate = useNavigate();
 
-    useEffect(()=>{
-        setProduct(props.detail)
-      }, [props.detail])
-      
+useEffect(()=>{
+  setProduct(props.detail)
+}, [props.detail])
+
+
 const [selectedcolor,setselectedcolor] = useState('')
 
 
@@ -30,8 +31,6 @@ const handleOnClick = (type,att) =>{
     }
     return
 }
-
-
 
 const colors = Product.colors?.map(item => item.colors)
     .filter((v, i, a) => a.indexOf(v) === i)
@@ -71,6 +70,9 @@ const toggleTab = (index) => {
 }
 
 
+
+
+
 return (
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
   
@@ -101,7 +103,7 @@ return (
     <hr></hr>
 
     <div className="btn-variants">
-            {colors}
+        {colors}
           </div>
 
 

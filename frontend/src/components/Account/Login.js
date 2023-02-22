@@ -150,7 +150,7 @@ export default function Login() {
 		</div>
 		{/* already have account */}
 		<p className='text-center text-white'>
-			Have an account? <Link to='/signup'>Signup</Link>
+			Don't Have an account? <Link to='/signup'>Signup</Link>
 		</p>
 	</form>
 		</div>

@@ -6,14 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { getBasketTotal } from '../../reducer'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
-import emailjs from '@emailjs/browser';
-
 
 import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
 import axios from 'axios'
 
 function Payment() {
   const [{ address, basket, user }, dispatch] = useStateValue();
+
+console.log(basket)
 
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -65,7 +65,7 @@ function Payment() {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const data = await axios.post('/create-payment-intent', {
+      const data = await axios.post('/create-payment', {
         amount: getBasketTotal(basket)
       })
       setClientSecret(data.data.clientSecret)
@@ -73,20 +73,18 @@ function Payment() {
     fetchClientSecret()
     console.log('client secret is ', clientSecret)
   }, [])
-
-
+  
   const handlePayment = async (e) => {
     e.preventDefault();
 
     await stripe.confirmCardPayment(clientSecret,{
       payment_method: {
         card:elements.getElement(CardNumberElement), 
-    }  
+      }  
     })
 
     const paymentCreate = await stripe.createPaymentMethod({
       type: 'card',
-
       card: elements.getElement(CardNumberElement),
     })
 
@@ -100,23 +98,32 @@ function Payment() {
     });
 
 
+    // const result = basket.reduce((a,b) => Object.assign(a,b))
 
+    axios.post('/api/sendemail', {
+      result:basket,
+      email:user?.email,
+      totalAmount:getBasketTotal(basket),
+      address:address,
+      paymentCreate:paymentCreate.paymentMethod
+    })
+    
+
+    
     dispatch({
       type: "EMPTY_BASKET",
     });
-    navigate("/");
+    navigate('/')
     toast.success('Payment successful')
     window.localStorage.removeItem('basket')
 
-
-
       .catch((err) => console.warn(err));
 
-  }
 
-  
+    }
 
-
+    
+    
   return (
     <>
 
@@ -201,6 +208,7 @@ function Payment() {
     )} */}
 <div className="bg-white bg-opacity-50 p-2">
 
+
 <small>Card Number</small>
 <CardNumberElement className="bg-white rounded-1 p-2"/>
 
@@ -220,9 +228,10 @@ function Payment() {
 
 </div>
 
+
             {/* <CardElement /> */}
-            <div className="text-center">
-            <button className="p-2 m-2 btn border-0 rounded-1 bg-warning" onClick={handlePayment}>Confirm Payment</button>
+            <div className="text-center ">
+            <button className="bg-warning px-2 py-1 m-2 rounded-1 border-0" onClick={handlePayment}>Confirm Payment</button>
             </div>
             
           </div>
