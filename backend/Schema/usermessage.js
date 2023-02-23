@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const UserMessage = new mongoose.Schema(
     {
-        order_id: String,
+        orderId: String,
         message: String,
         message_id: String,
         replymsg: String,

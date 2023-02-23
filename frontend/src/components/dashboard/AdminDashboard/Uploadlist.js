@@ -30,7 +30,6 @@ const deletelist = async (id) => {
 
 useEffect(()=> {
 fetchData()
-deletelist()
 filteredata();
 },[])
 
@@ -70,13 +69,14 @@ return (
     <option value="">All</option>
     <option value="Nano-tanks">Nano-tanks</option>
     <option value="Tanks">Tanks</option>
+    <option value="Soil">Soil</option>
     <option value="Lighting">Lighting</option>
     <option value="Filter">Filter</option>
-    <option value="heater">Heater</option>
+    <option value="Heater">Heater</option>
     <option value="fertiliser">Fertiliser</option>
     <option value="hardscaping">Hardscaping</option>
     <option value="other">Other</option>
-    <option value="plants">Plants</option>
+    <option value="Plants">Plants</option>
 
   </select>
       {filteredlist.map((item)=> (

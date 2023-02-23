@@ -60,7 +60,9 @@ padding:20px;
 <div class="order-body">
 
   <h1 class="company-logo">Aquature</h1>
-
+  <hr>
+<h1 style="text-align:center;">OrderId: {{orderId}}</h1>
+<hr>
 {{#each items}}
     <div class="items">
 
@@ -115,7 +117,7 @@ padding:20px;
     <div>
 
 
-    <h5>Customer's Address:</h5>
+    <h5>Ship At:</h5>
 <p>StreetName:{{address.street}}</p>
 <p>City: {{address.city}}</p>
 <p>PostCode: {{address.postcode}}</p>
@@ -124,7 +126,7 @@ padding:20px;
 <hr>
 <div>
     <h5>Payment Info:</h5>
- <p style="font-size:18px;">Card: {{paymentCreate.card.brand}}></p>
+ <p style="font-size:18px;">Card: {{paymentCreate.card.brand}}</p>
 <p>Ending in: {{paymentCreate.card.last4}}</p>
     </div>
 

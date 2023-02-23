@@ -12,9 +12,6 @@ import axios from 'axios'
 
 function Payment() {
   const [{ address, basket, user }, dispatch] = useStateValue();
-
-console.log(basket)
-
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -88,24 +85,29 @@ console.log(basket)
       card: elements.getElement(CardNumberElement),
     })
 
+    const orderId = crypto.randomUUID().slice(0,20)
+
     axios.post("/orders/add", {
       basket: basket,
       amount: getBasketTotal(basket),
       email: user?.email,
       username: user?.username,
       address: address,
-      paymentCreate: paymentCreate.paymentMethod
+      paymentCreate: paymentCreate.paymentMethod,
+      orderId:orderId
     });
 
 
     // const result = basket.reduce((a,b) => Object.assign(a,b))
+
 
     axios.post('/api/sendemail', {
       result:basket,
       email:user?.email,
       totalAmount:getBasketTotal(basket),
       address:address,
-      paymentCreate:paymentCreate.paymentMethod
+      paymentCreate:paymentCreate.paymentMethod,
+      orderId:orderId
     })
     
 

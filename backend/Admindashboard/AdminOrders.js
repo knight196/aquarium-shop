@@ -21,7 +21,7 @@ const router = express.Router()
 //finding specific user's order by one id from admin
 
 router.get('/orders/_id/:id', async (req,res) => {
-    const orderId = await Orders.findOne({_id:req.params.id})
+    const orderId = await Orders.findOne({orderId:req.params.id})
     if(orderId){
       res.send(orderId)
     }else{
@@ -43,10 +43,10 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
 //refund option from admindashboard
 router.put('/orders/:id', async(req,res)=> {
     try{
-      const refundId = await Orders.findById(req.params.id)
+      const refundId = await Orders.findOne({orderId:req.params.id})
   
       const refunded = await Orders.findOneAndUpdate(
-      {_id: req.params.id},
+      {orderId: req.params.id},
       {Refund:!refundId.Refund}
       )
   
@@ -64,10 +64,10 @@ router.put('/orders/:id', async(req,res)=> {
 
   router.put('/ordersdeliver/:id', async (req,res)=> {
     try{
-      const deliverId = await Orders.findById(req.params.id)
+      const deliverId = await Orders.findOne({orderId:req.params.id})
 
       const deliver = await Orders.findOneAndUpdate(
-        {_id:req.params.id},
+        {orderId:req.params.id},
         {Delivered:!deliverId.Delivered}
       )
 
@@ -84,7 +84,7 @@ router.put('/orders/:id', async(req,res)=> {
   //orders delete from admindashboard
 router.delete('/orders/:id', async (req,res)=> {
     try{
-      const deleteId = await Orders.findByIdAndDelete(req.params.id)
+      const deleteId = await Orders.findOneAndDelete(req.params.id)
       if(!req.params.id){
         return res.status(400).send()
       }
@@ -97,7 +97,7 @@ router.delete('/orders/:id', async (req,res)=> {
   //delete on newproducts
 router.delete('/:id', async(req,res)=> {
     try{
-    const deleteId = await addProduct.findByIdAndDelete(req.params.id)
+    const deleteId = await addProduct.findOneAndDelete(req.params.id)
       if(!req.params.id){
         return res.status(400).send()
       }

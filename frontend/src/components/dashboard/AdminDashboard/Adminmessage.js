@@ -29,11 +29,13 @@ const deletemsg= async (id) => {
     getusermsg();
   },[])
 
+  console.log(usermsg)
+
   return (
     <div className="text-center">
       {usermsg.map((item)=> (
         <div className="d-flex my-1 py-1 justify-content-between align-items-center bg-white bg-opacity-50 p-2">
-          <Link to={!item.order_id ? `/api/addcontactmsg/_id/${item._id}` : `/api/orders/_id/${item.order_id}`}>
+          <Link to={!item.orderId ? `/api/addcontactmsg/_id/${item._id}` : `/api/orders/_id/${item.orderId}`}>
         <p>{item.username} : {item.message}</p>
           </Link>
           <button className="bg-danger btn" onClick={()=> deletemsg(item._id)}>Delete</button>

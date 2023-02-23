@@ -116,7 +116,7 @@ export default function Home() {
                         {filterproduct.category === 'Tanks' ? (
                             <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/tanks/slug/${filterproduct.slug}`}>View More</Link></button>
                             ):(
-                            filterproduct.category === 'plants' ?
+                            filterproduct.category === 'Plants' ?
                             <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/plants/slug/${filterproduct.slug}`}>View More</Link></button>
                             
                             :

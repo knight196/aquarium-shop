@@ -33,12 +33,12 @@ export default function AdminOrderInfo() {
  const refunded = async (id) => {
   await axios.put(`/api/orders/${id}`)
   await axios.post('/orders/addusermessage', {
-    order_id:orders?._id,
+    orderId:orders?.orderId,
     username:orders?.username,
     message:"We've got it. Your Refund is on its way to you"
   })
   await axios.post('/orders/adminmessage', {
-    order_id:orders?._id,
+    orderId:orders?.orderId,
     username:orders?.username,
     message:`You have refunded ${orders?.username} order`
   })
@@ -54,13 +54,13 @@ export default function AdminOrderInfo() {
 
 await axios.put(`/api/ordersdeliver/${id}`)
 await axios.post('/orders/addusermessage', {
-  order_id:orders?._id,
+  orderId:orders?.orderId,
   username:orders?.username,
   message:'Delivered'
 })
 
 await axios.post('/orders/adminmessage', {
-  order_id:orders?._id,
+  orderId:orders?.orderId,
   username:orders?.username,
   message:`${orders?.username} order has been delivered`
 })
@@ -77,12 +77,12 @@ setTimeout(function(){
  const cancel = async (id) => {
   await axios.put(`/orders/get/${id}`)
   await axios.post('/orders/addusermessage', {
-    order_id:orders?._id,
+    orderId:orders?.orderId,
     username:orders?.username,
     message:'Your order has been cancelled'
   })
   await axios.post('/orders/adminmessage', {
-    order_id:orders?._id,
+    orderId:orders?.orderId,
     username:orders?.username,
     message:`You have cancelled ${orders?.username} order`
   })
@@ -117,7 +117,7 @@ setTimeout(function(){
     
       <div>
         <h5>Order Id</h5>
-        <p>{orders._id}</p>
+        <p>{orders.orderId}</p>
       </div>
     
     </div>
@@ -174,10 +174,10 @@ setTimeout(function(){
        */}
      
  <div className={orders.Cancel === true ? 'd-none' : 'd-block'}>
-      <p className={delivered === orders._id === orders.Delivered === true? 'delivered': 'delivered show'}>{orders.Refund === true ? 'REFUNDED' : 'DELIVERED'}</p>
+      <p className={delivered === orders.orderId === orders.Delivered === true? 'delivered': 'delivered show'}>{orders.Refund === true ? 'REFUNDED' : 'DELIVERED'}</p>
  </div>
  
-      <p className={cancelOrder === orders._id === orders.Cancel === true ? 'order-cancelled': 'order-cancelled show'}>ORDERCANCELLED</p>
+      <p className={cancelOrder === orders.orderId === orders.Cancel === true ? 'order-cancelled': 'order-cancelled show'}>ORDERCANCELLED</p>
      
          </div>
     
@@ -220,17 +220,17 @@ setTimeout(function(){
         <div>
           <h5>Actions</h5>
           <div className="d-flex justify-content-between">
-          <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders._id)}>Delete</button>
+          <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders.orderId)}>Delete</button>
           
           <div className={orders.Delivered === true ? 'd-none' : 'd-block'}>
-          <button className={cancelOrder === orders._id === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders._id);setcancelOrder(orders._id,!cancelOrder)}}>Cancel</button>
+          <button className={cancelOrder === orders.orderId === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders.orderId);setcancelOrder(orders.orderId,!cancelOrder)}}>Cancel</button>
           </div>
           
           <div className={orders.Delivered === true ? 'd-block' : 'd-none'}>
-          <button style={{position:'relative',zIndex:'10'}} className={refund === orders._id === orders.Refund === true ? "my-2 px-2 bg-secondary btn border-0 text-white" : 'd-none'} onClick={()=> {refunded(orders._id);setrefund(orders._id,!refund)}}>Refund</button>
+          <button style={{position:'relative',zIndex:'10'}} className={refund === orders.orderId === orders.Refund === true ? "my-2 px-2 bg-secondary btn border-0 text-white" : 'd-none'} onClick={()=> {refunded(orders.orderId);setrefund(orders.orderId,!refund)}}>Refund</button>
           </div>
 
-          <button style={{position:'relative',zIndex:'10'}} className={delivered === orders._id === orders.Delivered === true ? "my-2 px-2 bg-success btn border-0 text-white" : 'd-none'} onClick={()=> {deliveredItem(orders._id);setdelivered(orders._id,!delivered)}}>Delivered</button>
+          <button style={{position:'relative',zIndex:'10'}} className={delivered === orders.orderId === orders.Delivered === true ? "my-2 px-2 bg-success btn border-0 text-white" : 'd-none'} onClick={()=> {deliveredItem(orders.orderId);setdelivered(orders.orderId,!delivered)}}>Delivered</button>
           
           </div>
     

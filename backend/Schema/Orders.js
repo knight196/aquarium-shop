@@ -8,6 +8,7 @@ const OrderSchema = mongoose.Schema(
   email: String,
   address: Object,
   paymentCreate:Array,
+  orderId:String,
   Cancel:{type:Boolean,default:false},
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},

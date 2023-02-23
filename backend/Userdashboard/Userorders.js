@@ -7,7 +7,7 @@ const router = express.Router();
 
 //finding specific order by one id from user
 router.get('/get/_id/:id', async (req,res)=> {
-  const orderId = await Orders.findOne({_id:req.params.id})
+  const orderId = await Orders.findOne({orderId:req.params.id})
   if(orderId){
    res.send(orderId)
   }else{
@@ -29,10 +29,10 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
 
   router.put('/ordersreturn/:id', async (req,res)=> {
     try{
-      const returnId = await Orders.findById(req.params.id)
+      const returnId = await Orders.findById({orderId:req.params.id})
 
       const returnitem = await Orders.findOneAndUpdate(
-        {_id:req.params.id},
+        {orderId:req.params.id},
         {Return:!returnId.Return}
       )
 
@@ -56,6 +56,7 @@ router.post("/add", async(req, res) => {
   const username = req.body.username
   const address = req.body.address;
   const paymentCreate = req.body.paymentCreate
+  const orderId = req.body.orderId
 
   const orderDetail = {
     products: products,
@@ -64,6 +65,7 @@ router.post("/add", async(req, res) => {
     address: address,
     email: email,
     username:username,
+    orderId:orderId
   };
 
   Orders.create(orderDetail, (err, result) => {
@@ -94,10 +96,10 @@ router.post("/get", (req, res) => {
 // cancel order update from user dashboard
 router.put('/get/:id', async (req,res)=> {
     try{
-      const cancelId = await Orders.findById(req.params.id)
+      const cancelId = await Orders.findOne({orderId: req.params.id})
   
       const cancelOrder = await Orders.findOneAndUpdate(
-        {_id: req.params.id},
+        {orderId: req.params.id},
         {Cancel:!cancelId.Cancel}
       )
   
@@ -114,7 +116,7 @@ router.put('/get/:id', async (req,res)=> {
   // delete orders from user dashboard
 router.delete('/get/:id', async (req,res)=> {
     try{
-      const deleteId = await Orders.findByIdAndDelete(req.params.id)
+      const deleteId = await Orders.findOneAndDelete(req.params.id)
       if(!req.params.id){
         return res.status(400).send()
       }

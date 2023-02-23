@@ -26,7 +26,7 @@ useEffect(() => {
           <h5>Product Detail</h5>
         {order.products.slice(0,1).map((item) => (
 
-          <Link to={`/api/orders/_id/${order._id}`}>
+          <Link to={`/api/orders/_id/${order.orderId}`}>
 
           <div className="d-flex align-items-center justify-content-between user-orders-card px-2">
           

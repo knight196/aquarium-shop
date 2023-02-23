@@ -36,12 +36,12 @@ export default function OrdersInfo() {
 
       const cancel = async () => {
         await axios.post('/orders/adminmessage', {
-          order_id:orders?._id,
+          orderId:orders?.orderId,
           username:user?.username,
           message:'wants to cancel order'
         })
         await axios.post('/orders/addusermessage', {
-          order_id:orders?._id,
+          orderId:orders?.orderId,
           username:user?.username,
           message:'Your order cancellation request has been received'
         })
@@ -56,12 +56,12 @@ export default function OrdersInfo() {
         const returned = async (id) => {
           await axios.put(`/orders/ordersreturn/${id}`)
           await axios.post('/orders/addusermessage', {
-            order_id:orders?._id,
+            orderId:orders?.orderId,
             username:user?.username,
             message: 'You have returned your item'
           })
           await axios.post('/orders/adminmessage', {
-            order_id:orders?._id,
+            orderId:orders?.orderId,
             username:user?.username,
             message:'has opened the return request'
           })
@@ -95,7 +95,7 @@ export default function OrdersInfo() {
 
   <div>
     <h5>Order Id</h5>
-    <p>{orders._id}</p>
+    <p>{orders.orderId}</p>
   </div>
 
 </div>
@@ -211,13 +211,13 @@ export default function OrdersInfo() {
     <div>
       <h5>Actions</h5>
       <div className="d-flex justify-content-between">
-      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders._id)}>Delete</button>
+      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders.orderId)}>Delete</button>
       <div className={orders.Delivered === true ? 'd-none' : 'd-block'}>
-      <button className={cancelOrder === orders._id === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders._id);setcancelOrder(orders._id,!cancelOrder)}}>Cancel</button>
+      <button className={cancelOrder === orders.orderId === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders.orderId);setcancelOrder(orders.orderId,!cancelOrder)}}>Cancel</button>
       </div>
       
       <div className={orders.Delivered === true ? 'd-block' : 'd-none'}>
-      <button className={returnitem === orders._id === orders.Return === true ? 'd-block btn px-2 bg-secondary border-0' : 'd-none'} onClick={()=> {returned(orders._id); setreturnitem(orders._id, !returnitem)}}>Return</button>
+      <button className={returnitem === orders.orderId === orders.Return === true ? 'd-block btn px-2 bg-secondary border-0' : 'd-none'} onClick={()=> {returned(orders.orderId); setreturnitem(orders.orderId, !returnitem)}}>Return</button>
       </div>
 
       </div>

@@ -146,7 +146,7 @@ app.post('/newproducts/add', async (req,res) => {
 
 app.post('/api/sendemail', async (req,res) => {
 
-const {email,result,totalAmount,address,paymentCreate}  = req.body;
+const {email,result,totalAmount,address,paymentCreate,orderId}  = req.body;
 
 
 try{
@@ -181,6 +181,7 @@ var mailOptions = {
     totalAmount:totalAmount,
     address:address,
     paymentCreate:paymentCreate,
+    orderId:orderId
   }
 }
 
