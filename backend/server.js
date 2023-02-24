@@ -157,8 +157,8 @@ try{
     service:'outlook',
     port:587,
   auth : {  
-    user:process.env.user,
-    pass:process.env.pass
+    user:'Aquature@outlook.com',
+    pass:'Aqua1234@'
   }
 })
 
@@ -175,7 +175,7 @@ const handlebarOptions = {
 transporter.use('compile', hbs(handlebarOptions))
 
 var mailOptions = {
-  from:process.env.user,
+  from:'Aquature@outlook.com',
   to:email,
   subject:'Order confirmation',
   template:'email',
