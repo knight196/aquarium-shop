@@ -12,7 +12,7 @@ const Admindashboard = require('./Admindashboard/AdminOrders')
 const cloudinary = require('cloudinary').v2
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
-
+const bodyParser = require('body-parser')
 
 const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
 
@@ -29,6 +29,7 @@ app.use(express.json({limit:'25mb'}))
 app.use(express.urlencoded({limit:'25mb', extended:true}))
 app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
+app.use(bodyParser.json())
 // app.use(cors())
 
 
