@@ -30,6 +30,7 @@ app.use(express.urlencoded({limit:'25mb', extended:true}))
 app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(cors())
 
 
@@ -157,8 +158,8 @@ try{
     service:'outlook',
     port:587,
   auth : {  
-    user:'Aquature@outlook.com',
-    pass:'Aqua1234@'
+    user:process.env.user,
+    pass:process.env.pass
   }
 })
 
@@ -175,7 +176,7 @@ const handlebarOptions = {
 transporter.use('compile', hbs(handlebarOptions))
 
 var mailOptions = {
-  from:'Aquature@outlook.com',
+  from:process.env.user,
   to:email,
   subject:'Order confirmation',
   template:'email',
