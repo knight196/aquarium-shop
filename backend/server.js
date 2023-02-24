@@ -165,10 +165,10 @@ try{
 const handlebarOptions = {
   viewEngine:{
     extName: '.handlebars',
-    partialDir: path.resolve('./views'),
+    partialDir: path.resolve(__dirname,'./views'),
     defaultLayout:false
   },
-  viewPath:path.resolve('./views'),
+  viewPath:path.resolve(__dirname,'./views'),
   extName:'.handlebars'
 }
 
