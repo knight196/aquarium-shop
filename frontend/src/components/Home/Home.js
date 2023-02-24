@@ -294,7 +294,7 @@ export default function Home() {
                         <p>01211 000000</p>
 
                         <h6>Contact Detail</h6>
-                        <p>aquature@gmail.com</p>
+                        <p>Aquature@outlook.com</p>
                         </div>
                         
                         <div>
