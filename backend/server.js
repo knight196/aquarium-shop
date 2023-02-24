@@ -155,8 +155,7 @@ const {email,result,totalAmount,address,paymentCreate,orderId}  = req.body;
 try{
 
   var transporter = nodemailer.createTransport({
-    service:'outlook',
-    port:587,
+    service:'hotmail',
   auth : {  
     user:process.env.user,
     pass:process.env.pass
