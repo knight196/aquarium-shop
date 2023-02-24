@@ -17,7 +17,8 @@ const hbs = require('nodemailer-express-handlebars')
 const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
 
 
-dotenv.config();
+dotenv.config({path:path.resolve(__dirname, './.env')});
+
 
 const app = express();
 const port = process.env.PORT || 5000
@@ -154,8 +155,8 @@ try{
   var transporter = nodemailer.createTransport({
     service:'outlook',
   auth : {  
-    user:'Aquature@outlook.com',
-    pass:'Aqua1234@'
+    user:process.env.user,
+    pass:process.env.pass
   }
 })
 
@@ -172,7 +173,7 @@ const handlebarOptions = {
 transporter.use('compile', hbs(handlebarOptions))
 
 var mailOptions = {
-  from:'Aquature@outlook.com',
+  from:process.env.user,
   to:email,
   subject:'Order confirmation',
   template:'email',
