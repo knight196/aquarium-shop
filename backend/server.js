@@ -149,7 +149,7 @@ app.post('/newproducts/add', async (req,res) => {
 
 app.post('/api/sendemail', async (req,res) => {
 
-const {email,result,totalAmount,address,paymentCreate,orderId}  = req.body;
+const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
 
 
 try{
@@ -181,10 +181,13 @@ var mailOptions = {
   template:'email',
   context:{
     items:result,
+    subtotal:subtotal,
     totalAmount:totalAmount,
     address:address,
     paymentCreate:paymentCreate,
-    orderId:orderId
+    orderId:orderId,
+    deliveryOptions:deliveryOptions,
+    deliveryPrice:deliveryPrice
   }
 }
 

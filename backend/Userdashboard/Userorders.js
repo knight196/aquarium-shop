@@ -51,21 +51,27 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
 
 router.post("/add", async(req, res) => {
   const products = req.body.basket;
+  const subtotal = req.body.subtotal
   const amount = req.body.amount;
   const email = req.body.email;
   const username = req.body.username
   const address = req.body.address;
   const paymentCreate = req.body.paymentCreate
   const orderId = req.body.orderId
+  const deliveryOptions = req.body.deliveryOptions
+  const deliveryPrice = req.body.deliveryPrice
 
   const orderDetail = {
     products: products,
     paymentCreate,
+    subtotal:subtotal,
     amount: amount,
     address: address,
     email: email,
     username:username,
-    orderId:orderId
+    orderId:orderId,
+    deliveryOptions:deliveryOptions,
+    deliveryPrice:deliveryPrice
   };
 
   Orders.create(orderDetail, (err, result) => {

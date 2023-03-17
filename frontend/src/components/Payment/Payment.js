@@ -11,7 +11,7 @@ import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,Car
 import axios from 'axios'
 
 function Payment() {
-  const [{ address, basket, user }, dispatch] = useStateValue();
+  const [{ address, basket, user,deliveryOptions }, dispatch] = useStateValue();
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -23,6 +23,10 @@ function Payment() {
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('address', JSON.stringify(address))
+  },[address])
 
 
 
@@ -59,18 +63,22 @@ function Payment() {
   const elements = useElements();
   const stripe = useStripe();
 
+  const totalPrice = (getBasketTotal(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
+
+  console.log(totalPrice)
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       const data = await axios.post('/create-payment', {
-        amount: getBasketTotal(basket)
+        amount: totalPrice
       })
       setClientSecret(data.data.clientSecret)
     }
     fetchClientSecret()
     console.log('client secret is ', clientSecret)
   }, [])
-  
+
+
   const handlePayment = async (e) => {
     e.preventDefault();
 
@@ -89,25 +97,30 @@ function Payment() {
 
     axios.post("/orders/add", {
       basket: basket,
-      amount: getBasketTotal(basket),
+      subtotal:getBasketTotal(basket),
+      amount: totalPrice,
       email: user?.email,
       username: user?.username,
       address: address,
       paymentCreate: paymentCreate.paymentMethod,
-      orderId:orderId
+      orderId:orderId,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price
     });
 
 
-    // const result = basket.reduce((a,b) => Object.assign(a,b))
-
+   
 
     axios.post('/api/sendemail', {
       result:basket,
       email:user?.email,
-      totalAmount:getBasketTotal(basket),
+      subtotal:getBasketTotal(basket),
+      totalAmount:totalPrice,
       address:address,
       paymentCreate:paymentCreate.paymentMethod,
-      orderId:orderId
+      orderId:orderId,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price
     })
     
 
@@ -124,8 +137,7 @@ function Payment() {
 
     }
 
-    
-    
+
   return (
     <>
 
@@ -188,10 +200,23 @@ function Payment() {
           </div>
           <hr />
 
+          <div>
+            <p>Delivery-Options:</p>
+            <div className="d-flex justify-content-between align-items-center">
+            <p>{deliveryOptions.options}</p> 
+            <p>£{deliveryOptions.price}</p>
+            </div>
+          </div>
+
+          <hr></hr>
+
+
 
           <div className="text-center d-flex justify-content-between px-2 align-items-center">
             <p>Total Price</p>
-            <p>£{getBasketTotal(basket).toFixed(2)}</p>
+        
+              <p className="">£{(getBasketTotal(basket) + parseFloat(deliveryOptions.price)).toFixed(2)}</p>
+        
           </div>
 
           <hr />

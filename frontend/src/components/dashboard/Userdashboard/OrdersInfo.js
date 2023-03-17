@@ -186,6 +186,27 @@ export default function OrdersInfo() {
     </div>
 
     <hr></hr>
+    
+    <div className="d-flex justify-content-between align-items-center">
+  <h5>Subtotal</h5>
+  <p>£{orders.subtotal}</p>
+</div>
+
+<hr></hr>
+
+    <div>
+  <h5>Delivery Options</h5>
+
+  <div className="d-flex justify-content-between align-items-center">
+
+  <p>{orders.deliveryOptions}</p>
+  <p>£{orders.deliveryPrice}</p>
+  
+  </div>
+</div>
+
+<hr></hr>
+
 
 <div className="d-flex justify-content-between align-items-center">
   <h5>TotalPrice</h5>

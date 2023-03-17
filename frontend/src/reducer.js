@@ -1,12 +1,14 @@
 export const initialState={
     basket:JSON.parse(localStorage.getItem('basket') || '[]'),
     user: JSON.parse(localStorage.getItem("user")),
-    address:{}
+    address:JSON.parse(localStorage.getItem('address') || '{}'),
+    deliveryOptions:JSON.parse(localStorage.getItem('deliveryOptions') || '[]') ,
 }
 
 
 //selector
-export const getBasketTotal = (basket) => basket?.reduce((amount,item)=> item.price + amount, 0)
+export const getBasketTotal = (basket) => basket?.reduce((amount,item)=> item.price + amount , 0)
+
 
 
 const reducer = (state, action) => {
@@ -48,6 +50,11 @@ const reducer = (state, action) => {
                             ...state,
                             address:{...action.item}
                         }
+
+                        case 'SET_DELIVERY':
+                            return{
+                                ...state,deliveryOptions:action.payload
+                            }
                
                 
                 case 'SET_USER':

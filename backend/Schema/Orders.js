@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 const OrderSchema = mongoose.Schema(
   {
   username:String,
+  subtotal:Number,
   amount: Number,
   products: Array,
   email: String,
   address: Object,
   paymentCreate:Array,
   orderId:String,
+  deliveryOptions:String,
+  deliveryPrice:Number,
   Cancel:{type:Boolean,default:false},
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},

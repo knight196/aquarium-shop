@@ -6,12 +6,16 @@ import Subtotal from '../Subtotal/Subtotal'
 
 function Checkout() {
 
-  let [{basket,user}, dispatch] = useStateValue()
+  let [{basket,user,deliveryOptions}, dispatch] = useStateValue()
 
  
   useEffect(() => {
     localStorage.setItem('basket', JSON.stringify(basket))
   },[basket])
+
+  useEffect(() => {
+    localStorage.setItem('deliveryOptions', JSON.stringify(deliveryOptions))
+  },[deliveryOptions])
 
   return (
 <>
