@@ -7,17 +7,28 @@ import {useNavigate,Link} from 'react-router-dom'
 
 function Subtotal() {
 
+  const deliveries = [
+    {
+      options:'Standard',
+      price:4.99
+    },
+    {
+      options:'Tracked',
+      price:5.99
+    }
+  ]
+
 const navigate = useNavigate();
 
   const [{basket,user,deliveryOptions}, dispatch] = useStateValue()
 
-  const [deliveryOption,setdeliveryOptions] = useState('standard')
+  const [deliveryOption,setdeliveryOptions] = useState('Standard')
 
   const [price,setprice] = useState(4.99)
 
   const deliverySelect = (e,price) => {
-  setdeliveryOptions(`${e.target.value}`)
-  setprice(`${price}`)
+  setdeliveryOptions(e.target.value)
+  setprice(price)
   }
 
   useEffect(() => {
@@ -39,12 +50,11 @@ const navigate = useNavigate();
 
         <h5>Delivery Options</h5>
 
-<input type="radio" value="standard"  checked={deliveryOption === 'standard'} onChange={(e)=> deliverySelect(e,4.99)}/> <label>Standard £4.99 -- 2-3 working days</label>
-
-<br></br>
-
-<input type="radio" value="tracked" checked={deliveryOption === 'tracked'} onChange={(e)=>deliverySelect(e,5.99)}/> <label>Tracked £5.99</label>
-
+{deliveries.map(item => (
+  <>
+  <input type="radio" value={item.options} checked={deliveryOption === item.options} onChange={(e) => deliverySelect(e,item.price)}/> <label>{item.options} + {item.price}</label> <br></br>
+  </>
+))}
 
 
 
