@@ -1,13 +1,13 @@
 const plants = [
     {
         title:'Staurogyne repens',
-        link:'/api/plants/slug/Staurogyne-repens',
+        link:'/api/plants/slug/staurogyne-repens',
         image:'https://i.ebayimg.com/images/g/4NIAAOSwdGFYpMIB/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/zGQAAOSw~AVYpMIK/s-l1600.jpg'
     },
     {
         title:'Rotala Rotundifolia',
-        link:'/api/plants/slug/Rotala-rotundifolia',
+        link:'/api/plants/slug/Rotala-routundefolia',
         image:'https://i.ebayimg.com/images/g/5yQAAOSwWxNYrMck/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/PosAAOSwOgdYrMcr/s-l1600.jpg'
     },
@@ -19,13 +19,13 @@ const plants = [
     },
     {
         title:'Cryptocoryne beckettii petchii',
-        link:"/api/plants/slug/Cryptocoryne-beckettii-'Petchii'",
+        link:"/api/plants/slug/Cryptocoryne-backettii-petchii",
         image:'https://i.ebayimg.com/images/g/qr4AAOSw4A5YrMHF/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/hyMAAOSwTuJYrMHI/s-l1600.jpg'
     },
     {
         title:"Hygrophila-corymbosa-'Siamensis 53B'",
-        link:"/api/plants/slug/Hygrophila-corymbosa-'Siamensis 53B'",
+        link:"/api/plants/slug/Hygrophila-siamensis-53b",
         image:'https://i.ebayimg.com/images/g/V4oAAOSw3v5YpN9z/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/cfwAAOSwWxNYpN95/s-l1600.jpg'
     },
@@ -37,7 +37,7 @@ const plants = [
     },
     {
          title:"Alternanthera-reineckii-'Pink'",
-        link:"/api/plants/slug/Alternanthera reineckii 'Pink'",
+        link:"/api/plants/slug/Alternanthera-reineckii-'Pink'",
         image:'https://i.ebayimg.com/images/g/xZ0AAOSwjI5azfso/s-l1600.jpg',
         doubleimg:'https://i.ebayimg.com/images/g/KrQAAOSwhjRazfsx/s-l1600.jpg'
     },
@@ -49,7 +49,7 @@ const plants = [
    },
    {
     title:"Vallisneria-spiralis-'Tiger'",
-   link:"/api/plants/slug/Vallisneria-spiralis-'Tiger'",
+   link:"/api/plants/slug/Valisaneria-tiger",
    image:'https://tropica.com/imagegen.ashx?height=720&image=/Plants/055A/1.JPG&crop=resize&class=product',
    doubleimg:'https://tropica.com/imagegen.ashx?height=720&image=/Plants/055A/4.JPG&crop=resize&class=product'
 },
