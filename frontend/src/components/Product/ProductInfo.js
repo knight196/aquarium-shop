@@ -54,6 +54,8 @@ const addToBasket=(e) =>{
 
 
 return (
+  <>
+  {!Product ? <></>: 
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
   
   <div className="d-flex justify-content-between align-items-center product-info">
@@ -65,7 +67,6 @@ return (
   <div className="product-details p-4">
     <h5>{Product.title}</h5>
     <hr></hr>
-
 
 
     <p>{Product.description}</p>
@@ -108,6 +109,8 @@ return (
   
 
 </motion.div>
+    }
+</>
 )
 }
 

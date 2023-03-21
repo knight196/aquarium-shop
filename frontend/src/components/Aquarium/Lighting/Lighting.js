@@ -4,6 +4,8 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
 
+import Loaders from '../../Loaders'
+
 export default function Lighting() {
 
   const [addedproducts,setaddedproducts] = useState([])
@@ -18,6 +20,8 @@ export default function Lighting() {
   },[])
   
   return (
+  <>
+    {!addedproducts ? <Loaders/>: 
     <>
     <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product">
 
@@ -62,6 +66,8 @@ export default function Lighting() {
 </div>
 
     </>
+  }
+  </>
 
   )
 }

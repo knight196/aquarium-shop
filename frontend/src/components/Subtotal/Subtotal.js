@@ -41,7 +41,6 @@ const navigate = useNavigate();
     })
   },[deliveryOption])
 
-  console.log(deliveryOption,price)
 
   return (
     <div className='subtotal'>

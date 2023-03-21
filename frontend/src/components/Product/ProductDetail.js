@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProductInfo from './ProductInfo';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import Loaders from '../Loaders'
 
 function ProductDetail(props) {
 
@@ -28,9 +29,17 @@ function ProductDetail(props) {
 
     return (
       <div className="px-2 my-5">
-           <div>
-               <ProductInfo  detail={details} />
+            <>
+            {!details ?
+             
+                <Loaders/> 
+         
+            :
+            <div>
+            <ProductInfo  detail={details} />
            </div>
+        }
+        </>
       </div>
       
   )

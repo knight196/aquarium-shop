@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import Loaders from '../../Loaders'
 
 export default function TwinstarC() {
 
@@ -19,9 +20,10 @@ export default function TwinstarC() {
 
 
   return (
-  
-       <div className="product">
-     {addedproducts.map((item)=> {
+    <>
+  {!addedproducts ? <Loaders/> :
+  <div className="product">
+  {addedproducts.map((item)=> {
       if(item.CompanyProductName=== 'Twinstar-light-C'){
         return(
           <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
@@ -31,7 +33,9 @@ export default function TwinstarC() {
     </motion.div>
       )
     }
-    })}
-    </div>
+  })}
+  </div>
+}
+  </>
   )
 }

@@ -7,10 +7,6 @@ import 'aos/dist/aos.css'
 import axios from 'axios'
 import slideshow from './data'
 import plants from './Plantsdata'
-import {gsap,Power2} from 'gsap'
-import ScrollTrigger from 'gsap/dist/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
-
 
 export default function Home() {
 
@@ -96,7 +92,6 @@ export default function Home() {
     function right() {
         document.getElementById('scroll').scrollLeft += 350;
     }
-   
 
 
     return (
@@ -221,6 +216,8 @@ export default function Home() {
                 <div className="slider-scroll bg-success bg-opacity-50 p-2">
 
         <h5  className="text-white">Featured Categories</h5>
+
+
                     <div className="grid p-2 mb-5">
      
 
