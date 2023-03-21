@@ -9,9 +9,12 @@ export default function DD() {
 
   const [addedoase,setaddedoase] = useState([])
 
+  const [loading,setloading] = useState(false)
+
   const getaddedoase = async () => {
     const res = await axios.get('/api/products')
     setaddedoase(res.data.products)
+    setloading(true)
   }
   
   useEffect(() => {
@@ -21,7 +24,7 @@ export default function DD() {
   return (
 
     <>
-    {!addedoase ? <Loaders/> :
+    {loading ? 
 
     <div className="product">
     {addedoase.map((item)=> {
@@ -35,7 +38,7 @@ export default function DD() {
       )
     }
   })}
-  </div>
+  </div> : <Loaders/>
   }
   </>
   )

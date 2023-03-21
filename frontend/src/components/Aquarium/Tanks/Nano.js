@@ -9,9 +9,12 @@ export default function Nano() {
 
   const [addedoase,setaddedoase] = useState([])
 
+  const [loading,setloading] = useState(false)
+
   const getaddedoase = async () => {
     const res = await axios.get('/api/products')
     setaddedoase(res.data.products)
+    setloading(true)
   }
   
   useEffect(() => {
@@ -20,7 +23,7 @@ export default function Nano() {
 
   return (
     <>
-    {!addedoase ? <Loaders/> :
+    {loading ? 
     <div className="product">
     {addedoase.map((item)=> {
       if(item.category === 'Nano-tanks'){
@@ -33,7 +36,7 @@ export default function Nano() {
       )
     }
   })}
-  </div>
+  </div> : <Loaders/>
   }
   </>
   )

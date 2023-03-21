@@ -11,9 +11,12 @@ export default function Filter() {
   
   const [addedoase,setaddedoase] = useState([])
 
+  const [loading,setloading] = useState(false)
+
   const getaddedoase = async () => {
     const res = await axios.get('/api/products')
     setaddedoase(res.data.products)
+    setloading(true)
   }
   
   useEffect(() => {
@@ -23,7 +26,7 @@ export default function Filter() {
 
   return (
     <>
-    {!addedoase ? <Loaders/> : 
+    {loading ?  
     <div className="product">
      {addedoase.map((item)=> {
       if(item.category=== 'Filter'){
@@ -36,7 +39,7 @@ export default function Filter() {
       )
     }
   })}
-  </div>
+  </div> : <Loaders/>
 }
   </>
   )

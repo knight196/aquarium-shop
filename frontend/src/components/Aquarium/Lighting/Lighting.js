@@ -10,9 +10,12 @@ export default function Lighting() {
 
   const [addedproducts,setaddedproducts] = useState([])
 
+  const [loading,setloading] = useState(false)
+
   const getadded = async () => {
     const res = await axios.get('/api/products')
     setaddedproducts(res.data.products)
+    setloading(true)
   }
   
   useEffect(() => {
@@ -21,7 +24,7 @@ export default function Lighting() {
   
   return (
   <>
-    {!addedproducts ? <Loaders/>: 
+    {loading ?  
     <>
     <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product">
 
@@ -63,9 +66,10 @@ export default function Lighting() {
 }
 })}
 
-</div>
+</div> 
 
     </>
+: <Loaders/>
   }
   </>
 

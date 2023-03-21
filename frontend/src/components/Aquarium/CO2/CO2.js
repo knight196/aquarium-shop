@@ -9,9 +9,12 @@ export default function CO2() {
 
     const [addedproducts,setaddedproducts] = useState([])
 
+    const [loading,setloading] = useState(false)
+
     const getadded = async () => {
       const res = await axios.get('/api/products')
       setaddedproducts(res.data.products)
+      setloading(true)
     }
     
     useEffect(() => {
@@ -20,8 +23,8 @@ export default function CO2() {
 
   return (
     <>
-    {!addedproducts ? <Loaders/>
-    :<div  className="product">
+    {loading ? 
+    <div  className="product">
          {addedproducts.map((item)=> {
   if(item.category=== 'Co2'){
     return(
@@ -33,7 +36,7 @@ export default function CO2() {
   )
 }
 })}
-    </div>
+    </div> : <Loaders/>
     }
     </>
   )

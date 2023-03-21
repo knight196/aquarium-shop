@@ -9,9 +9,12 @@ export default function Soil() {
 
     const [addedproducts,setaddedproducts] = useState([])
 
+    const [loading,setloading] = useState(false)
+
     const getadded = async () => {
       const res = await axios.get('/api/products')
       setaddedproducts(res.data.products)
+      setloading(true)
     }
     
     useEffect(() => {
@@ -20,8 +23,7 @@ export default function Soil() {
 
   return (
     <>
-    {!addedproducts ? <Loaders/> 
-    :
+    {loading ?  
     <div className="product">
       {addedproducts.map((item)=> {
   if(item.category=== 'Soil'){
@@ -34,7 +36,7 @@ export default function Soil() {
   )
 }
 })}
-    </div>
+    </div> : <Loaders/>
 }
 </>
   )

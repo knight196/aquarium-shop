@@ -8,9 +8,12 @@ export default function Oase() {
 
 const [addedoase,setaddedoase] = useState([])
 
+const [loading,setloading] = useState(false)
+
 const getaddedoase = async () => {
   const res = await axios.get('/api/products')
   setaddedoase(res.data.products)
+  setloading(true)
 }
 
 useEffect(() => {
@@ -19,10 +22,10 @@ useEffect(() => {
 
   return (
     <>
-    {!addedoase ? <Loaders/> :
+    {loading ? 
     <div className="product">
       {addedoase.map((item)=> {
-        if(item.CompanyProductName === 'Oase-tank'){
+        if(item.CompanyProductName === 'Oase-Tank'){
           return(
             <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="product-card">
         <img src={item.image.url} alt={item.title}/>
@@ -32,7 +35,7 @@ useEffect(() => {
         )
       }
       })}
-    </div>
+    </div> : <Loaders/>
     }
     </>
   )

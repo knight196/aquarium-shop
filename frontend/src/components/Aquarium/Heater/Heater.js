@@ -9,9 +9,12 @@ export default function Heater() {
 
     const [addedproducts,setaddedproducts] = useState([])
 
+    const [loading,setloading] = useState(false)
+
     const getadded = async () => {
       const res = await axios.get('/api/products')
       setaddedproducts(res.data.products)
+      setloading(true)
     }
     
     useEffect(() => {
@@ -21,7 +24,7 @@ export default function Heater() {
 
   return (
    <>
-   {!addedproducts ? <Loaders/> :
+   {loading ? 
    <div className="product">
 
 {addedproducts.map((item)=> {
@@ -36,7 +39,7 @@ export default function Heater() {
 }
 })}
 
-</div>
+</div> : <Loaders/>
 }
 </>
   )

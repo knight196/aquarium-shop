@@ -9,9 +9,12 @@ import Loaders from '../../Loaders'
     export default function TwinstarS() {
         const [addedproducts,setaddedproducts] = useState([])
 
+        const [loading,setloading] = useState(false)
+
         const getadded = async () => {
           const res = await axios.get('/api/products')
           setaddedproducts(res.data.products)
+          setloading(true)
         }
         
         useEffect(() => {
@@ -20,7 +23,7 @@ import Loaders from '../../Loaders'
 
         return (
           <>
-          {!addedproducts ? <Loaders/> :
+          {loading ?
             <div className="product">
             {addedproducts.map((item)=> {
              if(item.CompanyProductName=== 'Twinstar-light-S'){
@@ -33,7 +36,7 @@ import Loaders from '../../Loaders'
              )
             }
           })}
-           </div>
+           </div> : <Loaders/>
         }
           </>
       )

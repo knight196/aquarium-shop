@@ -6,7 +6,7 @@ import {motion} from 'framer-motion'
 import UpdatedComponent from '../../HOC'
 import Loaders from '../../Loaders'
 
-function Foreground({selectedBrand,handleBrandChange,filteredlist}) {
+function Foreground({selectedBrand,handleBrandChange,filteredlist,loading}) {
 
   return (
 
@@ -24,7 +24,7 @@ function Foreground({selectedBrand,handleBrandChange,filteredlist}) {
 
   </select>
 
-  {!filteredlist ? Loaders : 
+  {loading ? 
 
     <div className="product">
     {filteredlist.map((item)=> {
@@ -38,7 +38,7 @@ return(
 )
 }
 })}
-</div>
+</div> : <Loaders/>
 }
 
     </>

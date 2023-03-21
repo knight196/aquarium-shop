@@ -9,9 +9,12 @@ export default function Fertiliser() {
 
     const [addedproducts,setaddedproducts] = useState([])
 
+    const [loading,setloading] = useState(false)
+
     const getadded = async () => {
       const res = await axios.get('/api/products')
       setaddedproducts(res.data.products)
+      setloading(true)
     }
     
     useEffect(() => {
@@ -20,7 +23,7 @@ export default function Fertiliser() {
 
   return (
     <>
-    {!addedproducts ? <Loaders/> :
+    {loading ? 
 
     <div className="product">
               {addedproducts.map((item)=> {
@@ -34,7 +37,7 @@ export default function Fertiliser() {
   )
 }
 })}
-    </div>
+    </div> : <Loaders/>
 }
 </>
   )

@@ -180,7 +180,7 @@ export default function Home() {
 
                 <div data-aos="zoom-in">
 
-                <h4 className="text-white px-2 py-2">Browse our range of Aquatic plants</h4>
+                   <h4 className="text-white px-2 py-2">Browse our range of Aquatic plants</h4>
                 
                 <div className="slide-option py-2">
 
