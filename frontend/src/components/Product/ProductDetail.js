@@ -11,10 +11,14 @@ function ProductDetail(props) {
     const { slug }=useParams();
     const [details, setDetails]=useState([])
 
+    const [loading,setloading] = useState(false)
+
+
 
     const fetchData = async () => {
         const res = await axios.get(`/api/products/slug/${slug}`)
         setDetails(res.data)
+        setloading(true)
     }
 
         useEffect(()=> {
@@ -30,14 +34,13 @@ function ProductDetail(props) {
     return (
       <div className="px-2 my-5">
             <>
-            {!details ?
-             
-                <Loaders/> 
-         
-            :
+            {loading ?
             <div>
             <ProductInfo  detail={details} />
            </div>
+           :
+
+           <Loaders/>
         }
         </>
       </div>
