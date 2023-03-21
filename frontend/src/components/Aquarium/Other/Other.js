@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import Loaders from '../../Loaders'
 
 export default function Other() {
 
@@ -19,8 +20,10 @@ export default function Other() {
 
 
   return (
+    <>
+    {!addedproducts ? <Loaders/> :
     <div className="product">
-      
+    
       {addedproducts.map((item)=> {
   if(item.category=== 'other'){
     return(
@@ -33,6 +36,8 @@ export default function Other() {
 }
 })}
 
-    </div>
+</div>
+}
+</>
   )
 }

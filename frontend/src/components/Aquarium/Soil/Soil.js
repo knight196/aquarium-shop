@@ -2,6 +2,8 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Loaders from '../../Loaders'
+
 export default function Soil() {
 
 
@@ -17,6 +19,9 @@ export default function Soil() {
     },[])
 
   return (
+    <>
+    {!addedproducts ? <Loaders/> 
+    :
     <div className="product">
       {addedproducts.map((item)=> {
   if(item.category=== 'Soil'){
@@ -30,5 +35,7 @@ export default function Soil() {
 }
 })}
     </div>
+}
+</>
   )
 }

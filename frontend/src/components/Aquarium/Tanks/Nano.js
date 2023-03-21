@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-
+import Loaders from '../../Loaders'
 
 export default function Nano() {
 
@@ -19,6 +19,8 @@ export default function Nano() {
   },[])
 
   return (
+    <>
+    {!addedoase ? <Loaders/> :
     <div className="product">
     {addedoase.map((item)=> {
       if(item.category === 'Nano-tanks'){
@@ -30,7 +32,9 @@ export default function Nano() {
     </motion.div>
       )
     }
-    })}
+  })}
   </div>
+  }
+  </>
   )
 }

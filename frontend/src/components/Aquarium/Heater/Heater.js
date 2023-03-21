@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-
+import Loaders from '../../Loaders'
 
 export default function Heater() {
 
@@ -20,7 +20,9 @@ export default function Heater() {
     
 
   return (
-    <div className="product">
+   <>
+   {!addedproducts ? <Loaders/> :
+   <div className="product">
 
 {addedproducts.map((item)=> {
   if(item.category=== 'heater'){
@@ -35,5 +37,7 @@ export default function Heater() {
 })}
 
 </div>
+}
+</>
   )
 }

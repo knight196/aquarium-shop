@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import TanksInfo from './TanksInfo'
+import Loaders from '../../Loaders'
 
 export default function TanksDetail() {
   
@@ -19,8 +20,12 @@ export default function TanksDetail() {
   },[slug])
   
     return (
-    <div>
+    <>
+      {!details ? <Loaders/> :
+      <div>
       <TanksInfo detail={details}/>
-    </div>
+      </div>
+    }
+    </>
   )
 }

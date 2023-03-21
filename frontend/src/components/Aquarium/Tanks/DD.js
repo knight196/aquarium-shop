@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-
+import Loaders from '../../Loaders'
 
 export default function DD() {
 
@@ -19,6 +19,10 @@ export default function DD() {
   },[])
 
   return (
+
+    <>
+    {!addedoase ? <Loaders/> :
+
     <div className="product">
     {addedoase.map((item)=> {
       if(item.CompanyProductName === 'D&D'){
@@ -30,7 +34,9 @@ export default function DD() {
     </motion.div>
       )
     }
-    })}
+  })}
   </div>
+  }
+  </>
   )
 }

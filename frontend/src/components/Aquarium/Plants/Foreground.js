@@ -4,6 +4,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import UpdatedComponent from '../../HOC'
+import Loaders from '../../Loaders'
 
 function Foreground({selectedBrand,handleBrandChange,filteredlist}) {
 
@@ -23,6 +24,8 @@ function Foreground({selectedBrand,handleBrandChange,filteredlist}) {
 
   </select>
 
+  {!filteredlist ? Loaders : 
+
     <div className="product">
     {filteredlist.map((item)=> {
 if(item.position=== 'Foreground'){
@@ -36,6 +39,7 @@ return(
 }
 })}
 </div>
+}
 
     </>
   )

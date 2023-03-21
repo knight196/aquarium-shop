@@ -4,7 +4,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import UpdatedComponent from '../../HOC'
-
+import Loaders from '../../Loaders'
 
 function Background({selectedBrand,handleBrandChange,filteredlist}) {
 
@@ -25,6 +25,9 @@ function Background({selectedBrand,handleBrandChange,filteredlist}) {
   </select>
 
 
+{!filteredlist ? <Loaders/> 
+:
+
     <div className="product">
     {filteredlist.map((item,i)=> {
 if(item.position=== 'Background'){
@@ -38,6 +41,7 @@ return(
 }
 })}
 </div>
+}
 </>
   )
 }

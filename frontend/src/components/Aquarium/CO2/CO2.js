@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import Loaders from '../../Loaders'
 
 export default function CO2() {
 
@@ -18,7 +19,9 @@ export default function CO2() {
     },[])
 
   return (
-    <div  className="product">
+    <>
+    {!addedproducts ? <Loaders/>
+    :<div  className="product">
          {addedproducts.map((item)=> {
   if(item.category=== 'Co2'){
     return(
@@ -31,5 +34,7 @@ export default function CO2() {
 }
 })}
     </div>
+    }
+    </>
   )
 }

@@ -3,6 +3,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import Loaders from '../../Loaders'
 
 export default function Fertiliser() {
 
@@ -18,6 +19,9 @@ export default function Fertiliser() {
     },[])
 
   return (
+    <>
+    {!addedproducts ? <Loaders/> :
+
     <div className="product">
               {addedproducts.map((item)=> {
   if(item.category=== 'fertiliser'){
@@ -31,5 +35,7 @@ export default function Fertiliser() {
 }
 })}
     </div>
+}
+</>
   )
 }
