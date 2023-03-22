@@ -21,7 +21,6 @@ useEffect(()=>{
 }, [props.detail])  
 
 
-// const [selectedcolor,setselectedcolor] = useState('')
 
 const [toggleState, setToggleState] = useState(0)
 
@@ -30,14 +29,9 @@ const toggleTab = (index) => {
 }
 
 
-// const handleOnClick = (type) =>{
-//     setselectedcolor(type)
-// }    
-
 const [colorlist,setcolorlist] = useState([])
 
 const [selectedcolor,setselectedcolor] = useState('')
-
 
 useEffect(() => {
 
@@ -51,11 +45,9 @@ useEffect(() => {
 
 console.log(selectedcolor)
 
-const handleOnClick = (type,att) =>{
-  if(type === 'color'){
-      setselectedcolor(att)
-      return
-  }
+const handleOnClick = (type) =>{
+      setselectedcolor(type)
+      setToggleState(type)
 }
 
 
@@ -101,7 +93,7 @@ return (
 
   <div className="imgScroll">
     {Product.images?.map((item, index) => (
-      <img className={toggleState === index ? "active-tabs tabImg" : 'tabs tabImg'} src={item.url} onClick={() => toggleTab(index)} alt="" />
+      <img className={toggleState === index ? "active-tabs tabImg" : 'tabs tabImg'} src={item.url} alt="" />
     ))}
   </div>
 
@@ -115,7 +107,7 @@ return (
 
     <div className="btn-variants">
  {colorlist?.map((color,index) => (
-  <SelectorButton key={index} handleClick={handleOnClick} type="color" att={color} active={selectedcolor === color}/>
+  <SelectorButton key={index} handleClick={handleOnClick} toggleTab={toggleTab} index={index} type={color} active={selectedcolor === color}/>
  ))}
     {/* {Product.colors?.map(item => item.colors)
     .map((color) => <button className={selectedcolor === color ? 'bg-primary bg-opacity-50 border-0 p-2 py-1 m-1 ' : 'border-0 p-2 py-1 m-1'} onClick={()=>handleOnClick(color)}>{color}</button>

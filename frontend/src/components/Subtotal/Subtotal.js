@@ -56,7 +56,6 @@ const navigate = useNavigate();
 ))}
 
 
-
       </div>
 
       <hr/>
