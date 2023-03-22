@@ -18,56 +18,67 @@ let navigate = useNavigate();
 
 useEffect(()=>{
   setProduct(props.detail)
-}, [props.detail])
+}, [props.detail])  
 
 
-const [selectedcolor,setselectedcolor] = useState('')
-
-
-const handleOnClick = (type,att) =>{
-    if(type === 'color'){
-        setselectedcolor(att)
-        return
-    }
-    return
-}
-
-const colors = Product.colors?.map(item => item.colors)
-    .filter((v, i, a) => a.indexOf(v) === i)
-    .map((color, index) => {
-      return (
-        <>
-          <SelectorButton type="color" key={index} handleClick={handleOnClick} att={color} active={selectedcolor === color} />
-        </>
-      )
-    })
-
-
-const addToBasket=(e) =>{
-    if(!selectedcolor){
-    e.preventDefault();
-      alert('Please select a color')
-    }
-    else{
-      //dispatch the item into the data layer
-      dispatch ({
-      type:'ADD_TO_BASKET',
-      item: {
-        slug: props.detail.slug, 
-        title: props.detail.title,
-        image: props.detail.image,
-        color:selectedcolor,
-        price: props.detail.price
-      },
-    })
-    }
-};
+// const [selectedcolor,setselectedcolor] = useState('')
 
 const [toggleState, setToggleState] = useState(0)
 
 const toggleTab = (index) => {
   setToggleState(index)
 }
+
+
+// const handleOnClick = (type) =>{
+//     setselectedcolor(type)
+// }    
+
+const [colorlist,setcolorlist] = useState([])
+
+const [selectedcolor,setselectedcolor] = useState('')
+
+
+useEffect(() => {
+
+  const color = Product.colors?.map(item => item.colors)
+      .filter((v, i, a) => a.indexOf(v) === i)
+      setcolorlist(color)
+
+      if(!selectedcolor) setselectedcolor(color?.[0])
+
+},[selectedcolor])
+
+console.log(selectedcolor)
+
+const handleOnClick = (type,att) =>{
+  if(type === 'color'){
+      setselectedcolor(att)
+      return
+  }
+}
+
+
+
+const addToBasket=(e) =>{
+    if(!selectedcolor){
+    e.preventDefault();  
+      alert('Please select a color')
+    }  
+    else{
+      //dispatch the item into the data layer
+      dispatch ({
+      type:'ADD_TO_BASKET',  
+      item: {
+        slug: props.detail.slug, 
+        title: props.detail.title,
+        image: props.detail.image,
+        color:selectedcolor,
+        price: props.detail.price
+      },  
+    })  
+    }
+};    
 
 
 
@@ -103,7 +114,12 @@ return (
     <hr></hr>
 
     <div className="btn-variants">
-        {colors}
+ {colorlist?.map((color,index) => (
+  <SelectorButton key={index} handleClick={handleOnClick} type="color" att={color} active={selectedcolor === color}/>
+ ))}
+    {/* {Product.colors?.map(item => item.colors)
+    .map((color) => <button className={selectedcolor === color ? 'bg-primary bg-opacity-50 border-0 p-2 py-1 m-1 ' : 'border-0 p-2 py-1 m-1'} onClick={()=>handleOnClick(color)}>{color}</button>
+    )} */}
           </div>
 
 
