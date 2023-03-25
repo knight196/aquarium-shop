@@ -8,6 +8,7 @@ var addProductSchema = new mongoose.Schema(
        description:{type:String},
        Company:{type:String},
        price:{type:Number},
+       qty:{type:Number,default:50},
        image:{
         public_id:{
             type:String,

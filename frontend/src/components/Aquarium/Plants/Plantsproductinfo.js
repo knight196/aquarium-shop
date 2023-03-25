@@ -6,6 +6,7 @@ import Select from 'react-select';
 import {Link,useNavigate} from "react-router-dom";
 import './Plants.css'
 import {motion} from 'framer-motion'
+import { toast } from 'react-toastify'
 // import { useAlert } from 'react-alert';
 
 function Plantsproductinfo(props) {
@@ -37,23 +38,25 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 
 const addToBasket=(e) =>{
+
+  const existItem = basket.find(x => x.slug === props.detail.slug)
+
+  const quantity = existItem ? existItem.quantity+ 1 : 1
+
     if(!packaging?.value){
-    e.preventDefault();
-      alert('Please select a packaging')
+      toast.warning('Please select a packaging')
     }
     else{
       //dispatch the item into the data layer
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
-        slug: props.detail.slug, 
-        title: props.detail.title,
-        image: props.detail.image,
-        packaging:packaging?.value,
-        price: priceFinal,
+      ...e,quantity,packaging:packaging?.value,price:priceFinal
       },
     })
+    window.location.href='/Checkout'
     }
+
 };
 
 
@@ -83,14 +86,12 @@ return (
 
 
 
-  <Link to={'/Checkout'}>
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={addToBasket}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product)}>
             Add to basket
       </button>
     </div>
-  </Link>
-  
+
 
   </div>
 

@@ -142,6 +142,11 @@ setTimeout(function(){
                   <p>£{item.price}</p>
                 </div>
 
+                <div className="w-50 text-center">
+              <p5>Qty</p5>
+              <p>{item.quantity}</p>
+            </div>
+
                 {!item.color ? (
             <>
             </>

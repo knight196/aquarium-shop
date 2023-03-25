@@ -6,6 +6,7 @@ import {Link,useNavigate} from "react-router-dom";
 import {motion} from 'framer-motion'
 import SelectorButton from './SelectorButton';
 import './Tanks.css'
+import axios from 'axios'
 // import { useAlert } from 'react-alert';
 
 function TanksInfo(props) {
@@ -52,7 +53,13 @@ const handleOnClick = (type) =>{
 
 
 
-const addToBasket=(e) =>{
+const addToBasket = (e) =>{
+
+
+  const existItem = basket.find(x => x.slug === props.detail.slug)
+
+  const quantity = existItem ? existItem.quantity+ 1 : 1
+   
     if(!selectedcolor){
     e.preventDefault();  
       alert('Please select a color')
@@ -62,14 +69,14 @@ const addToBasket=(e) =>{
       dispatch ({
       type:'ADD_TO_BASKET',  
       item: {
-        slug: props.detail.slug, 
-        title: props.detail.title,
-        image: props.detail.image,
-        color:selectedcolor,
-        price: props.detail.price
-      },  
+       ...e,
+       color:selectedcolor,
+       quantity
+      }
     })  
+    window.location.href='/Checkout'
     }
+
 };    
 
 
@@ -127,7 +134,7 @@ return (
 
   <Link to={'/Checkout'}>
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={addToBasket}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product)}>
             Add to basket
       </button>
     </div>

@@ -6,6 +6,7 @@ import  {toast} from 'react-toastify'
 import './Header.css'
 import Submenulist from './Submenulist'
 import data from './submenu'
+import {qty} from '../../reducer'
 
 export default function Header(props) {
 
@@ -58,7 +59,7 @@ const handleClick = () => setClick(!click);
 
     <button>
         <NavLink to='/Checkout'><i className="fas fa-shopping-cart"></i>
-        <span>{basket?.length}</span>
+        <span>{qty(basket)}</span>
     </NavLink>
     </button>
     <button onClick={handleClick} className="menu-bar text-white"><i className={click ? "fas fa-times" : "fas fa-bars"}></i></button>

@@ -6,7 +6,7 @@ import {motion} from 'framer-motion'
 import UpdatedComponent from '../../HOC'
 import Loaders from '../../Loaders'
 
-function Foreground({selectedBrand,handleBrandChange,filteredlist,loading}) {
+function Foreground({selectedBrand,handleBrandChange,handleCheck,filteredlist,loading}) {
 
   return (
 

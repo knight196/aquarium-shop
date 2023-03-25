@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef,useMemo } from 'react';
 import './Payment.css';
 import { useStateValue } from "../../StateProvider";
-import CheckoutProduct from "../CheckoutProduct/CheckoutProduct";
 import { Link, useNavigate } from "react-router-dom";
-import { getBasketTotal } from '../../reducer'
+import { getBasketTotal, getTotalBasketQty, qty } from '../../reducer'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 
@@ -63,7 +62,7 @@ function Payment() {
   const elements = useElements();
   const stripe = useStripe();
 
-  const totalPrice = (getBasketTotal(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
+  const totalPrice = (getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
 
   console.log(totalPrice)
 
@@ -123,19 +122,38 @@ function Payment() {
       deliveryPrice:deliveryOptions.price
     })
     
-
     
     dispatch({
       type: "EMPTY_BASKET",
     });
     navigate('/')
     toast.success('Payment successful')
-    window.localStorage.removeItem('basket')
+    window.localStorage.removeItem('cartItems')
 
       .catch((err) => console.warn(err));
 
 
     }
+
+    const updatecart  = async (item,quantity) => {
+      const products = await axios.get(`/api/products/${item.slug}`)
+      if(products.qty < quantity){
+        window.alert('Sorry this product is out of stock')
+        return
+      }
+  
+      dispatch({
+        type:'ADD_TO_BASKET',
+        item:{...item,quantity}
+      })
+      window.location.href='/Payment'
+    }
+  
+    const removeFromBasket = (item) => {
+      dispatch({type:'REMOVE_FROM_BASKET', item:item})
+      window.location.href='/Payment'
+    }
+  
 
 
   return (
@@ -171,15 +189,33 @@ function Payment() {
 
             <h6>Order History</h6>
             {basket.map(item => (
-              <CheckoutProduct
-                slug={item.slug}
-                title={item.title}
-                image={item.image}
-                price={item.price}
-                packaging={item.packaging}
-                color={item.color}
-              />
-            ))}
+            <div className='checkoutProduct'>
+
+            <div className="bg-white mx-1">
+            <img className='checkoutProduct__image img-fluid' src={item.image.url} alt=""/>
+            </div>
+          
+          <div className='checkoutProduct__info'>
+              <p className='checkoutProduct__title'>{item.title}</p>
+              <p>{item.packaging}</p>
+              <p>{item.color}</p>
+                  <strong>£{item.price}</strong>
+
+            <div>
+              <button onClick={()=> updatecart(item,item.quantity -1)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
+              <label>{item.quantity}</label>
+              <button onClick={()=> updatecart(item,item.quantity + 1)} disabled={item.quantity === item.qty} className="border-0 px-1 mx-2">+</button>
+              </div>
+
+              <button onClick={()=> removeFromBasket(item)}>Remove</button>
+      
+
+          </div>
+      
+      
+          
+          </div>
+          ))}
           </div>
         </div>
 
@@ -190,7 +226,7 @@ function Payment() {
 
           <div className="d-flex h5 my-2 pb-3 justify-content-between px-2">
             <span>Your Cart</span>
-            <span>{basket.length === 0 ? "" : basket.length}</span>
+            <span>{qty(basket)}</span>
           </div>
           <hr></hr>
 
@@ -215,7 +251,7 @@ function Payment() {
           <div className="text-center d-flex justify-content-between px-2 align-items-center">
             <p>Total Price</p>
         
-              <p className="">£{(getBasketTotal(basket) + parseFloat(deliveryOptions.price)).toFixed(2)}</p>
+              <p className="">£{(getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)}</p>
         
           </div>
 

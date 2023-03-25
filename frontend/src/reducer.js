@@ -1,5 +1,5 @@
 export const initialState={
-    basket:JSON.parse(localStorage.getItem('basket') || '[]'),
+    basket:localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
     user: JSON.parse(localStorage.getItem("user")),
     address:JSON.parse(localStorage.getItem('address') || '{}'),
     deliveryOptions:JSON.parse(localStorage.getItem('deliveryOptions') || '[]') ,
@@ -7,7 +7,10 @@ export const initialState={
 
 
 //selector
-export const getBasketTotal = (basket) => basket?.reduce((amount,item)=> item.price + amount , 0)
+export const qty = (basket) => basket?.reduce((a,c) => a + c.quantity,0)
+export const getBasketTotal = (basket) => basket?.reduce((amount,item)=> item.price + amount, 0)
+export const getTotalBasketQty = (basket) => basket?.reduce((amount,item) => amount + item.price * item.quantity , 0)
+
 
 
 
@@ -15,36 +18,34 @@ const reducer = (state, action) => {
   
     switch(action.type){
         case 'ADD_TO_BASKET':
-            return {
-                ...state,
-                basket:[...state.basket, action.item]
-            };
 
+      const newItem = action.item
+
+      const existItem = state.basket.find(item => item.slug === newItem.slug)
+
+      const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
+      [...state.basket,newItem]
+      
+      localStorage.setItem('cartItems', JSON.stringify(cartItems))
+
+      return {...state.basket,newItem}
+
+      
             case  'EMPTY_BASKET':
                 return{
                     ...state,
                     basket:[]
                 }
 
-            case "REMOVE_FROM_BASKET":
-              const index = state.basket.findIndex(
-                (basketItem)=> basketItem.slug === action.slug
-              )
+            case "REMOVE_FROM_BASKET":{
 
-            let newBasket = [...state.basket];
+            const cartItems = state.basket.filter(item => item.slug !== action.item.slug)
 
+            localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
-            if(index >= 0){
-                newBasket.splice(index,1)
-            }else{
-            
+            return {...state, basket:{...state.basket, cartItems: []}}
+
             }
-
-                return{
-                    ...state,
-                    basket:newBasket
-                }
-
                     case "SET_ADDRESS":
                         return{
                             ...state,

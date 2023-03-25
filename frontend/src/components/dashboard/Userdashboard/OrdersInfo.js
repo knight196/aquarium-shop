@@ -71,6 +71,7 @@ export default function OrdersInfo() {
           },[1500])
         }
 
+        console.log(orders)
 
   return (
     <div>
@@ -119,6 +120,12 @@ export default function OrdersInfo() {
               <p5>Price</p5>
               <p>£{item.price}</p>
             </div>
+
+            <div className="w-50 text-center">
+              <p5>Qty</p5>
+              <p>{item.quantity}</p>
+            </div>
+
 
             {!item.color ? (
             <>

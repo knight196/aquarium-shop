@@ -6,6 +6,7 @@ import Select from 'react-select';
 import {Link,useNavigate} from "react-router-dom";
 import './Product.css'
 import {motion} from 'framer-motion'
+
 // import { useAlert } from 'react-alert';
 
 function ProductInfo(props) {
@@ -14,40 +15,34 @@ function ProductInfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
+    localStorage.setItem('cartItems', JSON.stringify(basket))
+
 let navigate = useNavigate();
 
     useEffect(()=>{
         setProduct(props.detail)
       }, [props.detail])
-      
-const [packaging,setpackaging] = useState();
 
-const packageOptions = Product.variants?.map((p) => p.packaging)
-  .filter((v, i, a) => a.indexOf(v) === i)
-  .map((packaging) => ({ label: packaging, value:packaging }))
+const addToBasket=(item) =>{
 
-   const priceOptions = Product.variants?.filter((p) =>  packaging && p.packaging=== packaging.value)
-  .map((p) => p.price)
-  .filter((v, i, a) => a.indexOf(v) === i)
-  .map((price) => ({ label: price, value:price }));
+  const existItem = basket.find(x => x.slug === props.detail.slug)
 
-
-  let priceFinal = {}
-  if(priceOptions?.length===1){priceFinal=priceOptions[0].value}
-
-
-const addToBasket=(e) =>{
+  const quantity = existItem ? existItem.quantity+ 1 : 1
    
      //dispatch the item into the data layer
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
-        slug: props.detail.slug, 
-        title: props.detail.title,
-        image: props.detail.image,
-        price:props.detail.price
+        // slug: props.detail.slug, 
+        // title: props.detail.title,
+        // image: props.detail.image,
+        // price:props.detail.price,
+        // quantity
+        ...item,quantity
       },
     })
+    
+    window.location.href='/Checkout'
     
 };
 
@@ -55,7 +50,6 @@ const addToBasket=(e) =>{
 
 return (
   <>
-  {!Product ? <></>: 
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
   
   <div className="d-flex justify-content-between align-items-center product-info">
@@ -70,6 +64,7 @@ return (
 
 
     <p>{Product.description}</p>
+ 
     <h5>£{Product.price}</h5>
 
 <div className="d-flex py-2 justify-content-center">
@@ -81,7 +76,7 @@ return (
 
   <Link to={'/Checkout'}>
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={addToBasket}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product)}>
             Add to basket
       </button>
     </div>
@@ -108,8 +103,8 @@ return (
 
   
 
-</motion.div>
-    }
+</motion.div> 
+    
 </>
 )
 }
