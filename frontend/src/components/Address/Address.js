@@ -57,7 +57,7 @@ function Address() {
                         <p>Post Code</p>
                         <input type="text" onChange={(e) => setPostCode(e.target.value)} value={postcode} className="w-100 p-1 border-0" placeholder="Enter your PostCode" required/>
                         <p>Phone Number</p>
-                        <input type="text" onChange={(e) => setPhone(e.target.value)} value={phone} className="w-100 border-0 p-1" placeholder="Enter your Phone Number" required/>
+                        <input type="number" onChange={(e) => setPhone(e.target.value)} value={phone} className="w-100 border-0 p-1" placeholder="Enter your Phone Number" required/>
     </div>
 
 

@@ -72,9 +72,10 @@ import AdminOrderInfo from '../components/dashboard/AdminDashboard/AdminOrderInf
 import Contact from '../components/Contact/Contact.js'
 import Usercontactmsg from '../components/dashboard/Userdashboard/Usercontactmsg'
 import AdminContactmsg from '../components/dashboard/AdminDashboard/AdminContactmsg'
-
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
+import Passwordreset from '../components/Account/Passwordreset'
+import Emailconfirm from '../components/Account/Email'
 
 export default function RootChange() {
 
@@ -154,6 +155,8 @@ export default function RootChange() {
           <Route path="/Signup"  element={<Signup />}></Route>
           <Route path="/user/dashboard" element={<Userdashboard/>}/>
           <Route path="/admin/dashboard" element={<Admindashboard/>}/>
+          <Route path="/passwordReset" element={<Passwordreset/>}/>
+          <Route path="/Emailconfirm" element={<Emailconfirm/>}/>
            <Route  path="/api/products/slug/:slug" element={<ProductDetail/>}/>
           <Route path="/api/plants/slug/:slug" element={<PlantsProductDetail/>}/>
            <Route  path="/orders/get/_id/:id" element={<UserOrderInfo/>}/>

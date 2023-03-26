@@ -152,6 +152,11 @@ export default function Login() {
 		<p className='text-center text-white'>
 			Don't Have an account? <Link to='/signup'>Signup</Link>
 		</p>
+
+<div className="text-center">
+	<Link to="/Emailconfirm">Forgot Password</Link>
+</div>
+
 	</form>
 		</div>
 </div>

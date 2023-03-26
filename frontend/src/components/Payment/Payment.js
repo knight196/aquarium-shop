@@ -135,26 +135,53 @@ function Payment() {
 
     }
 
-    const updatecart  = async (item,quantity) => {
-      const products = await axios.get(`/api/products/${item.slug}`)
-      if(products.qty < quantity){
-        window.alert('Sorry this product is out of stock')
-        return
-      }
-  
-      dispatch({
-        type:'ADD_TO_BASKET',
-        item:{...item,quantity}
-      })
-      window.location.href='/Payment'
-    }
-  
-    const removeFromBasket = (item) => {
-      dispatch({type:'REMOVE_FROM_BASKET', item:item})
-      window.location.href='/Payment'
-    }
-  
 
+    const updatecart  = async (item,quantity, id) => {
+
+      await axios.put(`/orders/decrement/${id}`, {slug: item.slug})
+      
+          dispatch({
+            type:'ADD_TO_BASKET',
+            item:{...item,quantity}
+          })
+      
+          window.location.href='/Checkout'
+      
+        }
+      
+      
+      const incrementCart  = async (item,quantity,id) => {
+      
+        await axios.put(`/orders/increment/${id}`, {slug: item.slug})
+      
+        dispatch({
+          type:'ADD_TO_BASKET',
+          item:{...item,quantity}
+        })
+      
+        window.location.href='/Checkout'
+      
+      
+        }
+      
+        const removeFromBasket = (item) => {
+          dispatch({type:'REMOVE_FROM_BASKET', item:item})
+          window.location.href='/Checkout'
+      }
+      
+      const updateCart  = async (item,quantity) => {
+      
+      
+        dispatch({
+          type:'ADD_TO_BASKET',
+          item:{...item,quantity}
+        })
+      
+        window.location.href='/Checkout'
+      
+      
+        }
+      
 
   return (
     <>
@@ -200,12 +227,33 @@ function Payment() {
               <p>{item.packaging}</p>
               <p>{item.color}</p>
                   <strong>£{item.price}</strong>
-
-            <div>
-              <button onClick={()=> updatecart(item,item.quantity -1)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
-              <label>{item.quantity}</label>
-              <button onClick={()=> updatecart(item,item.quantity + 1)} disabled={item.quantity === item.qty} className="border-0 px-1 mx-2">+</button>
-              </div>
+                  {!item.packaging ? (
+                    
+                    
+                    <div>
+                <button onClick={()=>updateCart(item,item.quantity -1)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
+                <label>{item.quantity}</label>
+                <button onClick={()=> updateCart(item,item.quantity + 1)} className="border-0 px-1 mx-2">+</button>
+                </div>
+                      
+                    ) : 
+                    (
+  <>
+  {item.variants.map(variant => {
+                if(variant.packaging === item.packaging)
+                return (
+                  <div>
+                <button onClick={()=>incrementCart(item,item.quantity -1,variant._id)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
+                <label>{item.quantity}</label>
+                <button onClick={()=> updatecart(item,item.quantity + 1, variant._id)} disabled={item.quantity === variant.quantity} className="border-0 px-1 mx-2">+</button>
+                </div>
+  
+  
+                  )
+              })}
+  </>
+                    )}
+             
 
               <button onClick={()=> removeFromBasket(item)}>Remove</button>
       
