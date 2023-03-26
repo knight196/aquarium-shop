@@ -2,8 +2,51 @@ const Orders = require('../Schema/Orders')
 const express = require('express')
 const usermessage = require('../Schema/usermessage')
 const adminmessage = require('../Schema/adminmessage')
+const productModel = require('../Schema/addProduct')
 
 const router = express.Router();
+
+//decrement the stock value by adding the stock plants section
+
+router.put('/decrement/:id', async (req,res) => {
+
+
+try{
+
+
+const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+{$inc: {'variants.$.quantity': -1}}
+)
+
+res.status(200).json(qtyupdate)
+
+}catch(err){
+  res.status(404).send(err)
+}
+
+})
+
+
+// increase the value of the stock when decreasing the value of the stock plants section
+
+router.put('/increment/:id', async (req,res) => {
+
+
+  try{
+  
+  
+  const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+  {$inc: {'variants.$.quantity': 1}}
+  )
+  
+  res.status(200).json(qtyupdate)
+  
+  }catch(err){
+    res.status(404).send(err)
+  }
+  
+  })
+  
 
 //finding specific order by one id from user
 router.get('/get/_id/:id', async (req,res)=> {
@@ -24,6 +67,7 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
     res.status(404).send({message:'Orders not found'})
   }
 })
+
 
   //return the item
 

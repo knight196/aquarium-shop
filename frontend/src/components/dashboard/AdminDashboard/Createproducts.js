@@ -9,13 +9,13 @@ export default function Createproducts() {
     const [title,settitle] = useState('')
     const [Company,setCompany] = useState('')
     const [price,setprice] = useState(0)
-    const [category,setcategory] = useState('')
+    const [category,setcategory] = useState(0)
     const [description,setdescription] = useState('')
     const [difficulty,setdifficulty] = useState('')
     const [position,setposition] = useState('')
     const [details,setdetails] = useState([{featureDetails:''}])
     const [CompanyProductName,setCompanyProductName] = useState('')
-    const [variants,setvariants] = useState([{packaging:'',price:'' }])
+    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
     const [images,setimages] = useState([])
     const [colors,setcolors] = useState([{colors:''}]) 
      
@@ -41,7 +41,7 @@ export default function Createproducts() {
     // adding plants variants starts here
 
     const plantsAdd = () => {
-      setvariants([...variants,{packaging: ''}])
+      setvariants([...variants,{packaging: '',price:'', quantity:''}])
     }
     const plantshandlechange = (e,index) => {
       const {name,value} = e.target
@@ -108,7 +108,7 @@ const deletecolor = (i) => {
         setdescription('')
         setcategory('')
         setCompanyProductName('')
-        setvariants([{packaging:'', price:''}])
+        setvariants([{packaging:'', price:'', quantity:''}])
         setimages([])
         setcolors([{colors:''}])
        
@@ -136,7 +136,7 @@ const deletecolor = (i) => {
   return (
     <div className="p-2 text-center">
 
-    <h5>Slug</h5>
+    <h5>Slug (required)</h5>
     <input type="text" value={slug} onChange={(e) => setslug(e.target.value)}/>
 
     <h5>Image</h5>
@@ -172,6 +172,7 @@ const deletecolor = (i) => {
   <>
   <input type="text" name="packaging" placeholder="packaging" onChange={e=> plantshandlechange(e,i)}/>
   <input type="text" name="price" placeholder="price" onChange={e=> plantshandlechange(e,i)} className="my-1"/>
+  <input type="text" name="quantity" placeholder="quantity" onChange={e=> plantshandlechange(e,i)}/>
   {variants.length!== 1 && <button onClick={()=> deleteplants(i)}>Remove</button>}
   </>
 ))}
@@ -215,7 +216,7 @@ const deletecolor = (i) => {
   <h5>Position</h5>
     <input type="text" value={position} onChange={(e) => setposition(e.target.value)}/>
 
-    <h5>Category</h5>
+    <h5>Category (required)</h5>
     <input type="text" value={category} onChange={(e) => setcategory(e.target.value)}/>
 
     <br></br>

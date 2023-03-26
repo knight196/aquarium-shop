@@ -8,7 +8,7 @@ var addProductSchema = new mongoose.Schema(
        description:{type:String},
        Company:{type:String},
        price:{type:Number},
-       qty:{type:Number,default:50},
+       quantity:{type:Number},
        image:{
         public_id:{
             type:String,
@@ -34,7 +34,8 @@ var addProductSchema = new mongoose.Schema(
        variants:[
         {
             packaging:{type:String},
-            price:{type:Number}
+            price:{type:Number},
+            quantity:{type:Number}
 
     }
 ],

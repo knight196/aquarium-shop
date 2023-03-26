@@ -36,6 +36,15 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
   let priceFinal = {}
   if(priceOptions?.length===1){priceFinal=priceOptions[0].value}
 
+  const quantityUpdate = Product.variants?.filter((p) =>  packaging && p.packaging=== packaging.value)
+  .map((p) => p.quantity)
+  .filter((v, i, a) => a.indexOf(v) === i)
+  .map((p) => ({ label: p, value:p }));
+
+
+  let updateFinal = {}
+  if(quantityUpdate?.length===1){updateFinal=quantityUpdate[0].value}
+
 
 const addToBasket=(e) =>{
 
@@ -51,7 +60,7 @@ const addToBasket=(e) =>{
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
-      ...e,quantity,packaging:packaging?.value,price:priceFinal
+      ...e,quantity,packaging:packaging?.value,price:priceFinal,qty:updateFinal
       },
     })
     window.location.href='/Checkout'
@@ -78,6 +87,12 @@ return (
 
     <p>{Product.description}</p>
     <h5>£{Product.price}</h5>
+
+    <div>
+
+      {updateFinal > 0 ? (<p className="text-success px-2 py-1">Item is in Stock</p>) : (<p className="text-danger w-50 px-2 py-1">Out of Stock</p>) }
+     
+      </div>
 
 <div className="d-flex py-2 justify-content-center">
 

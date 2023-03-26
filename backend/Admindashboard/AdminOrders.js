@@ -19,30 +19,6 @@ cloudinary.config({
 const router = express.Router()
 
 
-//qty update for stock
-
-router.put('/qty/:id', async (req,res) => {
-  
-  const {qty} = req.body
-
-  try{
-
-    const stock = await addProduct.findOneAndUpdate(
-      
-      {slug:req.params.id},
-
-      {$set:{qty:qty}}
-      
-      )
-
-      res.status(200).json(stock)
-
-  }catch(err){
-    res.status(404).send(err)
-  }
-
-})
-
 //finding specific user's order by one id from admin
 
 router.get('/orders/_id/:id', async (req,res) => {
