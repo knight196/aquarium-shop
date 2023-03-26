@@ -85,6 +85,20 @@ const incrementCart  = async (item,quantity,id) => {
     window.location.href='/Checkout'
 }
 
+const updateCart  = async (item,quantity) => {
+
+
+  dispatch({
+    type:'ADD_TO_BASKET',
+    item:{...item,quantity}
+  })
+
+  window.location.href='/Checkout'
+
+
+  }
+
+
 
 function process(){
   if(!user){
@@ -123,6 +137,12 @@ console.log(basket)
               <p>{item.packaging}</p>
               <p>{item.color}</p>
                   <strong>£{item.price}</strong>
+
+                  <div>
+              <button onClick={()=>updateCart(item,item.quantity -1)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
+              <label>{item.quantity}</label>
+              <button onClick={()=> updateCart(item,item.quantity + 1)} className="border-0 px-1 mx-2">+</button>
+              </div>
 
             {item.variants.map(variant => {
               if(variant.packaging === item.packaging)
