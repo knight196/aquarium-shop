@@ -64,6 +64,8 @@ emailget()
         axios.post('/confirmresetPwd', {email:email.email})
         
         toast.success('Your password was reset successfully')
+
+        navigate('/')
       }
         
     
