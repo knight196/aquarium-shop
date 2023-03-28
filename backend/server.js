@@ -246,8 +246,10 @@ var mailOptions = {
   from:process.env.user,
   to:email,
   subject:'Password Reset',
-  text:'Click on the link below to change your new password',
-  html:`https://aquarium-shop-t2o8.onrender.com/passwordReset/${id}`
+  html:`
+  Click on the link below to change your new password
+  https://aquarium-shop-t2o8.onrender.com/passwordReset/${id}
+  `
 }
 await transporter.sendMail(mailOptions)
 
@@ -279,9 +281,10 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
   from:process.env.user,
   to:email,
-  subject:'Password Reset',
-  text:'Your new password has been created successfully.',
-  html:'https://aquarium-shop-t2o8.onrender.com'
+  subject:'Password Creation Success',
+  html:`
+  Your password has been created successfully.
+  https://aquarium-shop-t2o8.onrender.com`
 }
 await transporter.sendMail(mailOptions)
 

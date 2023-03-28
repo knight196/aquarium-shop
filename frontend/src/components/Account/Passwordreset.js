@@ -16,8 +16,12 @@ export default function Passwordreset() {
     
     const {password,password2,successMsg,errorMsg} = formData
 
+
+    const [email,setemail] = useState([])
+
   const emailget = async () => {
-await axios.get(`/orders/userresetpwd/${id}`)
+const res = await axios.get(`/orders/userresetpwd/${id}`)
+setemail(res.data)
   }
 
   useEffect(() => {
@@ -44,24 +48,33 @@ emailget()
           ...formData,
           errorMsg: 'Passwords do not match'
         })
+
+      }else if(password.length < 6){
+
+        setFormData({
+          ...formData,
+            errorMsg: 'Password needs to be at least 6 length'          
+        })
+
       }else{
 
+        
         axios.put('/orders/passwordreset', {password,id})
-
-        axios.post('/confirmresetPwd', {email: id.email})
-
-        toast.success('Your password was reset successfully')
       
+        axios.post('/confirmresetPwd', {email:email.email})
+        
+        toast.success('Your password was reset successfully')
       }
-
+        
+    
     }
+
 
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center">
       <form onSubmit={handleSubmit} noValidate className="text-center bg-secondary bg-opacity-50 w-50 h-50 p-2 d-flex flex-column justify-content-center align-items-center">
       {successMsg && showSuccessMsg(successMsg)}
 					{errorMsg && showErrorMsg(errorMsg)}
-
     <p>New Password</p>
     <input type="password" value={password} name="password" onChange={handleChange} placeholder='Enter your New Password' className="px-2 py-1"/>
 
@@ -69,7 +82,7 @@ emailget()
     <input type="password" name="password2" value={password2} onChange={handleChange} placeholder="Confirm new password" className="px-2 py-1"/>
 
 <br></br>
-<button className="border-0 px-2 py-1 my-1">Confirm</button>
+  <button className="border-0 px-2 py-1 my-1">Confirm</button>
 
       </form>
     </div>
