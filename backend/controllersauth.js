@@ -2,6 +2,7 @@ const User = require('./Schema/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const {jwtSecret,jwtExpire} = require('./prod/keys')
+
 exports.signupController = async (req, res) => {
     const { username, email, password } = req.body;
 
@@ -81,3 +82,5 @@ exports.signinController = async (req, res) => {
 
   
 };
+
+

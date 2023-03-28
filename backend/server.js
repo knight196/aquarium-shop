@@ -199,8 +199,69 @@ res.status(500).json(err.message)
 
 })
 
+app.put('/updateItem', async (req,res) => {
+
+  const {slug,title,description,price,details,variants,colors} = req.body
+
+try{
+
+    const listproducts = await addProduct.findOneAndUpdate(
+      {slug:slug},
+      {$set:{title:title}},
+      {$set:{description:description}},
+      {$set:{price:price}},
+      {$set:{details:details}},
+      {$set:{variants:variants}},
+      {$set:{colors:colors}}
+    )
+  
+    res.status(201).json({
+      success:true,
+      listproducts
+    })
+
+}catch(err){
+  console.log(err)
+}
+
+})
+
 
 app.post('/emailPassword', async (req,res) => {
+
+
+  const {id,email} = req.body
+
+try{
+
+var transporter = nodemailer.createTransport({
+  service:'hotmail',
+  auth:{
+    user:process.env.user,
+    pass:process.env.pass
+  }
+})
+
+var mailOptions = {
+  from:process.env.user,
+  to:email,
+  subject:'Password Reset',
+  text:'Click on the link below to change your new password',
+  html:`https://aquarium-shop-t2o8.onrender.com/passwordReset/${id}`
+}
+await transporter.sendMail(mailOptions)
+
+res.status(200).json({success:true, message:'email sent'})
+
+}catch(err){
+
+  res.status(404).send(err.message)
+
+}
+
+})
+
+app.post('/confirmresetPwd', async (req,res) => {
 
 
   const {email} = req.body
@@ -215,23 +276,12 @@ var transporter = nodemailer.createTransport({
   }
 })
 
-const handlebarOptions = {
-  viewEngine:{
-    extName: '.handlebars',
-    partialDir: path.resolve(__dirname,'./emailview'),
-    defaultLayout:false
-  },
-  viewPath:path.resolve(__dirname,'./emailview'),
-  extName:'.handlebars'
-}
-
-transporter.use('compile', hbs(handlebarOptions))
-
 var mailOptions = {
   from:process.env.user,
   to:email,
   subject:'Password Reset',
-  template:'passwordreset',
+  text:'Your new password has been created successfully.',
+  html:'https://aquarium-shop-t2o8.onrender.com'
 }
 await transporter.sendMail(mailOptions)
 
@@ -243,8 +293,8 @@ res.status(200).json({success:true, message:'email sent'})
 
 }
 
-})
 
+})
     
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))

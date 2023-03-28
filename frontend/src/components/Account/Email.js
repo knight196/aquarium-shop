@@ -1,30 +1,48 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import axios from 'axios'
+import {toast} from 'react-toastify'
 
 export default function Email() {
-
 
   const [email,setemail] = useState('')
 
 
-  const emailaddress = async (e) => {
+  const [signedemail,setSignedEmail] = useState([])
 
-    e.preventDefault()
+  const getverified = async () => {
 
-    axios.post('/emailPassword', {email})
-    .then(() => {
-      setemail('')
-    })
-
+    const res = await axios.get(`/orders/useremail/${email}`)
+    setSignedEmail(res.data)
   }
 
-  console.log(email)
+  useEffect(() => {
+    getverified()
+  },[email])
+  
+ 
+  
+  const emailaddress = async (e) => {
+    
+    e.preventDefault()
+    
+    if(signedemail === null || 'homepage'){
+      toast.warning('Email not found')
+    }else{
+      axios.post('/emailPassword', {id:signedemail._id,email})
+      .then(() => {
+        setemail('')
+      })
+      toast.success('Your password reset link has been sent')
+    }
+    
+  }
+
 
 
   return (
     <div className="d-flex text-center vh-100 justify-content-center align-items-center flex-column">
       <div className="bg-secondary bg-opacity-50 w-50 h-50 d-flex justify-content-center align-items-center flex-column p-2">
-      <p>Enter your alternative email address for new Password</p>
+      <p>Enter your email address for new Password</p>
       <input type="email" placeholder="Email address" value={email} onChange={(e)=> setemail(e.target.value)} className="p-2 py-1"/>
       <button className="border-0 px-2 py-1 my-1" onClick={emailaddress}>Confirm</button>
       </div>

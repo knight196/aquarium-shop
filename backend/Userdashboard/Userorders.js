@@ -1,15 +1,72 @@
 const Orders = require('../Schema/Orders')
+const Account = require('../Schema/User')
 const express = require('express')
 const usermessage = require('../Schema/usermessage')
 const adminmessage = require('../Schema/adminmessage')
 const productModel = require('../Schema/addProduct')
 
+const bcrypt = require('bcryptjs');
+
 const router = express.Router();
+
+
+//conditional of the email for the reset password
+
+router.get('/useremail/:email', async (req,res) => {
+
+try{
+  const  email  = await Account.findOne({email:req.params.email})
+
+  res.status(200).json(email)
+}catch(err){
+  console.log(err)
+}
+
+})
+
+//reset the password from using user id
+router.get('/userresetpwd/:id', async (req,res) => {
+
+  try{
+
+
+    const email = await Account.findOne({_id:req.params.id})
+
+
+    res.status(200).json(email)
+
+  }catch (err){
+    console.log(err)
+  }
+
+})
+
+
+router.put('/passwordreset', async (req,res) => {
+
+  try{
+    
+
+    const hashPassword = await bcrypt.hash(req.body.password,10)
+
+   const pwdUpdate =  await Account.findByIdAndUpdate(
+      {_id:req.body.id},
+      {$set:{password:hashPassword}}
+    )
+
+res.status(200).json({pwdUpdate})
+
+  }catch(err){
+    console.log(err)
+  }
+
+})
+
+
 
 //decrement the stock value by adding the stock plants section
 
 router.put('/decrement/:id', async (req,res) => {
-
 
 try{
 

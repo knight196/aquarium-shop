@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import {Link} from 'react-router-dom'
 
 export default function Uploadlist() {
 
@@ -86,6 +87,7 @@ return (
         <div>
             <p5>CreatedAt</p5>
         <p>{item.createdAt.substring(0,10)}</p>
+     
         <button onClick={()=> deletelist(item._id)} style={{fontSize:'10px'}} className="btn w-100 bg-danger text-white">Delete</button>
         </div>
         </div>
