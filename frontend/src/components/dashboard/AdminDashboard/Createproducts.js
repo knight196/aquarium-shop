@@ -94,8 +94,7 @@ const deletecolor = (i) => {
     const submitform = async (e) => {
       e.preventDefault();
     
-      axios
-      .post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants,images,colors})
+      axios.post('/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants,images,colors})
       .then(() => {
         setslug('')
         settitle('')

@@ -8,76 +8,99 @@ export default function EditList() {
   const {slug} = useParams()
 
   const [products,setproducts] = useState([])
+
+  const [slugName,setslugName] = useState('')
+    const [title,settitle] = useState('')
+    const [price,setprice] = useState(0)
+    const [description,setdescription] = useState('')
+    const [details,setdetails] = useState([{featureDetails:''}])
+    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
+    const [colors,setcolors] = useState([{colors:''}]) 
   
   const getproducts = async () => {
 
     const res = await axios.get(`/api/editProduct/${slug}`)
 
     setproducts(res.data)
-
+    setslugName(products.slug)
+    settitle(products.title)
+    setprice(products.price)
+    setdescription(products.description)
+    setdetails(products.details)
+    setvariants(products.variants)
+    setcolors(products.colors)
   }
 
   useEffect(() => {
     getproducts()
   },[])
 
-  const [slugName,setslugName] = useState('')
-    const [title,settitle] = useState('')
-    const [price,setprice] = useState(0)
-    const [description,setdescription] = useState('')
-    const [details,setdetails] = useState([{featureDetails:products.featureDetails}])
-    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
-    const [colors,setcolors] = useState([{colors:''}]) 
 
-  console.log(products)
-
+  
 
 const submitform = async (e) => {
   e.preventDefault();
 
   axios.put('/updateItem', {slugName,title,details,description,price,variants,colors})
-  .then(() => {
-    setslugName('')
-    settitle('')
-    setprice(0)
-    setdetails([{featureDetails:''}])        
-    setdescription('')
-    setvariants([{packaging:'', price:'', quantity:''}])
-    setcolors([{colors:''}])
-   
-    toast.success('product added successfully')
+  
+    toast.success('product updated successfully')
     setTimeout(function() {
       window.location.reload();
     },1500)
-  })
   .catch((err) => alert(err))
   
 }
 
+const handlecolorchange = (e,index) => {
+  const {name,value} = e.target;
+  const list=[...colors]
+  list[index][name] = value;
+  setcolors(list)
+}
+
+const plantshandlechange = (e,index) => {
+  const {name,value} = e.target
+  const list = [...variants]
+  list[index][name] = value;
+  setvariants(list)
+}
 
 
- 
+const handlechange = (e,index) => {
+  const {name,value} = e.target;
+  const list=[...details]
+  list[index][name] = value;
+  setdetails(list)
+}
+
+console.log(colors)
 
   return (
     <div className="text-center py-2">
       
       <p>Slug</p>
-      <input type="text"/>
+      <input type="text" value={slugName} onChange={e=> setslugName(e.target.value)}/>
 
       <p>Description</p>
-      <textarea  style={{width:'700px',height:'300px'}}/>
+      <textarea  style={{width:'700px',height:'300px'}} value={description} onChange={e=> setdescription(e.target.value)}/>
 
       <h5>Features&Details</h5>
+
+      {details?.map((item,index) => (
+        <div>
+        <input type="text" value={item.featureDetails} className="my-1 w-50 h-50" onChange={e=> handlechange(e,index)}/>
+        </div>
+      ))}
 
 <div className="d-flex flex-column align-items-center">
 
 <h5>Plants variants</h5>
 <br></br>
-{products.variants?.map(item => (
+{variants?.map((item,index) => (
   <>
-  <input type="text" className="my-1" value={item.packaging} placeholder="packaging"/>
-  <input type="text" className="my-1" value={item.price} placeholder="price"/>
-  <input type="text" className="my-1" value={item.quantity} placeholder="quantity"/>
+  <input type="text" className="my-1" value={item.packaging} onChange={e=> plantshandlechange(e,index)} placeholder="packaging"/>
+  <input type="text" className="my-1" value={item.price} placeholder="price" onChange={e=> plantshandlechange(e,index)}/>
+  <input type="text" className="my-1" value={item.quantity} placeholder="quantity" onChange={e=> plantshandlechange(e,index)}/>
   </>
 ))}
 </div>
@@ -86,16 +109,16 @@ const submitform = async (e) => {
 
 <h5>Color variants</h5>
 
-{products.colors?.map(item => (
-  <input type="text" className="my-1" value={item.colors} placeholder="colors"/> 
+{colors?.map((item,index) => (
+  <input type="text" className="my-1" value={item.colors} placeholder="colors" onChange={e=> handlecolorchange(e,index)}/> 
 ))}
 </div>
 
       <p>Title</p>
-      <input type="text"/>
+      <input type="text" value={title} onChange={e=> settitle(e.target.value)}/>
 
       <p>Price</p>
-      <input type="number" />
+      <input type="number" value={price} onChange={e=> setprice(e.target.value)}/>
 
     
 

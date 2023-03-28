@@ -87,7 +87,9 @@ return (
         <div>
             <p5>CreatedAt</p5>
         <p>{item.createdAt.substring(0,10)}</p>
-       
+        <Link to={`/api/editProduct/${item.slug}`}>
+        <button style={{fontSize:'10px'}} className="btn w-100 bg-primary text-white">Edit</button>
+        </Link>
         <button onClick={()=> deletelist(item._id)} style={{fontSize:'10px'}} className="btn w-100 bg-danger text-white">Delete</button>
         </div>
         </div>

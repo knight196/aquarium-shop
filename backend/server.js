@@ -207,6 +207,7 @@ try{
 
     const listproducts = await addProduct.findOneAndUpdate(
       {slug:slug},
+      {$set:{slug:slug}},
       {$set:{title:title}},
       {$set:{description:description}},
       {$set:{price:price}},

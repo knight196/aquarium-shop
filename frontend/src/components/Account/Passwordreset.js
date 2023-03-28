@@ -74,7 +74,7 @@ emailget()
 
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center">
-      <form onSubmit={handleSubmit} noValidate className="text-center bg-secondary bg-opacity-50 w-50 h-50 p-2 d-flex flex-column justify-content-center align-items-center">
+      <form onSubmit={handleSubmit} noValidate className="text-center bg-secondary bg-opacity-50  p-5 d-flex flex-column justify-content-center align-items-center">
       {successMsg && showSuccessMsg(successMsg)}
 					{errorMsg && showErrorMsg(errorMsg)}
     <p>New Password</p>
