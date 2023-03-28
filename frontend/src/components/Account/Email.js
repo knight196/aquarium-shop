@@ -18,22 +18,16 @@ export default function Email() {
   useEffect(() => {
     getverified()
   },[email])
-  
+
  
   
   const emailaddress = async (e) => {
     
     e.preventDefault()
-    
-    if(signedemail === null || 'homepage'){
-      toast.warning('Email not found')
-    }else{
+  
       axios.post('/emailPassword', {id:signedemail._id,email})
-      .then(() => {
-        setemail('')
-      })
       toast.success('Your password reset link has been sent')
-    }
+    
     
   }
 
