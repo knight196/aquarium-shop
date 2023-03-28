@@ -19,25 +19,30 @@ export default function Email() {
     getverified()
   },[email])
 
+  console.log(signedemail)
  
   
   const emailaddress = async (e) => {
     
     e.preventDefault()
-  
+
+    if(signedemail === null){
+      toast.warning('Email not found')
+    }else{ 
       axios.post('/emailPassword', {id:signedemail._id,email})
       toast.success('Your password reset link has been sent')
+    }
     
     
   }
 
-
+console.log(email)
 
   return (
     <div className="d-flex text-center vh-100 justify-content-center align-items-center flex-column">
       <div className="bg-secondary bg-opacity-50 w-50 h-50 d-flex justify-content-center align-items-center flex-column p-2">
       <p>Enter your email address for new Password</p>
-      <input type="email" placeholder="Email address" value={email} onChange={(e)=> setemail(e.target.value)} className="p-2 py-1"/>
+      <input type="email" placeholder="Email address" onChange={(e)=> setemail(e.target.value)} className="p-2 py-1"/>
       <button className="border-0 px-2 py-1 my-1" onClick={emailaddress}>Confirm</button>
       </div>
     </div>
