@@ -74,7 +74,7 @@ const handlecolorchange = (e,index) => {
 }
 
 const plantshandlechange = (e,index) => {
-  const {name,value} = e.target.value
+  const {name,value} = e.target
   const list = [...variants]
   list[index][name] = value;
   setvariants(list)

@@ -200,6 +200,8 @@ res.status(500).json(err.message)
 })
 
 app.put('/updateItem/:slug', async (req,res) => {
+
+
 try{
 
         const listproducts = await addProduct.findOneAndUpdate(
