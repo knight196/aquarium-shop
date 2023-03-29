@@ -59,7 +59,7 @@ const submitform = async (e) => {
 
     toast.success('product updated successfully')
       setTimeout(function() {
-        window.location.reload();
+        window.location.href(`/api/editProduct/${slug}`);
       },1500)
       .catch((err) => alert(err))
     
@@ -100,7 +100,7 @@ const handlechange = (e,index) => {
 
 
       <p>Description</p>
-      <textarea  style={{width:'700px',height:'300px'}} value={description} onChange={e=> setdescription(e.target.value)}/>
+      <textarea className="w-100" style={{height:'200px'}} value={description} onChange={e=> setdescription(e.target.value)}/>
 
       <h5>Features&Details</h5>
 
