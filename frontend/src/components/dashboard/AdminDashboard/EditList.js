@@ -59,7 +59,7 @@ const submitform = async (e) => {
 
     toast.success('product updated successfully')
       setTimeout(function() {
-        window.location.href(`/api/editProduct/${slug}`);
+        window.location.reload();
       },1500)
       .catch((err) => alert(err))
     
