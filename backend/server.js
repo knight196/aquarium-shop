@@ -199,23 +199,14 @@ res.status(500).json(err.message)
 
 })
 
-app.put('/updateItem', async (req,res) => {
-
-  const {slug,title,description,price,details,variants,colors} = req.body
-
+app.put('/updateItem/:slug', async (req,res) => {
 try{
 
-    const listproducts = await addProduct.findOneAndUpdate(
-      {slug:slug},
-      {$set:{slug:slug}},
-      {$set:{title:title}},
-      {$set:{description:description}},
-      {$set:{price:price}},
-      {$set:{details:details}},
-      {$set:{variants:variants}},
-      {$set:{colors:colors}}
-    )
-  
+        const listproducts = await addProduct.findOneAndUpdate(
+          {slug:req.params.slug},
+          {$set:req.body},
+        )
+    
     res.status(201).json({
       success:true,
       listproducts

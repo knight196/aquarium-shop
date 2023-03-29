@@ -7,28 +7,29 @@ export default function EditList() {
 
   const {slug} = useParams()
 
-  const [products,setproducts] = useState([])
 
   const [slugName,setslugName] = useState('')
     const [title,settitle] = useState('')
     const [price,setprice] = useState(0)
     const [description,setdescription] = useState('')
-    const [details,setdetails] = useState([{featureDetails:''}])
-    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
-    const [colors,setcolors] = useState([{colors:''}]) 
+    const [details,setdetails] = useState([])
+    const [variants,setvariants] = useState([])
+    const [colors,setcolors] = useState([]) 
+   
+ 
+
   
   const getproducts = async () => {
 
     const res = await axios.get(`/api/editProduct/${slug}`)
-
-    setproducts(res.data)
-    setslugName(products.slug)
-    settitle(products.title)
-    setprice(products.price)
-    setdescription(products.description)
-    setdetails(products.details)
-    setvariants(products.variants)
-    setcolors(products.colors)
+    setslugName(res.data.slug)
+    settitle(res.data.title)
+    setprice(res.data.price)
+    setdescription(res.data.description)
+    setdetails(res.data.details)
+    setvariants(res.data.variants)
+    setcolors(res.data.colors)
+ 
   }
 
   useEffect(() => {
@@ -36,18 +37,32 @@ export default function EditList() {
   },[])
 
 
-  
+
 
 const submitform = async (e) => {
   e.preventDefault();
-
-  axios.put('/updateItem', {slugName,title,details,description,price,variants,colors})
   
+ await axios.put(`/updateItem/${slug}`, {
+    slugName,
+    title,
+    price,
+    description,
+    details,
+    variants,
+    colors,
+  })
+
+//   public_id: "aquariumShop/c8pggarrossv8uvtccoo"
+// ​​
+// url: "https://res.cloudinary.com/personal-use-only/image/upload/v1677169914/aquariumShop/c8pggarrossv8uvtccoo.jpg"
+
+
     toast.success('product updated successfully')
-    setTimeout(function() {
-      window.location.reload();
-    },1500)
-  .catch((err) => alert(err))
+      setTimeout(function() {
+        window.location.reload();
+      },1500)
+      .catch((err) => alert(err))
+    
   
 }
 
@@ -59,7 +74,7 @@ const handlecolorchange = (e,index) => {
 }
 
 const plantshandlechange = (e,index) => {
-  const {name,value} = e.target
+  const {name,value} = e.target.value
   const list = [...variants]
   list[index][name] = value;
   setvariants(list)
@@ -73,13 +88,16 @@ const handlechange = (e,index) => {
   setdetails(list)
 }
 
-console.log(colors)
+
+
 
   return (
     <div className="text-center py-2">
       
       <p>Slug</p>
       <input type="text" value={slugName} onChange={e=> setslugName(e.target.value)}/>
+
+
 
       <p>Description</p>
       <textarea  style={{width:'700px',height:'300px'}} value={description} onChange={e=> setdescription(e.target.value)}/>
@@ -88,7 +106,7 @@ console.log(colors)
 
       {details?.map((item,index) => (
         <div>
-        <input type="text" value={item.featureDetails} className="my-1 w-50 h-50" onChange={e=> handlechange(e,index)}/>
+        <input type="text" name="featureDetails" value={item.featureDetails} className="my-1 w-50 h-50" onChange={e=> handlechange(e,index)}/>
         </div>
       ))}
 
@@ -98,9 +116,9 @@ console.log(colors)
 <br></br>
 {variants?.map((item,index) => (
   <>
-  <input type="text" className="my-1" value={item.packaging} onChange={e=> plantshandlechange(e,index)} placeholder="packaging"/>
-  <input type="text" className="my-1" value={item.price} placeholder="price" onChange={e=> plantshandlechange(e,index)}/>
-  <input type="text" className="my-1" value={item.quantity} placeholder="quantity" onChange={e=> plantshandlechange(e,index)}/>
+  <input type="text" name="packaging" className="my-1" value={item.packaging} onChange={e=> plantshandlechange(e,index)} placeholder="packaging"/>
+  <input type="text" name="price" className="my-1" value={item.price} placeholder="price" onChange={e=> plantshandlechange(e,index)}/>
+  <input type="text" name="quantity" className="my-1" value={item.quantity} placeholder="quantity" onChange={e=> plantshandlechange(e,index)}/>
   </>
 ))}
 </div>
@@ -110,7 +128,7 @@ console.log(colors)
 <h5>Color variants</h5>
 
 {colors?.map((item,index) => (
-  <input type="text" className="my-1" value={item.colors} placeholder="colors" onChange={e=> handlecolorchange(e,index)}/> 
+  <input type="text" name="colors" className="my-1" value={item.colors} placeholder="colors" onChange={e=> handlecolorchange(e,index)}/> 
 ))}
 </div>
 
