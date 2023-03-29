@@ -59,7 +59,7 @@ const submitform = async (e) => {
 
     toast.success('product updated successfully')
       setTimeout(function() {
-        window.location.reload();
+        window.location.href="/admin/dashboard"
       },1500)
       .catch((err) => alert(err))
     
