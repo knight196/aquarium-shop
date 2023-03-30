@@ -58,6 +58,47 @@ productRouter.get('/products/slug/:slug', async (req, res) => {
 
   })
 
+  //decrement the stock value by adding the stock plants section
+
+productRouter.put('/decrement/:id', async (req,res) => {
+
+  try{
+  
+  
+  const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+  {$inc: {'variants.$.quantity': -1}}
+  )
+  
+  res.status(200).json(qtyupdate)
+  
+  }catch(err){
+    res.status(404).send(err)
+  }
+  
+  })
+  
+  
+  // increase the value of the stock when decreasing the value of the stock plants section
+  
+  productRouter.put('/increment/:id', async (req,res) => {
+  
+  
+    try{
+    
+    
+    const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+    {$inc: {'variants.$.quantity': 1}}
+    )
+    
+    res.status(200).json(qtyupdate)
+    
+    }catch(err){
+      res.status(404).send(err)
+    }
+    
+    })
+    
+
 
 
 module.exports = productRouter

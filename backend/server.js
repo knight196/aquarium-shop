@@ -3,21 +3,19 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const dotenv = require('dotenv')
-const addProduct = require('./Schema/addProduct')
 const authRoutes = require('./routes/routesauth')
 const productRouter = require('./routes/productroutes')
 const path = require('path')
 const Userdashboard = require('./Userdashboard/Userorders')
 const Admindashboard = require('./Admindashboard/AdminOrders')
-const cloudinary = require('cloudinary').v2
-const nodemailer = require('nodemailer')
-const hbs = require('nodemailer-express-handlebars')
+const newProduct = require('./routes/newproduct')
+const emailProduct = require('./routes/emailRoute')
 const bodyParser = require('body-parser')
-
-const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
-
-
 dotenv.config({path:path.resolve(__dirname, './.env')});
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
+
 
 
 const app = express();
@@ -31,12 +29,14 @@ app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cors())
+app.use(cors())
 
 
 app.use('/api', productRouter)
 app.use('/orders', Userdashboard)
 app.use('/api/', Admindashboard)
+app.use('/newproduct', newProduct)
+app.use('/emailproduct', emailProduct)
 
 
 
@@ -45,19 +45,13 @@ app.use('/api/', Admindashboard)
 //mongoose
 mongoose.connect(process.env.MONGODB_URI)
 
-//cloudinary config
-cloudinary.config({
-  cloud_name:process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
- })
 
 
 // API for PAYMENT
 
 app.get("/config", (req, res) => {
     res.send({
-      publishableKey: 'pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37'
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY
     });
   });
 
@@ -82,222 +76,12 @@ app.get("/config", (req, res) => {
     }
   });
 
-  // cloudinary image upload 
-app.post('/newproducts/add', async (req,res) => {
-
-  const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants,images,colors} = req.body
-  try{
-
-    const result = await cloudinary.uploader.upload(image, {
-      folder:'aquariumShop',
-      width:1920,
-      crop:'scale'
-    })
-
-
-    let images = [...req.body.images];
-    let imagesBuffer = []
-
-    for(let i=0; i<images.length; i++){
-     const result = await cloudinary.uploader.upload(images[i], {
-        folder:'aquariumvariants',
-        width:1920,
-        crop:'scale'
-      })
-      
-      imagesBuffer.push({
-        public_id:result.public_id,
-        url:result.secure_url
-      })
-      
-    }
-      
-    req.body.images = imagesBuffer
-
-
-    const listproducts = await addProduct.create({
-      slug,
-      title,
-      category,
-      description,
-      Company,
-      price,
-      image:{
-        public_id: result.public_id,
-        url:result.secure_url
-      },
-      position,
-      difficulty,
-      CompanyProductName,
-      details,
-      variants,
-      images:imagesBuffer,
-      colors,
-  
-    })
-  
-    res.status(201).json({
-      success:true,
-      listproducts
-    })
-  }catch(err){
-    console.log(err)
-  }
-
-
-})
-
-app.post('/api/sendemail', async (req,res) => {
-
-const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
-
-
-try{
-
-  var transporter = nodemailer.createTransport({
-    service:'hotmail',
-  auth : {  
-    user:process.env.user,
-    pass:process.env.pass
-  }
-})
-
-const handlebarOptions = {
-  viewEngine:{
-    extName: '.handlebars',
-    partialDir: path.resolve(__dirname,'./views'),
-    defaultLayout:false
-  },
-  viewPath:path.resolve(__dirname,'./views'),
-  extName:'.handlebars'
-}
-
-transporter.use('compile', hbs(handlebarOptions))
-
-var mailOptions = {
-  from:process.env.user,
-  to:email,
-  subject:'Order confirmation',
-  template:'email',
-  context:{
-    items:result,
-    subtotal:subtotal,
-    totalAmount:totalAmount,
-    address:address,
-    paymentCreate:paymentCreate,
-    orderId:orderId,
-    deliveryOptions:deliveryOptions,
-    deliveryPrice:deliveryPrice
-  }
-}
-
-await transporter.sendMail(mailOptions)
-res.status(200).json({success:true,message:'Email sent'})
-}catch(err){
-res.status(500).json(err.message)
-}
-
-})
-
-app.put('/updateItem/:slug', async (req,res) => {
-
-
-try{
-
-        const listproducts = await addProduct.findOneAndUpdate(
-          {slug:req.params.slug},
-          {$set:req.body},
-        )
     
-    res.status(201).json({
-      success:true,
-      listproducts
-    })
-
-}catch(err){
-  console.log(err)
-}
-
-})
+// app.use(express.static(path.join(__dirname, '../frontend/build')))
+// app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
 
 
-app.post('/emailPassword', async (req,res) => {
-
-
-  const {id,email} = req.body
-
-try{
-
-var transporter = nodemailer.createTransport({
-  service:'hotmail',
-  auth:{
-    user:process.env.user,
-    pass:process.env.pass
-  }
-})
-
-var mailOptions = {
-  from:process.env.user,
-  to:email,
-  subject:'Password Reset',
-  html:`
-  Click on the link below to change your new password
-  https://aquarium-shop-t2o8.onrender.com/passwordReset/${id}
-  `
-}
-await transporter.sendMail(mailOptions)
-
-res.status(200).json({success:true, message:'email sent'})
-
-}catch(err){
-
-  res.status(404).send(err.message)
-
-}
-
-})
-
-app.post('/confirmresetPwd', async (req,res) => {
-
-
-  const {email} = req.body
-
-try{
-
-var transporter = nodemailer.createTransport({
-  service:'hotmail',
-  auth:{
-    user:process.env.user,
-    pass:process.env.pass
-  }
-})
-
-var mailOptions = {
-  from:process.env.user,
-  to:email,
-  subject:'Password Creation Success',
-  html:`
-  Your password has been created successfully.
-  https://aquarium-shop-t2o8.onrender.com`
-}
-await transporter.sendMail(mailOptions)
-
-res.status(200).json({success:true, message:'email sent'})
-
-}catch(err){
-
-  res.status(404).send(err.message)
-
-}
-
-
-})
-    
-app.use(express.static(path.join(__dirname, '../frontend/build')))
-app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
-
-
-// app.use('/', (req,res)=> res.send('homepage'))
+app.use('/', (req,res)=> res.send('homepage'))
 
 app.listen(port, () => {
     console.log(`serve at http://localhost:${port}`)

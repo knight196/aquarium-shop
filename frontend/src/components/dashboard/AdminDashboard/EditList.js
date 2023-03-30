@@ -42,7 +42,7 @@ export default function EditList() {
 const submitform = async (e) => {
   e.preventDefault();
   
- await axios.put(`/updateItem/${slug}`, {
+ await axios.put(`/newproduct/updateItem/${slug}`, {
     slugName,
     title,
     price,

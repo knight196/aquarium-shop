@@ -110,7 +110,7 @@ function Payment() {
 
    
 
-    axios.post('/api/sendemail', {
+    axios.post('/emailproduct/sendemail', {
       result:basket,
       email:user?.email,
       subtotal:getBasketTotal(basket),
@@ -138,7 +138,7 @@ function Payment() {
 
     const updatecart  = async (item,quantity, id) => {
 
-      await axios.put(`/orders/decrement/${id}`, {slug: item.slug})
+      await axios.put(`/api/decrement/${id}`, {slug: item.slug})
       
           dispatch({
             type:'ADD_TO_BASKET',
@@ -152,7 +152,7 @@ function Payment() {
       
       const incrementCart  = async (item,quantity,id) => {
       
-        await axios.put(`/orders/increment/${id}`, {slug: item.slug})
+        await axios.put(`/api/increment/${id}`, {slug: item.slug})
       
         dispatch({
           type:'ADD_TO_BASKET',

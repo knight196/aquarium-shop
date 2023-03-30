@@ -59,9 +59,9 @@ emailget()
       }else{
 
         
-        axios.put('/orders/passwordreset', {password,id})
+        axios.put('/emailproduct/passwordreset', {password,id})
       
-        axios.post('/confirmresetPwd', {email:email.email})
+        axios.post('/emailproduct/confirmresetPwd', {email:email.email})
         
         toast.success('Your password was reset successfully')
 

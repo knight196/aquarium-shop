@@ -29,7 +29,7 @@ export default function Email() {
     if(signedemail === null){
       toast.warning('Email not found')
     }else{ 
-      axios.post('/emailPassword', {id:signedemail._id,email})
+      axios.post('/emailproduct/emailPassword', {id:signedemail._id,email})
       toast.success('Your password reset link has been sent')
     }
     
