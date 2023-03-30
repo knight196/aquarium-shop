@@ -20,7 +20,7 @@ export default function Passwordreset() {
     const [email,setemail] = useState([])
 
   const emailget = async () => {
-const res = await axios.get(`/orders/userresetpwd/${id}`)
+const res = await axios.get(`/emailproduct/userresetpwd/${id}`)
 setemail(res.data)
   }
 

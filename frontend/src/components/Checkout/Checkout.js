@@ -54,7 +54,7 @@ useEffect(() => {
 
 const updatecart  = async (item,quantity, id) => {
 
-await axios.put(`/orders/decrement/${id}`, {slug: item.slug})
+await axios.put(`/api/decrement/${id}`, {slug: item.slug})
 
     dispatch({
       type:'ADD_TO_BASKET',
@@ -68,7 +68,7 @@ await axios.put(`/orders/decrement/${id}`, {slug: item.slug})
 
 const incrementCart  = async (item,quantity,id) => {
 
-  await axios.put(`/orders/increment/${id}`, {slug: item.slug})
+  await axios.put(`/api/increment/${id}`, {slug: item.slug})
 
   dispatch({
     type:'ADD_TO_BASKET',

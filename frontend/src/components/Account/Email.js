@@ -11,7 +11,7 @@ export default function Email() {
 
   const getverified = async () => {
 
-    const res = await axios.get(`/orders/useremail/${email}`)
+    const res = await axios.get(`/emailproduct/useremail/${email}`)
     setSignedEmail(res.data)
   }
 

@@ -13,7 +13,7 @@ const emailProduct = require('./routes/emailRoute')
 const bodyParser = require('body-parser')
 dotenv.config({path:path.resolve(__dirname, './.env')});
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
 
 
 
@@ -29,7 +29,7 @@ app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+// app.use(cors())
 
 
 app.use('/api', productRouter)
@@ -51,7 +51,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.get("/config", (req, res) => {
     res.send({
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY
+      publishableKey:'pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37'
     });
   });
 
@@ -77,11 +77,11 @@ app.get("/config", (req, res) => {
   });
 
     
-// app.use(express.static(path.join(__dirname, '../frontend/build')))
-// app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
+app.use(express.static(path.join(__dirname, '../frontend/build')))
+app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
 
 
-app.use('/', (req,res)=> res.send('homepage'))
+// app.use('/', (req,res)=> res.send('homepage'))
 
 app.listen(port, () => {
     console.log(`serve at http://localhost:${port}`)
