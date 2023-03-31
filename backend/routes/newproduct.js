@@ -92,7 +92,7 @@ productRouter.post('/newproducts/add', async (req,res) => {
       details: req.body.details,
       price: req.body.price,
       colors: req.body.colors,
-      updateImg:req.body.updateImg,
+      image:req.body.image,
       updateImage:req.body.updateImage
     }
     try{
@@ -100,7 +100,7 @@ productRouter.post('/newproducts/add', async (req,res) => {
       if(req.body.image !== ''){
       
 
-        const newImage = await cloudinary.uploader.upload(data.updateImg, {
+        const newImage = await cloudinary.uploader.upload(data.image, {
           folder:'updateAquariumShop',
           width:1920,
           crop:'scale'
