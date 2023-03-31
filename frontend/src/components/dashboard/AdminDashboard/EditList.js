@@ -18,8 +18,8 @@ export default function EditList() {
    const [image,setimage] = useState([])
   const [images,setimages] = useState([])
 
+  const [updateImg,setUpdateImage] = useState('')
   const [updateImage,setUpdateImages] = useState([])
-
   
   const getproducts = async () => {
 
@@ -49,15 +49,16 @@ export default function EditList() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setimage(reader.result)
+      setUpdateImage(reader.result)
     }
   }
 
 const submitform = async (e) => {
   e.preventDefault();
  await axios.put(`/newproduct/updateItem/${slug}`, {
-  slugName,description,price,title,colors,variants,details,image,updateImage
+  slugName,description,price,title,colors,variants,details,updateImg,updateImage
  })
+
 
 
 //   public_id: "aquariumShop/c8pggarrossv8uvtccoo"
@@ -73,6 +74,7 @@ const submitform = async (e) => {
     
   
 }
+
 
 const handlecolorchange = (e,index) => {
   const {name,value} = e.target;
@@ -108,7 +110,6 @@ const listimages = (e) => {
 
 }
 
-console.log(updateImage)
 
   return (
     <div className="text-center py-2">
@@ -118,10 +119,13 @@ console.log(updateImage)
 
 <hr></hr>
       <h5>Image</h5>
-    <input  onChange={handleImage} type="file" />
+    <input  onChange={handleImage} type="file"/>
     <br></br>
     <img style={{width:'100px', height:'100px'}} src={image.url} alt={title}/>
-
+    <br></br>
+    {updateImg === '' ? <></> : 
+    <img style={{width:'100px', height:'100px'}} src={updateImg} alt={title}/>
+  }
 <hr></hr>
 
 <h5>Variants Images</h5>

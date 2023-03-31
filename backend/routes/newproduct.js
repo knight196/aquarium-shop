@@ -92,25 +92,41 @@ productRouter.post('/newproducts/add', async (req,res) => {
       details: req.body.details,
       price: req.body.price,
       colors: req.body.colors,
-      image:req.body.image,
+      updateImg:req.body.updateImg,
       updateImage:req.body.updateImage
     }
     try{
 
-      if(req.body.image !== ''){
+
+      if(data.updateImg === '' || data.updateImage === []){
+        
+        const listproducts = await addProduct.findOneAndUpdate(
+          {slug:data.slugName},
+          {$set:data},
+        )
+          
+          res.status(201).json({
+            success:true,
+            listproducts
+          })
+
+      }else{
+
+        
+        if(data.updateImg !== ''){
       
 
-        const newImage = await cloudinary.uploader.upload(data.image, {
+        const newImage = await cloudinary.uploader.upload(data.updateImg, {
           folder:'updateAquariumShop',
           width:1920,
           crop:'scale'
         })
 
-        data.image = {
+        data.updateImg = {
           public_id:newImage.public_id,
           url:newImage.url
         }
-      
+        
         
       }
 
@@ -137,21 +153,23 @@ productRouter.post('/newproducts/add', async (req,res) => {
       }
     
     }
-
     data.updateImage = imagesBuffer
+
+    const listproducts = await addProduct.findOneAndUpdate(
+      {slug:data.slugName},
+      {$set:data},
+    )
+      
+      res.status(201).json({
+        success:true,
+        listproducts
+      })
+  }
     
-      const listproducts = await addProduct.findOneAndUpdate(
-        {slug:data.slugName},
-        {$set:data},
-      )
-        
-        res.status(201).json({
-          success:true,
-          listproducts
-        })
     
     }catch(err){
       console.log(err)
+
     }
     
     })
