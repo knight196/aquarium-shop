@@ -15,8 +15,10 @@ export default function EditList() {
     const [details,setdetails] = useState([])
     const [variants,setvariants] = useState([])
     const [colors,setcolors] = useState([]) 
-   
- 
+   const [image,setimage] = useState([])
+  const [images,setimages] = useState([])
+
+  const [updateImage,setUpdateImages] = useState([])
 
   
   const getproducts = async () => {
@@ -29,7 +31,8 @@ export default function EditList() {
     setdetails(res.data.details)
     setvariants(res.data.variants)
     setcolors(res.data.colors)
- 
+    setimage(res.data.image)
+    setimages(res.data.images)
   }
 
   useEffect(() => {
@@ -37,20 +40,25 @@ export default function EditList() {
   },[])
 
 
-
+  const handleImage = (e) => {
+    const file = e.target.files[0]
+    setFileToBase(file)
+  }
+  
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setimage(reader.result)
+    }
+  }
 
 const submitform = async (e) => {
   e.preventDefault();
-  
  await axios.put(`/newproduct/updateItem/${slug}`, {
-    slugName,
-    title,
-    price,
-    description,
-    details,
-    variants,
-    colors,
-  })
+  slugName,description,price,title,colors,variants,details,image,updateImage
+ })
+
 
 //   public_id: "aquariumShop/c8pggarrossv8uvtccoo"
 // ​​
@@ -88,8 +96,19 @@ const handlechange = (e,index) => {
   setdetails(list)
 }
 
+const listimages = (e) => {
+  const files = Array.from(e.target.files)
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setUpdateImages(oldArray => [...oldArray, reader.result])
+    }
+  })
 
+}
 
+console.log(updateImage)
 
   return (
     <div className="text-center py-2">
@@ -97,7 +116,25 @@ const handlechange = (e,index) => {
       <p>Slug</p>
       <input type="text" value={slugName} onChange={e=> setslugName(e.target.value)}/>
 
+<hr></hr>
+      <h5>Image</h5>
+    <input  onChange={handleImage} type="file" />
+    <br></br>
+    <img style={{width:'100px', height:'100px'}} src={image.url} alt={title}/>
 
+<hr></hr>
+
+<h5>Variants Images</h5>
+<input type="file" onChange={listimages} multiple/>
+  <br></br>
+{images.map(item => (
+  <img style={{width:'100px', height:'100px'}} src={item.url} alt={title}/>
+))}
+<br></br>
+{updateImage.map(item => (
+  <img style={{width:'100px', height:'100px'}} src={item} alt={title}/>
+))}
+<hr></hr>
 
       <p>Description</p>
       <textarea className="w-100" style={{height:'200px'}} value={description} onChange={e=> setdescription(e.target.value)}/>

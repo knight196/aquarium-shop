@@ -83,13 +83,67 @@ productRouter.post('/newproducts/add', async (req,res) => {
 
   productRouter.put('/updateItem/:slug', async (req,res) => {
 
-
+    const  data = 
+    {
+      slugName: req.body.slugName,
+      title: req.body.title,
+      description: req.body.description,
+      variants: req.body.variants,
+      details: req.body.details,
+      price: req.body.price,
+      colors: req.body.colors,
+      updateImg:req.body.updateImg,
+      updateImage:req.body.updateImage
+    }
     try{
+
+      if(req.body.image !== ''){
+      
+
+        const newImage = await cloudinary.uploader.upload(data.updateImg, {
+          folder:'updateAquariumShop',
+          width:1920,
+          crop:'scale'
+        })
+
+        data.image = {
+          public_id:newImage.public_id,
+          url:newImage.url
+        }
+      
+        
+      }
+
+      let images = [...data.updateImage]
+
+      let imagesBuffer = []
+
+      if(data.updateImage !== ''){
+        
+
+        for(var i=0; i<images.length; i++){
+          
+          const result = await cloudinary.uploader.upload(images[i], {
+          folder:'updateAquariumVariants',
+          width:1920,
+          crop:'scale'
+        })
+
+        imagesBuffer.push({
+          public_id:result.public_id,
+          url:result.url
+        })
+        
+      }
     
-            const listproducts = await addProduct.findOneAndUpdate(
-              {slug:req.params.slug},
-              {$set:req.body},
-            )
+    }
+
+    data.updateImage = imagesBuffer
+    
+      const listproducts = await addProduct.findOneAndUpdate(
+        {slug:data.slugName},
+        {$set:data},
+      )
         
         res.status(201).json({
           success:true,
