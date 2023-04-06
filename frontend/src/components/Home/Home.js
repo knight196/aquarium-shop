@@ -178,7 +178,9 @@ export default function Home() {
                     ))}
                 </section>
 
-                <div data-aos="zoom-in">
+
+
+                <div>
 
                    <h4 className="text-white px-2 py-2">Browse our range of Aquatic plants</h4>
                 
