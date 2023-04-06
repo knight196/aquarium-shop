@@ -29,7 +29,7 @@ app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+// app.use(cors())
 
 
 app.use('/api', productRouter)
@@ -77,11 +77,11 @@ app.get("/config", (req, res) => {
   });
 
     
-// app.use(express.static(path.join(__dirname, '../frontend/build')))
-// app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
+app.use(express.static(path.join(__dirname, '../frontend/build')))
+app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
 
 
-app.use('/', (req,res)=> res.send('homepage'))
+// app.use('/', (req,res)=> res.send('homepage'))
 
 app.listen(port, () => {
     console.log(`serve at http://localhost:${port}`)
