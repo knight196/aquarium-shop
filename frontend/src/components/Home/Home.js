@@ -215,52 +215,52 @@ export default function Home() {
                 </div>
 
 
-                <div className="slider-scroll bg-success bg-opacity-50 p-2">
+                <div className="bg-success bg-opacity-50 p-2">
 
         <h5  className="text-white">Featured Categories</h5>
 
+        <div className="product-grid">
 
-                    <div className="grid p-2 mb-5">
-     
 
-     <div  className="product-grid" data-aos="zoom-in">
-      <img src="https://www.aquasabi.de/vcdn/images/dynamic/adaptive/5b9YKMMRlp/naturaquarium-takashi-amano.jpg" alt="tanks"></img>
-      <br></br>
-      <div className="product-view">
-      <p>TANKS</p>
-      <button className="btn bg-white"><Link to="/Tanks">View Products</Link></button>
-      </div>
-     </div>
+<div className="product-grid-one">
 
-     <div className="product-grid" data-aos="zoom-in">
-     <img src="https://storefeederimages.blob.core.windows.net/realaquaticsltd/Products/35d46c7b-a3ab-415e-b818-e527a968ece2/Full/khpy4qymvfo.jpg" alt="foreground"/>
-<br></br>
-<div className="product-view">
-<p>Plants</p>
-<button className="btn bg-white"><Link to="/foreground">View products</Link></button>
+<button><Link to="/woodsrocks">Hardscaping</Link></button>
+
 </div>
-     </div>
+              
+<div className="product-grid-two">
 
-     <div className="product-grid" data-aos="zoom-in">
-     <img  src="https://www.aquasabi.com/media/image/product/27669/lg/twinstar-led-light-iii-sp.jpg" alt="lighting"/>
-<br></br>
-<div className="product-view">
-<p>LIGHTING</p>
-<button className="btn bg-white"><Link to="/lighting">View Products</Link></button>
+<button><Link to="/lighting">Lighting</Link></button>
+
 </div>
-     </div>
+              
+<div className="product-grid-three">
+
+<button ><Link to="/soil">Soil & Substrate</Link></button>
+
+</div>
+
+<div className="product-grid-four">
+
+<button><Link to="/Tanks">Tanks</Link></button>
+
+</div>
+
+<div className="product-grid-five">
+
+<button><Link to="/fertiliser">Plant Fertiliser</Link></button>
+
+</div>
+
+<div className="product-grid-six">
+
+<button><Link to="/plants">Plants</Link></button>
+
+</div>
 
 
-     <div className="product-grid" data-aos="zoom-in">
-    <img src="https://www.azaqua.nl/img/cms/hardscape-aquascaping.jpg" alt="ornaments"/>
-    <br></br>
-    <div className="product-view">
-    <p>HARDSCAPING</p>
-    <button className="btn bg-white"><Link to="/woodsrocks">View Products</Link></button>
-    </div>
-     </div>
-
-     </div>
+        </div>
+              
 
                 </div>
 
