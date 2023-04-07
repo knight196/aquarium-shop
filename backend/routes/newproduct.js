@@ -117,7 +117,7 @@ productRouter.post('/newproducts/add', async (req,res) => {
       
 
         const newImage = await cloudinary.uploader.upload(data.updateImg, {
-          folder:'updateAquariumShop',
+          folder:'aquariumShop',
           width:1920,
           crop:'scale'
         })
@@ -140,7 +140,7 @@ productRouter.post('/newproducts/add', async (req,res) => {
         for(var i=0; i<images.length; i++){
           
           const result = await cloudinary.uploader.upload(images[i], {
-          folder:'updateAquariumVariants',
+            folder:'aquariumvariants',
           width:1920,
           crop:'scale'
         })
