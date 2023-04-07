@@ -83,89 +83,24 @@ productRouter.post('/newproducts/add', async (req,res) => {
 
   productRouter.put('/updateItem/:slug', async (req,res) => {
 
-    const  data = 
-    {
-      slugName: req.body.slugName,
-      title: req.body.title,
-      description: req.body.description,
-      variants: req.body.variants,
-      details: req.body.details,
-      price: req.body.price,
-      colors: req.body.colors,
-      updateImg:req.body.updateImg,
-      updateImage:req.body.updateImage
-    }
+  
     try{
 
 
-      if(data.updateImg === '' || data.updateImage === []){
+  
         
         const listproducts = await addProduct.findOneAndUpdate(
           {slug:data.slugName},
-          {$set:data},
+          {$set:req.body},
         )
-          
-          res.status(201).json({
-            success:true,
-            listproducts
-          })
-
-      }else{
-
-        
-        if(data.updateImg !== ''){
       
-
-        const newImage = await cloudinary.uploader.upload(data.updateImg, {
-          folder:'aquariumShop',
-          width:1920,
-          crop:'scale'
-        })
-
-        data.updateImg = {
-          public_id:newImage.public_id,
-          url:newImage.url
-        }
-        
-        
-      }
-
-      let images = [...data.updateImage]
-
-      let imagesBuffer = []
-
-      if(data.updateImage !== ''){
-        
-
-        for(var i=0; i<images.length; i++){
-          
-          const result = await cloudinary.uploader.upload(images[i], {
-            folder:'aquariumvariants',
-          width:1920,
-          crop:'scale'
-        })
-
-        imagesBuffer.push({
-          public_id:result.public_id,
-          url:result.url
-        })
-        
-      }
-    
-    }
-    data.updateImage = imagesBuffer
-
-    const listproducts = await addProduct.findOneAndUpdate(
-      {slug:data.slugName},
-      {$set:data},
-    )
+     
       
       res.status(201).json({
         success:true,
         listproducts
       })
-  }
-    
+  
     
     }catch(err){
       console.log(err)
