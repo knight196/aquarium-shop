@@ -83,32 +83,97 @@ productRouter.post('/newproducts/add', async (req,res) => {
 
   productRouter.put('/updateItem/:slug', async (req,res) => {
 
-  
+    const  data = 
+    {
+      slugName: req.body.slugName,
+      title: req.body.title,
+      description: req.body.description,
+      variants: req.body.variants,
+      details: req.body.details,
+      price: req.body.price,
+      colors: req.body.colors,
+    }
+
     try{
 
-
-  
+    
         
+          const newImage = await cloudinary.uploader.upload(req.body.image, {
+          folder:'updateAquariumShop',
+          width:1920,
+          crop:'scale'
+        })
+
+        data.image ={
+          public_id:newImage.public_id,
+          url:newImage.url
+        }
+
+        
+   
+        let images = [...req.body.images];
+        
+        let updateImages = [...req.body.updateImages]
+
+        let imagesBuffer = []
+
+
+        if(images.length ===4){
+          
+          for(let i=0; i<images.length; i++){
+            const result = await cloudinary.uploader.upload(images[i], {
+               folder:'updateAquariumVariants',
+               width:1920,
+               crop:'scale'
+             })
+             
+             imagesBuffer.push({
+               public_id:result.public_id,
+               url:result.secure_url
+             })
+             
+            }
+            data.images = imagesBuffer
+            
+        }else if (images.length > 4){
+
+          
+          for(let i=0; i<updateImages.length; i++){
+         const result = await cloudinary.uploader.upload(updateImages[i], {
+            folder:'updateAquariumVariants',
+            width:1920,
+            crop:'scale'
+          })
+          
+          imagesBuffer.push({
+            public_id:result.public_id,
+            url:result.secure_url
+          })
+          
+        }
+        data.images = imagesBuffer
+      }
+          
+
         const listproducts = await addProduct.findOneAndUpdate(
           {slug:data.slugName},
-          {$set:req.body},
-        )
+          {$set:data},
+          )
+          
+          res.status(201).json({
+            success:true,
+            listproducts
+          })
+            
       
-     
-      
-      res.status(201).json({
-        success:true,
-        listproducts
-      })
-  
-    
+   
+   
     }catch(err){
       console.log(err)
-
     }
     
-    })
-    
-    
+  })
+  
+  
   
   module.exports = productRouter
