@@ -6,6 +6,8 @@ import { getBasketTotal, getTotalBasketQty, qty } from '../../reducer'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 
+import Basket from '../Checkout/Basket'
+
 import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
 import axios from 'axios'
 
@@ -136,53 +138,7 @@ function Payment() {
     }
 
 
-    const updatecart  = async (item,quantity, id) => {
-
-      await axios.put(`/api/decrement/${id}`, {slug: item.slug})
-      
-          dispatch({
-            type:'ADD_TO_BASKET',
-            item:{...item,quantity}
-          })
-      
-          window.location.href='/Checkout'
-      
-        }
-      
-      
-      const incrementCart  = async (item,quantity,id) => {
-      
-        await axios.put(`/api/increment/${id}`, {slug: item.slug})
-      
-        dispatch({
-          type:'ADD_TO_BASKET',
-          item:{...item,quantity}
-        })
-      
-        window.location.href='/Checkout'
-      
-      
-        }
-      
-        const removeFromBasket = (item) => {
-          dispatch({type:'REMOVE_FROM_BASKET', item:item})
-          window.location.href='/Checkout'
-      }
-      
-      const updateCart  = async (item,quantity) => {
-      
-      
-        dispatch({
-          type:'ADD_TO_BASKET',
-          item:{...item,quantity}
-        })
-      
-        window.location.href='/Checkout'
-      
-      
-        }
-      
-
+ 
   return (
     <>
 
@@ -215,55 +171,10 @@ function Payment() {
 
 
             <h6>Order History</h6>
-            {basket.map(item => (
-            <div className='checkoutProduct'>
-
-            <div className="bg-white mx-1">
-            <img className='checkoutProduct__image img-fluid' src={item.image.url} alt=""/>
-            </div>
-          
-          <div className='checkoutProduct__info'>
-              <p className='checkoutProduct__title'>{item.title}</p>
-              <p>{item.packaging}</p>
-              <p>{item.color}</p>
-                  <strong>£{item.price}</strong>
-                  {!item.packaging ? (
-                    
-                    
-                    <div>
-                <button onClick={()=>updateCart(item,item.quantity -1)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
-                <label>{item.quantity}</label>
-                <button onClick={()=> updateCart(item,item.quantity + 1)} className="border-0 px-1 mx-2">+</button>
-                </div>
-                      
-                    ) : 
-                    (
-  <>
-  {item.variants.map(variant => {
-                if(variant.packaging === item.packaging)
-                return (
-                  <div>
-                <button onClick={()=>incrementCart(item,item.quantity -1,variant._id)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
-                <label>{item.quantity}</label>
-                <button onClick={()=> updatecart(item,item.quantity + 1, variant._id)} disabled={item.quantity === variant.quantity} className="border-0 px-1 mx-2">+</button>
-                </div>
-  
-  
-                  )
-              })}
-  </>
-                    )}
+        
              
-
-              <button onClick={()=> removeFromBasket(item)}>Remove</button>
-      
-
-          </div>
-      
-      
-          
-          </div>
-          ))}
+          <Basket/>
+           
           </div>
         </div>
 

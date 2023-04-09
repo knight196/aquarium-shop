@@ -2,6 +2,7 @@ const express = require('express')
 
 const Product = require('../Schema/addProduct')
 
+
 const productRouter = express.Router();
 
 
@@ -65,7 +66,7 @@ productRouter.put('/decrement/:id', async (req,res) => {
   try{
   
   
-  const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+  const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
   {$inc: {'variants.$.quantity': -1}}
   )
   
@@ -86,7 +87,7 @@ productRouter.put('/decrement/:id', async (req,res) => {
     try{
     
     
-    const qtyupdate = await productModel.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+    const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
     {$inc: {'variants.$.quantity': 1}}
     )
     
@@ -97,7 +98,89 @@ productRouter.put('/decrement/:id', async (req,res) => {
     }
     
     })
+  //decrement the stock value by adding the stock product section
+
+productRouter.put('/productdecrement/:slug', async (req,res) => {
+
+  try{
+  
+  
+  const qtyupdate = await Product.findOneAndUpdate(
+  {slug:req.params.slug},
+  {$inc: {quantity: -1}}
+  )
+  
+  res.status(200).json(qtyupdate)
+  
+  }catch(err){
+    res.status(404).send(err)
+  }
+  
+  })
+  
+  
+  // increase the value of the stock when decreasing the value of the stock product section
+  
+  productRouter.put('/productincrement/:slug', async (req,res) => {
+  
+  
+    try{
     
+    
+    const qtyupdate = await Product.findOneAndUpdate(
+    {slug:req.params.slug},
+    {$inc: {quantity: 1}}
+    )
+    
+    res.status(200).json(qtyupdate)
+    
+    }catch(err){
+      res.status(404).send(err)
+    }
+    
+    })
+    
+
+
+    //decrement the stock value by adding the stock color variant section
+
+productRouter.put('/colordecrement/:id', async (req,res) => {
+
+  try{
+  
+  
+  const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'colors._id': req.params.id},
+  {$inc: {'colors.$.quantity': -1}}
+  )
+  
+  res.status(200).json(qtyupdate)
+  
+  }catch(err){
+    res.status(404).send(err)
+  }
+  
+  })
+  
+  
+  // increase the value of the stock when decreasing the value of the stock color variant section
+  
+  productRouter.put('/colorincrement/:id', async (req,res) => {
+  
+  
+    try{
+    
+    
+    const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'colors._id': req.params.id},
+    {$inc: {'colors.$.quantity': 1}}
+    )
+    
+    res.status(200).json(qtyupdate)
+    
+    }catch(err){
+      res.status(404).send(err)
+    }
+    
+    })
 
 
 

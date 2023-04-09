@@ -11,6 +11,7 @@ export default function EditList() {
   const [slugName,setslugName] = useState('')
     const [title,settitle] = useState('')
     const [price,setprice] = useState(0)
+    const [quantity,setquantity] = useState(0)
     const [description,setdescription] = useState('')
     const [details,setdetails] = useState([])
     const [variants,setvariants] = useState([])
@@ -30,6 +31,7 @@ const [images,setimages] = useState([])
     setslugName(res.data.slug)
     settitle(res.data.title)
     setprice(res.data.price)
+    setquantity(res.data.quantity)
     setdescription(res.data.description)
     setdetails(res.data.details)
     setvariants(res.data.variants)
@@ -61,7 +63,7 @@ const updateImages = images.slice(4)
 const submitform = async (e) => {
   e.preventDefault();
  await axios.put(`/newproduct/updateItem/${slug}`, {
-  slugName,description,price,title,colors,variants,details,image,images,updateImages
+  slugName,description,price,quantity,title,colors,variants,details,image,images,updateImages
  })
 
 
@@ -169,7 +171,10 @@ const listimages = (e) => {
 <h5>Color variants</h5>
 
 {colors?.map((item,index) => (
+  <>
   <input type="text" name="colors" className="my-1" value={item.colors} placeholder="colors" onChange={e=> handlecolorchange(e,index)}/> 
+  <input type="text" name="quantity" className="my-1" value={item.quantity} placeholder="quantity" onChange={e=> handlecolorchange(e,index)}/> 
+  </>
 ))}
 </div>
 
@@ -178,6 +183,9 @@ const listimages = (e) => {
 
       <p>Price</p>
       <input type="number" value={price} onChange={e=> setprice(e.target.value)}/>
+     
+      <p>Quantity</p>
+      <input type="number" value={quantity} onChange={e=> setquantity(e.target.value)}/>
 
     
 

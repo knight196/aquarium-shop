@@ -39,7 +39,12 @@ var addProductSchema = new mongoose.Schema(
 
     }
 ],
-colors:[{colors:{type:String}}]
+colors:[
+    {
+        colors:{type:String},
+        quantity:{type:Number}
+}
+]
     },
     {
         timestamps:true

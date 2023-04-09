@@ -8,6 +8,7 @@ export default function Createproducts() {
     const [image,setimage] = useState('')
     const [title,settitle] = useState('')
     const [Company,setCompany] = useState('')
+    const [quantity,setquantity] = useState(0)
     const [price,setprice] = useState(0)
     const [category,setcategory] = useState(0)
     const [description,setdescription] = useState('')
@@ -15,9 +16,9 @@ export default function Createproducts() {
     const [position,setposition] = useState('')
     const [details,setdetails] = useState([{featureDetails:''}])
     const [CompanyProductName,setCompanyProductName] = useState('')
-    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
+    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:0 }])
     const [images,setimages] = useState([])
-    const [colors,setcolors] = useState([{colors:''}]) 
+    const [colors,setcolors] = useState([{colors:'',quantity: 0}]) 
      
     const handleImage = (e) => {
       const file = e.target.files[0]
@@ -73,7 +74,7 @@ export default function Createproducts() {
     
     //adding colors
 const colorsAdd = () => {
-  setcolors([...colors,{colors: ''}])
+  setcolors([...colors,{colors: '', quantity:0}])
 }
 
 const handlecolorchange = (e,index) => {
@@ -94,11 +95,12 @@ const deletecolor = (i) => {
     const submitform = async (e) => {
       e.preventDefault();
     
-      axios.post('/newproduct/newproducts/add', {slug,difficulty,position,title,CompanyProductName,details,Company,description,image,price,category,variants,images,colors})
+      axios.post('/newproduct/newproducts/add', {slug,difficulty,position,title,quantity,CompanyProductName,details,Company,description,image,price,category,variants,images,colors})
       .then(() => {
         setslug('')
         settitle('')
         setCompany('')
+        setquantity(0)
         setprice(0)
         setdifficulty('')
         setposition('')
@@ -109,7 +111,7 @@ const deletecolor = (i) => {
         setCompanyProductName('')
         setvariants([{packaging:'', price:'', quantity:''}])
         setimages([])
-        setcolors([{colors:''}])
+        setcolors([{colors:'', quantity:0}])
        
         toast.success('product added successfully')
         setTimeout(function() {
@@ -185,6 +187,7 @@ const deletecolor = (i) => {
 {colors.map((x,i) => (
   <>
   <input type="text" name="colors" placeholder="color" onChange={e=> handlecolorchange(e,i)}/>
+  <input type="text" name="quantity" placeholder="quantity" onChange={e=> handlecolorchange(e,i)}/>
   {colors.length!== 1 && <button onClick={()=> deletecolor(i)}>Remove</button>}
   </>
 ))}
@@ -205,6 +208,9 @@ const deletecolor = (i) => {
 
     <h5>Company</h5>
     <input type="textarea" value={Company} onChange={(e) => setCompany(e.target.value)}/>
+
+  <h5>Quantity</h5>
+  <input type="text" value={quantity} onChange={(e) => setquantity(e.target.value)}/>
 
     <h5>Price</h5>
     <input type="text" value={price} onChange={(e) => setprice(e.target.value)}/>
