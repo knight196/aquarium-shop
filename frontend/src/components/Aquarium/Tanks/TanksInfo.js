@@ -32,6 +32,8 @@ const toggleTab = (index) => {
 
 const [colorlist,setcolorlist] = useState([])
 
+const [quantity,setquantity] = useState([])
+
 const [selectedcolor,setselectedcolor] = useState('')
 
 useEffect(() => {
@@ -40,18 +42,21 @@ useEffect(() => {
       .filter((v, i, a) => a.indexOf(v) === i)
       setcolorlist(color)
 
+  const qty = Product.colors?.filter(item => item.colors === selectedcolor)
+      .map(item => item.quantity)
+      setquantity(qty)
+
       if(!selectedcolor) setselectedcolor(color?.[0])
 
 },[selectedcolor])
 
-console.log(selectedcolor)
 
 const handleOnClick = (type) =>{
       setselectedcolor(type)
       setToggleState(type)
 }
 
-
+console.log(quantity)
 
 const addToBasket = (e) =>{
 
@@ -124,6 +129,9 @@ return (
 
     <p>{Product.description}</p>
     <h5>£{Product.price}</h5>
+
+
+{quantity > 0 ? <span className="text-success">Item in Stock</span> : <span className="text-danger">Out Of Stock</span> }
 
 <div className="d-flex py-2 justify-content-center">
 

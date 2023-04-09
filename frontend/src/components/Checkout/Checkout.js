@@ -64,6 +64,12 @@ const deliverySelect = (e,price) => {
 
   return (
 
+    <>
+
+{basket.length === 0 && (<p className="text-center h1">Your Cart is Empty</p>) }
+{basket.length !== 0 && (
+
+ 
       
   <div className="checkout h-100 bg-white rounded-1 bg-opacity-50">
 
@@ -99,5 +105,8 @@ const deliverySelect = (e,price) => {
 </div>
 
 </div>
+
+)}
+</>
   )
 }

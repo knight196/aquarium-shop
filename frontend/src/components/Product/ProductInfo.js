@@ -67,6 +67,8 @@ return (
  
     <h5>£{Product.price}</h5>
 
+    {Product.quantity > 0 ? <span className="text-success">Item in Stock</span> : <span className="text-danger">Out Of Stock</span>}
+
 <div className="d-flex py-2 justify-content-center">
 
 

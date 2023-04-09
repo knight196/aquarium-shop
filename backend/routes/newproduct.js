@@ -92,6 +92,7 @@ productRouter.post('/newproducts/add', async (req,res) => {
       details: req.body.details,
       price: req.body.price,
       colors: req.body.colors,
+      quantity:req.body.quantity
     }
 
     try{
