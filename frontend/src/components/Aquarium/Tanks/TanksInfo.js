@@ -56,22 +56,16 @@ const handleOnClick = (type) =>{
       setToggleState(type)
 }
 
-console.log(quantity)
+
 
 const addToBasket = (e) =>{
 
 
-  const existItem = basket.find(x => x.slug === props.detail.slug)
+  const existItem = basket.find(x => x.slug === Product.slug + selectedcolor)
 
-  const quantity = existItem ? existItem.quantity+ 1 : 1
+  const quantity = existItem ? existItem.quantity : 1
    
-    if(!selectedcolor){
-    e.preventDefault();  
-      alert('Please select a color')
-    }  
-    else{
-      //dispatch the item into the data layer
-      dispatch ({
+    dispatch ({
       type:'ADD_TO_BASKET',  
       item: {
        ...e,
@@ -80,11 +74,9 @@ const addToBasket = (e) =>{
       }
     })  
     window.location.href='/Checkout'
-    }
+  
 
 };    
-
-
 
 
 
@@ -118,12 +110,17 @@ return (
     <hr></hr>
 
     <div className="btn-variants">
+        
+
  {colorlist?.map((color,index) => (
+
   <SelectorButton key={index} handleClick={handleOnClick} toggleTab={toggleTab} index={index} type={color} active={selectedcolor === color}/>
- ))}
-    {/* {Product.colors?.map(item => item.colors)
-    .map((color) => <button className={selectedcolor === color ? 'bg-primary bg-opacity-50 border-0 p-2 py-1 m-1 ' : 'border-0 p-2 py-1 m-1'} onClick={()=>handleOnClick(color)}>{color}</button>
-    )} */}
+
+
+  ))}    
+ 
+        
+
           </div>
 
 

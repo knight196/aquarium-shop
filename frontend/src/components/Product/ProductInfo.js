@@ -27,7 +27,7 @@ const addToBasket=(item) =>{
 
   const existItem = basket.find(x => x.slug === props.detail.slug)
 
-  const quantity = existItem ? existItem.quantity+ 1 : 1
+  const quantity = existItem ? existItem.quantity : 1
    
      //dispatch the item into the data layer
       dispatch ({

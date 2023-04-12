@@ -48,9 +48,9 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 const addToBasket=(e) =>{
 
-  const existItem = basket.find(x => x.slug === props.detail.slug)
+  const existItem = basket.find(x => x.slug === props.detail.slug + packaging?.value) 
 
-  const quantity = existItem ? existItem.quantity+ 1 : 1
+  const quantity = existItem ? existItem.quantity : 1
 
     if(!packaging?.value){
       toast.warning('Please select a packaging')

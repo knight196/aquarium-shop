@@ -1,9 +1,11 @@
 import React from 'react'
 import './Tanks.css'
 
-export default function SelectorButton({active,toggleTab,index, type,handleClick}) {
+export default function SelectorButton({active,toggleTab,index, type,handleClick,quantity}) {
+  
+
   return (
-    <div onClick={()=> {handleClick(type); toggleTab(index)}} className={active ? "selectorItem btnactive" : "selectorItem"}>
+    <div  onClick={()=> {handleClick(type); toggleTab(index)}} className={active ? "selectorItem btnactive" : "selectorItem"}>
       {type}
     </div>
   )

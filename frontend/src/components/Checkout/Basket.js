@@ -7,6 +7,8 @@ function Checkout() {
 
   let [{basket}, dispatch] = useStateValue()
 
+  console.log(basket)
+
   //product variant stock quantity decrement for plants selection
 const updatecart  = async (item,quantity, id) => {
 
@@ -19,6 +21,8 @@ await axios.put(`/api/decrement/${id}`, {slug: item.slug})
 
     window.location.reload();
   }
+
+
 
 //product variant stock quantity increment for plants selection
 const incrementCart  = async (item,quantity,id) => {

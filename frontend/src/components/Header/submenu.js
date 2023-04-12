@@ -5,11 +5,11 @@ const submenu = [
         Linked:'/product',
         list:[
           {
-            link:'/tanks',
+            link:'/Tanks',
             listitem:'Tanks'
           },
           {
-            link:'/filteration',
+            link:'/filter',
             listitem:'Filteration'
           },
           {
@@ -17,7 +17,7 @@ const submenu = [
             listitem:'Lighting'
           },
           {
-            link:'/substrate',
+            link:'/soil',
             listitem:'SubStrate & Soil'
           },
           {
@@ -29,7 +29,7 @@ const submenu = [
             listitem:'Fertiliser'
           },
           {
-            link:'/ornaments',
+            link:'/woodsrocks',
             listitem:'Hardscaping'
           },
           {
