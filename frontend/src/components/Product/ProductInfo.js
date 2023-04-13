@@ -6,8 +6,9 @@ import Select from 'react-select';
 import {Link,useNavigate} from "react-router-dom";
 import './Product.css'
 import {motion} from 'framer-motion'
+import { toast } from 'react-toastify'
 
-// import { useAlert } from 'react-alert';
+
 
 function ProductInfo(props) {
 
@@ -29,7 +30,11 @@ const addToBasket=(item) =>{
 
   const quantity = existItem ? existItem.quantity : 1
    
-     //dispatch the item into the data layer
+    if(Product.quantity === 0){
+      toast.error('Item is out of Stock')
+    }else{
+
+      //dispatch the item into the data layer
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
@@ -41,9 +46,10 @@ const addToBasket=(item) =>{
         ...item,quantity
       },
     })
-    
+    navigate('/Checkout')
     window.location.href='/Checkout'
     
+  }
 };
 
 
@@ -76,13 +82,13 @@ return (
 
 
 
-  <Link to={'/Checkout'}>
+ 
     <div className='button__cart'>    
       <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product)}>
             Add to basket
       </button>
     </div>
-  </Link>
+
   
 
   </div>

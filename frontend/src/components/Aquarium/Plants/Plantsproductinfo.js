@@ -52,19 +52,23 @@ const addToBasket=(e) =>{
 
   const quantity = existItem ? existItem.quantity : 1
 
-    if(!packaging?.value){
-      toast.warning('Please select a packaging')
-    }
-    else{
-      //dispatch the item into the data layer
+if(updateFinal === 0){
+  toast.error('Item is Out of Stock')
+}else{
+  //dispatch the item into the data layer
+  if(!packaging?.value){
+    toast.warning('Please select a packaging')
+    }else{
+
       dispatch ({
-      type:'ADD_TO_BASKET',
-      item: {
-      ...e,quantity,packaging:packaging?.value,price:priceFinal,qty:updateFinal
+        type:'ADD_TO_BASKET',
+        item: {
+          ...e,quantity,packaging:packaging?.value,price:priceFinal,qty:updateFinal
       },
     })
-    window.location.href='/Checkout'
-    }
+    window.location.href='/Checkout'  
+  }
+}
 
 };
 

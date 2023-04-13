@@ -7,6 +7,7 @@ import {motion} from 'framer-motion'
 import SelectorButton from './SelectorButton';
 import './Tanks.css'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 // import { useAlert } from 'react-alert';
 
 function TanksInfo(props) {
@@ -32,7 +33,7 @@ const toggleTab = (index) => {
 
 const [colorlist,setcolorlist] = useState([])
 
-const [quantity,setquantity] = useState([])
+const [colorqty,setquantity] = useState([])
 
 const [selectedcolor,setselectedcolor] = useState('')
 
@@ -64,17 +65,25 @@ const addToBasket = (e) =>{
   const existItem = basket.find(x => x.slug === Product.slug + selectedcolor)
 
   const quantity = existItem ? existItem.quantity : 1
-   
-    dispatch ({
-      type:'ADD_TO_BASKET',  
-      item: {
-       ...e,
-       color:selectedcolor,
-       quantity
-      }
-    })  
-    window.location.href='/Checkout'
-  
+
+  if(colorqty > 0){
+    
+      dispatch ({
+        type:'ADD_TO_BASKET',  
+        item: {
+         ...e,
+         color:selectedcolor,
+         quantity
+        }
+      }) 
+      
+      window.location.href="/Checkout"
+      
+    }else{
+      
+      toast.error('Item is Out of Stock')
+
+  } 
 
 };    
 
@@ -128,7 +137,7 @@ return (
     <h5>£{Product.price}</h5>
 
 
-{quantity > 0 ? <span className="text-success">Item in Stock</span> : <span className="text-danger">Out Of Stock</span> }
+{colorqty > 0 ? <span className="text-success">Item in Stock</span> : <span className="text-danger">Out Of Stock</span> }
 
 <div className="d-flex py-2 justify-content-center">
 
@@ -137,13 +146,13 @@ return (
 
 
 
-  <Link to={'/Checkout'}>
+ 
     <div className='button__cart'>    
       <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product)}>
             Add to basket
       </button>
     </div>
-  </Link>
+  
   
 
   </div>
