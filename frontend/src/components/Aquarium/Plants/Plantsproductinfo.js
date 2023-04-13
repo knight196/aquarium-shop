@@ -48,9 +48,8 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 const addToBasket=(e) =>{
 
-  const existItem = basket.find(x => x.slug === props.detail.slug + packaging?.value) 
-
-  const quantity = existItem ? existItem.quantity : 1
+ 
+  const quantity = 1
 
 if(updateFinal === 0){
   toast.error('Item is Out of Stock')

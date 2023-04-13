@@ -62,9 +62,7 @@ const handleOnClick = (type) =>{
 const addToBasket = (e) =>{
 
 
-  const existItem = basket.find(x => x.slug === Product.slug + selectedcolor)
-
-  const quantity = existItem ? existItem.quantity : 1
+  const quantity = 1
 
   if(colorqty > 0){
     

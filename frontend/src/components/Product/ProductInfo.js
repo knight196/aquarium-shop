@@ -26,9 +26,7 @@ let navigate = useNavigate();
 
 const addToBasket=(item) =>{
 
-  const existItem = basket.find(x => x.slug === props.detail.slug)
-
-  const quantity = existItem ? existItem.quantity : 1
+  const quantity = 1
    
     if(Product.quantity === 0){
       toast.error('Item is out of Stock')
