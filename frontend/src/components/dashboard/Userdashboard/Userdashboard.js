@@ -14,6 +14,8 @@ export default function Userdashboard() {
   const [{user}, dispatch] = useStateValue();
 
   const [toggleState,setToggleState] = useState(1)
+
+  console.log(user)
   
 const toggleTab = (index) => {
   setToggleState(index)

@@ -98,6 +98,25 @@ productRouter.put('/decrement/:id', async (req,res) => {
     }
     
     })
+
+    //add plants product quantity when user remove the product from the cart
+
+    productRouter.put('/removePlantsIncrement/:id', async (req,res) => {
+
+      try{
+
+        const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'variants._id':req.params.id},
+        {$inc:{'variants.$.quantity': req.body.quantity}}
+        )
+
+        res.status(200).json(qtyupdate)
+
+      }catch(err){
+        res.status(404).send(err)
+      }
+
+    })
+
   //decrement the stock value by adding the stock product section
 
 productRouter.put('/productdecrement/:slug', async (req,res) => {
@@ -130,6 +149,27 @@ productRouter.put('/productdecrement/:slug', async (req,res) => {
     const qtyupdate = await Product.findOneAndUpdate(
     {slug:req.params.slug},
     {$inc: {quantity: 1}}
+    )
+    
+    res.status(200).json(qtyupdate)
+    
+    }catch(err){
+      res.status(404).send(err)
+    }
+    
+    })
+    
+  // increase the value of the stock when user click on the remove button 
+  
+  productRouter.put('/removeProductIncrement/:slug', async (req,res) => {
+  
+  
+    try{
+    
+    
+    const qtyupdate = await Product.findOneAndUpdate(
+    {slug:req.params.slug},
+    {$inc: {quantity: req.body.quantity}}
     )
     
     res.status(200).json(qtyupdate)
@@ -181,6 +221,27 @@ productRouter.put('/colordecrement/:id', async (req,res) => {
     }
     
     })
+
+  // increase the value of the stock when user click on the color variant remove button
+  
+  productRouter.put('/removeColorIncrement/:id', async (req,res) => {
+  
+  
+    try{
+    
+    
+    const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'colors._id': req.params.id},
+    {$inc: {'colors.$.quantity': req.body.quantity}}
+    )
+    
+    res.status(200).json(qtyupdate)
+    
+    }catch(err){
+      res.status(404).send(err)
+    }
+    
+    })
+
 
 
 

@@ -37,6 +37,8 @@ const [colorqty,setquantity] = useState([])
 
 const [selectedcolor,setselectedcolor] = useState('')
 
+const [id,setid] = useState('')
+
 useEffect(() => {
 
   const color = Product.colors?.map(item => item.colors)
@@ -46,6 +48,12 @@ useEffect(() => {
   const qty = Product.colors?.filter(item => item.colors === selectedcolor)
       .map(item => item.quantity)
       setquantity(qty)
+
+
+  const productId = Product.colors?.filter(item => item.colors === selectedcolor)
+  .map(item => item._id)
+  setid(productId)
+  
 
       if(!selectedcolor) setselectedcolor(color?.[0])
 
@@ -59,8 +67,7 @@ const handleOnClick = (type) =>{
 
 
 
-const addToBasket = (e) =>{
-
+const addToBasket = async (e,id) =>{
 
   const quantity = 1
 
@@ -75,6 +82,8 @@ const addToBasket = (e) =>{
         }
       }) 
       
+      await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
+
       window.location.href="/Checkout"
       
     }else{
@@ -85,7 +94,7 @@ const addToBasket = (e) =>{
 
 };    
 
-
+console.log(id)
 
 return (
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">
@@ -146,7 +155,7 @@ return (
 
  
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product,id)}>
             Add to basket
       </button>
     </div>

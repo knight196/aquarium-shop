@@ -12,6 +12,8 @@ export default function OrdersInfo() {
   const { id }=useParams();
   const [orders, setorders]=useState([])
 
+  console.log(orders)
+
 
   const fetchData = async () => {
       const res = await axios.get(`/orders/get/_id/${id}`)
@@ -45,6 +47,9 @@ export default function OrdersInfo() {
           username:user?.username,
           message:'Your order cancellation request has been received'
         })
+
+       
+
         toast.success('Your order cancellation has been received');
         setTimeout(function(){
         window.location.href="/user/dashboard"
@@ -71,7 +76,7 @@ export default function OrdersInfo() {
           },[1500])
         }
 
-        console.log(orders)
+    
 
   return (
     <div>

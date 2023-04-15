@@ -7,6 +7,7 @@ import {Link,useNavigate} from "react-router-dom";
 import './Plants.css'
 import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 // import { useAlert } from 'react-alert';
 
 function Plantsproductinfo(props) {
@@ -45,8 +46,16 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
   let updateFinal = {}
   if(quantityUpdate?.length===1){updateFinal=quantityUpdate[0].value}
 
+  const packagingId = Product.variants?.filter(p => packaging && p.packaging === packaging.value)
+  .map(item => item._id)
+  .filter((v,i,a) => a.indexOf(v) === i)
+  .map(id => ({label:id, value:id}))
 
-const addToBasket=(e) =>{
+  let finalId = {}
+  if(packagingId?.length ===1){finalId=packagingId[0].value}
+
+
+const addToBasket= async (e,id) =>{
 
  
   const quantity = 1
@@ -65,6 +74,9 @@ if(updateFinal === 0){
           ...e,quantity,packaging:packaging?.value,price:priceFinal,qty:updateFinal
       },
     })
+
+    await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
+
     window.location.href='/Checkout'  
   }
 }
@@ -105,7 +117,7 @@ return (
 
 
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product,finalId)}>
             Add to basket
       </button>
     </div>

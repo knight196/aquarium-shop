@@ -7,7 +7,6 @@ function Checkout() {
 
   let [{basket}, dispatch] = useStateValue()
 
-  console.log(basket)
 
   //product variant stock quantity decrement for plants selection
 const updatecart  = async (item,quantity, id) => {
@@ -38,8 +37,12 @@ const incrementCart  = async (item,quantity,id) => {
 
   }
 
-  //remove the product from the basket
-  const removeFromBasket = (item) => {
+  //remove the plants product from the basket
+  const removePlantsIncrement = async(item,id) => {
+
+await axios.put(`/api/removePlantsIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
+    
+
     dispatch({type:'REMOVE_FROM_BASKET', item:item})
     window.location.reload();
 }
@@ -74,8 +77,18 @@ const incrementProduct  = async (item,quantity,slug) => {
 
   }
 
+    //remove the  product from the basket
+    const removeProductIncrement = async(item,slug) => {
 
-    //product variant stock quantity decrement for plants selection
+      await axios.put(`/api/removeProductIncrement/${slug}`, {quantity:item.quantity})
+          
+      
+          dispatch({type:'REMOVE_FROM_BASKET', item:item})
+          window.location.reload();
+      }
+
+
+    //product variant stock quantity decrement for color selection
 const colordecrement  = async (item,quantity, id) => {
 
   await axios.put(`/api/colordecrement/${id}`, {slug: item.slug})
@@ -89,7 +102,7 @@ const colordecrement  = async (item,quantity, id) => {
   
     }
   
-  //product variant stock quantity increment for plants selection
+  //product variant stock quantity increment for color selection
   const colorincrement  = async (item,quantity,id) => {
   
     await axios.put(`/api/colorincrement/${id}`, {slug: item.slug})
@@ -103,6 +116,17 @@ const colordecrement  = async (item,quantity, id) => {
   
   
     }
+
+  //remove the color product from the basket
+  const removeColorIncrement = async(item,id) => {
+
+    await axios.put(`/api/removeColorIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
+        dispatch({type:'REMOVE_FROM_BASKET', item:item})
+        window.location.reload();
+    }
+
+
+
 
 
   return (
@@ -143,6 +167,8 @@ const colordecrement  = async (item,quantity, id) => {
                      <button onClick={()=>colorincrement(item,item.quantity -1,color._id)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
                      <label>{item.quantity}</label>
                      <button onClick={()=> colordecrement(item,item.quantity + 1, color._id)} disabled={item.quantity === color.quantity} className="border-0 px-1 mx-2">+</button>
+                     <br></br>
+                     <button className="border-0 bg-warning px-2 py-1 my-1" onClick={()=> removeColorIncrement(item,color._id)}>Remove</button>
                      </div>
                     )
                   }
@@ -158,6 +184,8 @@ const colordecrement  = async (item,quantity, id) => {
 <button onClick={()=>incrementProduct(item,item.quantity -1,item.slug)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
 <label>{item.quantity}</label>
 <button onClick={()=> decrementProduct(item,item.quantity + 1,item.slug)} className="border-0 px-1 mx-2">+</button>
+<br></br>
+<button className="border-0 bg-warning px-2 py-1 my-1" onClick={()=> removeProductIncrement(item,item.slug)}>Remove</button>
 </div>
 
 ) : 
@@ -170,6 +198,8 @@ return (
 <button onClick={()=>incrementCart(item,item.quantity -1,variant._id)} disabled={item.quantity ===1} className="border-0 px-1">-</button>
 <label>{item.quantity}</label>
 <button onClick={()=> updatecart(item,item.quantity + 1, variant._id)} disabled={item.quantity === variant.quantity} className="border-0 px-1 mx-2">+</button>
+<br></br>
+<button className="border-0 bg-warning px-2 py-1 my-1" onClick={()=> removePlantsIncrement(item,variant._id)}>Remove</button>
 </div>
 
 
@@ -180,9 +210,7 @@ return (
 )}
                   </>
                  )}
-                  
-                  
-                  <button onClick={()=> removeFromBasket(item)}>Remove</button>
+                
                   
                   
                   </div>

@@ -109,9 +109,6 @@ function Payment() {
       deliveryPrice:deliveryOptions.price
     });
 
-
-   
-
     axios.post('/emailproduct/sendemail', {
       result:basket,
       email:user?.email,

@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs');
 
 dotenv.config({path:path.resolve(__dirname, '../.env')});
 
-
+//order confirmation 
 productRouter.post('/sendemail', async (req,res) => {
 
     const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
@@ -63,7 +63,11 @@ productRouter.post('/sendemail', async (req,res) => {
     }
     
     })
+
+   
     
+
+    //email the password reset from form
     productRouter.post('/emailPassword', async (req,res) => {
     
     
@@ -100,6 +104,7 @@ productRouter.post('/sendemail', async (req,res) => {
     
     })
     
+    //user will be redirected to the new password page
     productRouter.post('/confirmresetPwd', async (req,res) => {
     
     
@@ -167,7 +172,7 @@ productRouter.get('/useremail/:email', async (req,res) => {
   
   })
   
-  
+  //user password will be created and saved as encryption
   productRouter.put('/passwordreset', async (req,res) => {
   
     try{

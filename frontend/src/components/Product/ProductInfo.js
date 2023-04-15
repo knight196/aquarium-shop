@@ -7,7 +7,7 @@ import {Link,useNavigate} from "react-router-dom";
 import './Product.css'
 import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
-
+import axios from 'axios'
 
 
 function ProductInfo(props) {
@@ -24,7 +24,7 @@ let navigate = useNavigate();
         setProduct(props.detail)
       }, [props.detail])
 
-const addToBasket=(item) =>{
+const addToBasket= async (item,slug) =>{
 
   const quantity = 1
    
@@ -36,17 +36,18 @@ const addToBasket=(item) =>{
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
-        // slug: props.detail.slug, 
-        // title: props.detail.title,
-        // image: props.detail.image,
-        // price:props.detail.price,
-        // quantity
+      
         ...item,quantity
       },
     })
-    navigate('/Checkout')
-    window.location.href='/Checkout'
     
+    navigate('/Checkout')
+    
+    await axios.put(`/api/productdecrement/${slug}`)
+
+    window.location.href='/Checkout'
+
+ 
   }
 };
 
@@ -82,7 +83,7 @@ return (
 
  
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product,Product.slug)}>
             Add to basket
       </button>
     </div>
