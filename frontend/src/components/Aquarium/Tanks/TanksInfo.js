@@ -16,9 +16,7 @@ function TanksInfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
-    useEffect(() => {
-      localStorage.setItem('basket', JSON.stringify(basket))
-    },[basket])
+
 
 let navigate = useNavigate();
 
