@@ -15,6 +15,7 @@ function ProductInfo(props) {
   const [Product, setProduct] = useState([])
   
     const [{basket},dispatch]=useStateValue();
+    
 
     let navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const addToBasket= async (item,slug) =>{
 
 
  
-  const quantity = 1
+  const quantity =  1
   
     if(Product.quantity === 0){
       toast.error('Item is out of Stock')
