@@ -1,73 +1,73 @@
-export const initialState={
-    basket:localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+export const initialState = {
+    // basket:localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [],
+    basket: JSON.parse(localStorage.getItem('basket') || '[]'),
     user: JSON.parse(localStorage.getItem("user")),
-    address:JSON.parse(localStorage.getItem('address') || '{}'),
-    deliveryOptions:JSON.parse(localStorage.getItem('deliveryOptions') || '[]') ,
+    address: JSON.parse(localStorage.getItem('address') || '{}'),
+    deliveryOptions: JSON.parse(localStorage.getItem('deliveryOptions') || '[]'),
 }
 
 
 //selector
-export const qty = (basket) => basket?.reduce((a,c) => a + c.quantity,0)
-export const getBasketTotal = (basket) => basket?.reduce((amount,item)=> item.price + amount, 0)
-export const getTotalBasketQty = (basket) => basket?.reduce((amount,item) => amount + item.price * item.quantity , 0)
+export const qty = (basket) => basket?.reduce((a, c) => a + c.quantity, 0)
+export const getBasketTotal = (basket) => basket?.reduce((amount, item) => item.price + amount, 0)
+export const getTotalBasketQty = (basket) => basket?.reduce((amount, item) => amount + item.price * item.quantity, 0)
 
 
 
 
 const reducer = (state, action) => {
-  
-    switch(action.type){
+
+    switch (action.type) {
         case 'ADD_TO_BASKET':
 
-      const newItem = action.item
+        const newItem = action.item
 
-      const existItem = state.basket.find(item => item.slug === newItem.slug)
-
-      const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
-      [...state.basket,newItem]
-
-      localStorage.setItem('cartItems', JSON.stringify(cartItems))
+        const existItem = state.basket.find(item => item.slug === newItem.slug)
+  
+        const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
+        [...state.basket,newItem]
+  
+        localStorage.setItem('cartItems', JSON.stringify(cartItems))
      
+        return {...state,newItem}
 
-      return {...state,newItem}
-      
-            case  'EMPTY_BASKET':
-                return{
-                    ...state,
-                    basket:[]
-                }
+        case 'EMPTY_BASKET':
+            return {
+                ...state,
+                basket: []
+            }
 
-            case "REMOVE_FROM_BASKET":{
+        case "REMOVE_FROM_BASKET": {
 
             const cartItems = state.basket.filter(item => item.slug !== action.item.slug)
 
-            localStorage.setItem('cartItems', JSON.stringify(cartItems))
+            localStorage.setItem('basket', JSON.stringify(cartItems))
 
-            return {...state, basket:{...state.basket, cartItems: []}}
+            return { ...state, basket: { ...state.basket, cartItems: [] } }
 
+        }
+        case "SET_ADDRESS":
+            return {
+                ...state,
+                address: { ...action.item }
             }
-                    case "SET_ADDRESS":
-                        return{
-                            ...state,
-                            address:{...action.item}
-                        }
 
-                        case 'SET_DELIVERY':
-                            return{
-                                ...state,deliveryOptions:action.payload
-                            }
-               
-                
-                case 'SET_USER':
-                    return{
-                        ...state,
-                        user:action.user
-                    }
+        case 'SET_DELIVERY':
+            return {
+                ...state, deliveryOptions: action.payload
+            }
 
-                
 
-                default:
-                    return state;
+        case 'SET_USER':
+            return {
+                ...state,
+                user: action.user
+            }
+
+
+
+        default:
+            return state;
     }
 }
 

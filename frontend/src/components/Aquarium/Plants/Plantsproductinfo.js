@@ -16,6 +16,10 @@ function Plantsproductinfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
+    useEffect(() => {
+      localStorage.setItem('basket', JSON.stringify(basket))
+    },[basket])
+
 let navigate = useNavigate();
 
     useEffect(()=>{
@@ -56,9 +60,9 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 
 const addToBasket= async (e,id) =>{
+  
 
- 
-  const quantity = 1
+  const quantity =  1
 
 if(updateFinal === 0){
   toast.error('Item is Out of Stock')

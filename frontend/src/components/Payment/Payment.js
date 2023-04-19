@@ -127,7 +127,7 @@ function Payment() {
     });
     navigate('/')
     toast.success('Payment successful')
-    window.localStorage.removeItem('cartItems')
+    window.localStorage.removeItem('basket')
 
       .catch((err) => console.warn(err));
 

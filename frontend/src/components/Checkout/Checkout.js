@@ -52,14 +52,14 @@ const deliverySelect = (e,price) => {
         localStorage.setItem('deliveryOptions', JSON.stringify(deliveryOptions))
       },[deliveryOptions])
 
-      function process(){
+      function process (){
         if(!user){
           navigate('/Login')
         }else{
           navigate('/Address')
         }
       }
-      
+ 
     
 
   return (
@@ -98,8 +98,11 @@ const deliverySelect = (e,price) => {
   <p>Delivery-Options: {deliveryOptions.options} + £{deliveryOptions.price}</p>
   <strong>Total:£{(getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)}</strong>
   
+  
   <div className="d-flex justify-content-center">
-<button className="border-0 bg-primary text-white p-1" onClick={process}>Procced to Checkout</button>
+
+<button className="border-0 bg-primary text-white p-1" onClick={()=> process()}>Procced to Checkout</button>
+
   </div>
 </div>
 </div>

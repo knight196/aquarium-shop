@@ -1,5 +1,7 @@
+import React, {useEffect, useState} from 'react';
 import './Checkout.css'
 import { useStateValue } from '../../StateProvider'
+
 
 import axios from 'axios'
 
@@ -7,6 +9,11 @@ function Checkout() {
 
   let [{basket}, dispatch] = useStateValue()
 
+  useEffect(() => {
+    localStorage.setItem('basket', JSON.stringify(basket))
+  },[basket])
+
+  console.log(basket)
 
   //product variant stock quantity decrement for plants selection
 const updatecart  = async (item,quantity, id) => {
@@ -44,6 +51,7 @@ await axios.put(`/api/removePlantsIncrement/${id}`, {slug:item.slug,quantity:ite
     
 
     dispatch({type:'REMOVE_FROM_BASKET', item:item})
+
     window.location.reload();
 }
 

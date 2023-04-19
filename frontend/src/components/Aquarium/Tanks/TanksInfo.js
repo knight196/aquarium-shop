@@ -16,6 +16,10 @@ function TanksInfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
+    useEffect(() => {
+      localStorage.setItem('basket', JSON.stringify(basket))
+    },[basket])
+
 let navigate = useNavigate();
 
 useEffect(()=>{
@@ -68,8 +72,11 @@ const handleOnClick = (type) =>{
 
 
 const addToBasket = async (e,id) =>{
+  
 
-  const quantity = 1
+
+  const quantity =  1
+
 
   if(colorqty > 0){
     
@@ -84,7 +91,7 @@ const addToBasket = async (e,id) =>{
       
       await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
 
-      window.location.href="/Checkout"
+     window.location.href="/Checkout"
       
     }else{
       
@@ -94,7 +101,7 @@ const addToBasket = async (e,id) =>{
 
 };    
 
-console.log(id)
+
 
 return (
   <motion.div  initial={{opacity:0}} animate={{opacity:1}} className="py-5">

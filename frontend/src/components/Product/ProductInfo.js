@@ -15,10 +15,12 @@ function ProductInfo(props) {
   const [Product, setProduct] = useState([])
   
     const [{basket},dispatch]=useStateValue();
-
-    localStorage.setItem('cartItems', JSON.stringify(basket))
-
-let navigate = useNavigate();
+    
+    useEffect(() => {
+      localStorage.setItem('basket', JSON.stringify(basket))
+    },[basket])
+    
+    let navigate = useNavigate();
 
     useEffect(()=>{
         setProduct(props.detail)
@@ -26,8 +28,10 @@ let navigate = useNavigate();
 
 const addToBasket= async (item,slug) =>{
 
+
+ 
   const quantity = 1
-   
+  
     if(Product.quantity === 0){
       toast.error('Item is out of Stock')
     }else{
@@ -37,15 +41,15 @@ const addToBasket= async (item,slug) =>{
       type:'ADD_TO_BASKET',
       item: {
       
-        ...item,quantity
+        ...item,quantity,
       },
     })
     
-    navigate('/Checkout')
+    window.location.href="/Checkout"
     
     await axios.put(`/api/productdecrement/${slug}`)
 
-    window.location.href='/Checkout'
+   
 
  
   }
