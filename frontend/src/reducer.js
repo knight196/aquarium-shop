@@ -1,5 +1,5 @@
 export const initialState = {
-    basket:localStorage.getItem('basket') ? JSON.parse(localStorage.getItem('basket')) : [],
+    basket:localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
     user: JSON.parse(localStorage.getItem("user")),
     address: JSON.parse(localStorage.getItem('address') || '{}'),
     deliveryOptions: JSON.parse(localStorage.getItem('deliveryOptions') || '[]'),

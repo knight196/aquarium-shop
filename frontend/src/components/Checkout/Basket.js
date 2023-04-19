@@ -9,11 +9,6 @@ function Checkout() {
 
   let [{basket}, dispatch] = useStateValue()
 
-  useEffect(() => {
-    localStorage.setItem('basket', JSON.stringify(basket))
-  },[basket])
-
-  console.log(basket)
 
   //product variant stock quantity decrement for plants selection
 const updatecart  = async (item,quantity, id) => {
