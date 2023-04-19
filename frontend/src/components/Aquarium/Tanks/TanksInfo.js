@@ -72,8 +72,7 @@ const handleOnClick = (type) =>{
 const addToBasket = async (e,id) =>{
   
 
-
-  const quantity =  1
+  const quantity = 1
 
 
   if(colorqty > 0){

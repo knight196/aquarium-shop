@@ -16,8 +16,7 @@ function Plantsproductinfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
-  
-
+ 
 let navigate = useNavigate();
 
     useEffect(()=>{
@@ -58,7 +57,7 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
 
 
 const addToBasket= async (e,id) =>{
-  
+
 
   const quantity =  1
 
