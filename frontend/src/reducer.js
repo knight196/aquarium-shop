@@ -23,13 +23,14 @@ const reducer = (state, action) => {
 
             const existItem = state.basket.find(item => item.slug === newItem.slug)
             
-            
+        
               const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
               [...state.basket,newItem]
 
               localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
               return {...state,newItem}
+
 
 
         case 'EMPTY_BASKET':
