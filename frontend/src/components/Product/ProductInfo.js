@@ -16,7 +16,7 @@ function ProductInfo(props) {
   
     const [{basket},dispatch]=useStateValue();
     
-
+    
     
     let navigate = useNavigate();
 
@@ -27,9 +27,7 @@ function ProductInfo(props) {
 const addToBasket= async (item,slug) =>{
 
 
-
-
-  const quantity =1
+  const quantity = 1
   
     if(Product.quantity === 0){
       toast.error('Item is out of Stock')
@@ -47,9 +45,6 @@ const addToBasket= async (item,slug) =>{
     window.location.href="/Checkout"
     
     await axios.put(`/api/productdecrement/${slug}`)
-
-   
-
  
   }
 };

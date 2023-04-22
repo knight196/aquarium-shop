@@ -117,6 +117,22 @@ productRouter.put('/decrement/:id', async (req,res) => {
 
     })
 
+    //increment the product of the if variant is different in the plantsinfo
+
+    productRouter.put('/basketPlantsInc/:id', async (req,res) => {
+      try{
+
+        const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'variants._id': req.params.id},
+        {$inc: {'variants.$.quantity': req.body.quantity}}
+        )
+
+        res.status(200).json(qtyupdate)
+
+      }catch(err){
+        res.status(404).send(err)
+      }
+    })
+
   //decrement the stock value by adding the stock product section
 
 productRouter.put('/productdecrement/:slug', async (req,res) => {
@@ -200,7 +216,9 @@ productRouter.put('/colordecrement/:id', async (req,res) => {
   }
   
   })
-  
+
+
+
   
   // increase the value of the stock when decreasing the value of the stock color variant section
   
@@ -241,6 +259,29 @@ productRouter.put('/colordecrement/:id', async (req,res) => {
     }
     
     })
+
+    //increment the value of the color stock if color is not equal
+
+
+    productRouter.put('/baskecolorInc/:id', async (req,res) => {
+  
+  
+      try{
+      
+      
+      const qtyupdate = await Product.findOneAndUpdate({slug:req.body.slug,'colors._id': req.params.id},
+      {$inc: {'colors.$.quantity': req.body.quantity}}
+      )
+      
+      res.status(200).json(qtyupdate)
+      
+      }catch(err){
+        res.status(404).send(err)
+      }
+      
+      })
+  
+
 
 
 

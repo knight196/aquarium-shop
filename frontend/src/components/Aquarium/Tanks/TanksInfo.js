@@ -17,7 +17,6 @@ function TanksInfo(props) {
     const [{basket},dispatch]=useStateValue();
 
 
-
 let navigate = useNavigate();
 
 useEffect(()=>{
@@ -39,7 +38,7 @@ const [colorqty,setquantity] = useState([])
 
 const [selectedcolor,setselectedcolor] = useState('')
 
-const [id,setid] = useState('')
+const [colorid,setid] = useState('')
 
 useEffect(() => {
 
@@ -67,28 +66,46 @@ const handleOnClick = (type) =>{
       setToggleState(type)
 }
 
+const colorslug = basket.filter(item => item.slug === Product.slug).map(item => item.slug).toString()
+
+const colorquantity = parseInt(basket.filter(item => item.slug === Product.slug).map(item => item.quantity))
+
+const colorId = basket.filter(item => item.slug === Product.slug).map(item => item.colorId).toString()
+
+const color = basket.filter(item => item.slug  === Product.slug).map(item => item.color).toString()
 
 
 const addToBasket = async (e,id) =>{
-  
 
-  const quantity = 1
-
+ 
+  const quantity =  1
 
   if(colorqty > 0){
     
+  
       dispatch ({
         type:'ADD_TO_BASKET',  
         item: {
          ...e,
          color:selectedcolor,
+         colorId:colorid,
          quantity
         }
-      }) 
-      
-      await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
+      })       
 
-     window.location.href="/Checkout"
+    
+      if(color !== selectedcolor){
+        await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
+        await axios.put(`/api/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
+      }else{
+        await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
+        await axios.put(`/api/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
+      }
+      
+     
+ 
+      window.location.href="/Checkout"
+    
       
     }else{
       
@@ -159,12 +176,10 @@ return (
 
  
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product,id)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product,colorid)}>
             Add to basket
       </button>
     </div>
-  
-  
 
   </div>
 

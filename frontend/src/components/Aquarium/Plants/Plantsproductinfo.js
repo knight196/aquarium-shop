@@ -16,6 +16,7 @@ function Plantsproductinfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
+
  
 let navigate = useNavigate();
 
@@ -55,31 +56,56 @@ const packageOptions = Product.variants?.map((p) => p.packaging)
   let finalId = {}
   if(packagingId?.length ===1){finalId=packagingId[0].value}
 
+  const plantslug = basket.filter(item => item.slug === Product.slug).map(item => item.slug).toString()
+
+const plantsquantity = parseInt(basket.filter(item => item.slug === Product.slug).map(item => item.quantity))
+
+const plantsId = basket.filter(item => item.slug === Product.slug).map(item => item.plantsId).toString()
+
+const plantsvariant = basket.filter(item => item.slug  === Product.slug).map(item => item.packaging).toString()
+
 
 const addToBasket= async (e,id) =>{
 
 
-  const quantity =  1
+  
+  const quantity = 1
 
 if(updateFinal === 0){
   toast.error('Item is Out of Stock')
 }else{
-  //dispatch the item into the data layer
-  if(!packaging?.value){
-    toast.warning('Please select a packaging')
-    }else{
+ //dispatch the item into the data layer
+ if(!packaging?.value){
+  toast.warning('Please select a packaging')
+  }else{
 
-      dispatch ({
-        type:'ADD_TO_BASKET',
-        item: {
-          ...e,quantity,packaging:packaging?.value,price:priceFinal,qty:updateFinal
-      },
-    })
+    dispatch ({
+      type:'ADD_TO_BASKET',
+      item: {
+        ...e,
+        quantity,
+        packaging:packaging?.value,
+        price:priceFinal,
+        qty:updateFinal,
+        plantsId:finalId
+    },
+  })
 
+  if( plantsvariant !== packaging){
+    await axios.put(`/api/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
     await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
-
-    window.location.href='/Checkout'  
+    
+  }else{
+    await axios.put(`/api/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
+    await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
+    
   }
+  
+ 
+
+  
+  window.location.href='/Checkout'  
+}
 }
 
 };

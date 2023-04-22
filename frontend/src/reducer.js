@@ -19,17 +19,17 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'ADD_TO_BASKET':
 
-            const newItem = action.item
+        const newItem = action.item
 
-            const existItem = state.basket.find(item => item.slug === newItem.slug)
-            
+        const existItem = state.basket.find(item => item.slug === newItem.slug)
         
-              const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
-              [...state.basket,newItem]
+    
+          const cartItems = existItem ? state.basket.map(item => item.slug === existItem.slug ? newItem : item) :
+          [...state.basket,newItem]
 
-              localStorage.setItem('cartItems', JSON.stringify(cartItems))
+          localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
-              return {...state,newItem}
+          return {...state,newItem}
 
 
 

@@ -287,8 +287,6 @@
   .product-grid > div {
     height: 200px;
     position: relative;
-    -webkit-filter: brightness(75%);
-            filter: brightness(75%);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     overflow: hidden;
