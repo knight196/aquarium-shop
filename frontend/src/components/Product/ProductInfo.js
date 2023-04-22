@@ -24,6 +24,10 @@ function ProductInfo(props) {
         setProduct(props.detail)
       }, [props.detail])
 
+      const product = basket.find(item => item.slug === Product.slug)
+
+      console.log(product)
+
 const addToBasket= async (item,slug) =>{
 
 
@@ -33,7 +37,12 @@ const addToBasket= async (item,slug) =>{
       toast.error('Item is out of Stock')
     }else{
 
-      //dispatch the item into the data layer
+      if(product){
+        toast.warning('Item is in Basket')
+      }else{
+
+        
+        //dispatch the item into the data layer
       dispatch ({
       type:'ADD_TO_BASKET',
       item: {
@@ -45,6 +54,7 @@ const addToBasket= async (item,slug) =>{
     window.location.href="/Checkout"
     
     await axios.put(`/api/productdecrement/${slug}`)
+      }
  
   }
 };
