@@ -82,7 +82,13 @@ const addToBasket = async (e,id) =>{
 
   if(colorqty > 0){
     
-  
+    if(color === selectedcolor){
+
+      toast.warning('Item is in Basket')
+
+    }else{
+
+      
       dispatch ({
         type:'ADD_TO_BASKET',  
         item: {
@@ -101,10 +107,11 @@ const addToBasket = async (e,id) =>{
         await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
         await axios.put(`/api/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
       }
+      window.location.href="/Checkout"
       
+    }
      
  
-      window.location.href="/Checkout"
     
       
     }else{

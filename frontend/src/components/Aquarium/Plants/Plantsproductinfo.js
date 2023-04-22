@@ -66,8 +66,6 @@ const plantsvariant = basket.filter(item => item.slug  === Product.slug).map(ite
 
 
 const addToBasket= async (e,id) =>{
-
-
   
   const quantity = 1
 
@@ -75,11 +73,16 @@ if(updateFinal === 0){
   toast.error('Item is Out of Stock')
 }else{
  //dispatch the item into the data layer
- if(!packaging?.value){
-  toast.warning('Please select a packaging')
+ if(plantsvariant === packaging?.value){
+  toast.warning('Item is in Basket')
   }else{
 
-    dispatch ({
+    if(!packaging?.value){
+      toast.warning('Please select the packaging')
+    }else{
+
+      
+      dispatch ({
       type:'ADD_TO_BASKET',
       item: {
         ...e,
@@ -91,7 +94,7 @@ if(updateFinal === 0){
     },
   })
 
-  if( plantsvariant !== packaging){
+  if( plantsvariant !== packaging?.value){
     await axios.put(`/api/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
     await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
     
@@ -101,11 +104,11 @@ if(updateFinal === 0){
     
   }
   
- 
-
-  
   window.location.href='/Checkout'  
+
 }
+}
+
 }
 
 };
