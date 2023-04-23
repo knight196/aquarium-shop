@@ -26,7 +26,6 @@ function ProductInfo(props) {
 
       const product = basket.find(item => item.slug === Product.slug)
 
-      console.log(product)
 
 const addToBasket= async (item,slug) =>{
 

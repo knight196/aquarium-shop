@@ -48,6 +48,17 @@ export default function OrdersInfo() {
           message:'Your order cancellation request has been received'
         })
 
+        await axios.post('/emailproduct/cancelemail', {
+          result:orders,
+          email:user?.email,
+          subtotal:orders.subtotal,
+          totalAmount:orders.amount,
+          orderId:orders.orderId,
+          address:orders.address,
+          paymentCreate:orders.paymentCreate,
+          deliveryOptions:orders.deliveryOptions,
+          deliveryPrice:orders.deliveryPrice
+        })
        
 
         toast.success('Your order cancellation has been received');
@@ -70,6 +81,19 @@ export default function OrdersInfo() {
             username:user?.username,
             message:'has opened the return request'
           })
+
+          await axios.post('/emailproduct/returnemail', {
+            result:orders,
+            email:user?.email,
+            subtotal:orders.subtotal,
+            totalAmount:orders.amount,
+            orderId:orders.orderId,
+            address:orders.address,
+            paymentCreate:orders.paymentCreate,
+            deliveryOptions:orders.deliveryOptions,
+            deliveryPrice:orders.deliveryPrice
+          })
+
           toast.success('You have opened the return request')
           setTimeout(function(){
             window.location.href="/user/dashboard"

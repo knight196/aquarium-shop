@@ -11,12 +11,14 @@ const bcrypt = require('bcryptjs');
 
 dotenv.config({path:path.resolve(__dirname, '../.env')});
 
+
+
 //order confirmation 
 productRouter.post('/sendemail', async (req,res) => {
+  
+  const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+  
 
-    const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
-    
-    
     try{
     
       var transporter = nodemailer.createTransport({
@@ -63,6 +65,280 @@ productRouter.post('/sendemail', async (req,res) => {
     }
     
     })
+
+    //cancellation request
+    productRouter.post('/cancelemail', async (req,res) => {
+
+      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+    
+    
+      try{
+      
+        var transporter = nodemailer.createTransport({
+          service:'hotmail',
+        auth : {  
+          user:process.env.user,
+          pass:process.env.pass
+        }
+      })
+      
+      const handlebarOptions = {
+        viewEngine:{
+          extName: '.handlebars',
+          partialDir: path.resolve(__dirname,'../views'),
+          defaultLayout:false
+        },
+        viewPath:path.resolve(__dirname,'../views'),
+        extName:'.handlebars'
+      }
+      
+      transporter.use('compile', hbs(handlebarOptions))
+      
+      var mailOptions = {
+        from:process.env.user,
+        to:email,
+        subject:'Order Cancel confirmation',
+        template:'cancelemail',
+        context:{
+          items:result,
+          subtotal:subtotal,
+          totalAmount:totalAmount,
+          address:address,
+          paymentCreate:paymentCreate,
+          orderId:orderId,
+          deliveryOptions:deliveryOptions,
+          deliveryPrice:deliveryPrice
+        }
+      }
+      
+      await transporter.sendMail(mailOptions)
+      res.status(200).json({success:true,message:'Email sent'})
+      }catch(err){
+      res.status(500).json(err.message)
+      }
+      
+
+    })
+
+    //order cancelled confirmed
+    productRouter.post('/confirmOrderCancelemail', async (req,res) => {
+
+      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+    
+    
+      try{
+      
+        var transporter = nodemailer.createTransport({
+          service:'hotmail',
+        auth : {  
+          user:process.env.user,
+          pass:process.env.pass
+        }
+      })
+      
+      const handlebarOptions = {
+        viewEngine:{
+          extName: '.handlebars',
+          partialDir: path.resolve(__dirname,'../views'),
+          defaultLayout:false
+        },
+        viewPath:path.resolve(__dirname,'../views'),
+        extName:'.handlebars'
+      }
+      
+      transporter.use('compile', hbs(handlebarOptions))
+      
+      var mailOptions = {
+        from:process.env.user,
+        to:email,
+        subject:'Order Cancel confirmation',
+        template:'orderCanceled',
+        context:{
+          items:result,
+          subtotal:subtotal,
+          totalAmount:totalAmount,
+          address:address,
+          paymentCreate:paymentCreate,
+          orderId:orderId,
+          deliveryOptions:deliveryOptions,
+          deliveryPrice:deliveryPrice
+        }
+      }
+      
+      await transporter.sendMail(mailOptions)
+      res.status(200).json({success:true,message:'Email sent'})
+      }catch(err){
+      res.status(500).json(err.message)
+      }
+      
+
+    })
+
+      //order cancelled confirmed
+      productRouter.post('/deliveredemail', async (req,res) => {
+
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+      
+      
+        try{
+        
+          var transporter = nodemailer.createTransport({
+            service:'hotmail',
+          auth : {  
+            user:process.env.user,
+            pass:process.env.pass
+          }
+        })
+        
+        const handlebarOptions = {
+          viewEngine:{
+            extName: '.handlebars',
+            partialDir: path.resolve(__dirname,'../views'),
+            defaultLayout:false
+          },
+          viewPath:path.resolve(__dirname,'../views'),
+          extName:'.handlebars'
+        }
+        
+        transporter.use('compile', hbs(handlebarOptions))
+        
+        var mailOptions = {
+          from:process.env.user,
+          to:email,
+          subject:'Delivered',
+          template:'delivered',
+          context:{
+            items:result,
+            subtotal:subtotal,
+            totalAmount:totalAmount,
+            address:address,
+            paymentCreate:paymentCreate,
+            orderId:orderId,
+            deliveryOptions:deliveryOptions,
+            deliveryPrice:deliveryPrice
+          }
+        }
+        
+        await transporter.sendMail(mailOptions)
+        res.status(200).json({success:true,message:'Email sent'})
+        }catch(err){
+        res.status(500).json(err.message)
+        }
+        
+  
+      })
+
+         //return 
+         productRouter.post('/returnemail', async (req,res) => {
+
+          const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+        
+        
+          try{
+          
+            var transporter = nodemailer.createTransport({
+              service:'hotmail',
+            auth : {  
+              user:process.env.user,
+              pass:process.env.pass
+            }
+          })
+          
+          const handlebarOptions = {
+            viewEngine:{
+              extName: '.handlebars',
+              partialDir: path.resolve(__dirname,'../views'),
+              defaultLayout:false
+            },
+            viewPath:path.resolve(__dirname,'../views'),
+            extName:'.handlebars'
+          }
+          
+          transporter.use('compile', hbs(handlebarOptions))
+          
+          var mailOptions = {
+            from:process.env.user,
+            to:email,
+            subject:'Returned',
+            template:'return',
+            context:{
+              items:result,
+              subtotal:subtotal,
+              totalAmount:totalAmount,
+              address:address,
+              paymentCreate:paymentCreate,
+              orderId:orderId,
+              deliveryOptions:deliveryOptions,
+              deliveryPrice:deliveryPrice
+            }
+          }
+          
+          await transporter.sendMail(mailOptions)
+          res.status(200).json({success:true,message:'Email sent'})
+          }catch(err){
+          res.status(500).json(err.message)
+          }
+          
+    
+        })
+
+
+        //refund
+          
+      productRouter.post('/refundemail', async (req,res) => {
+
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+      
+      
+        try{
+        
+          var transporter = nodemailer.createTransport({
+            service:'hotmail',
+          auth : {  
+            user:process.env.user,
+            pass:process.env.pass
+          }
+        })
+        
+        const handlebarOptions = {
+          viewEngine:{
+            extName: '.handlebars',
+            partialDir: path.resolve(__dirname,'../views'),
+            defaultLayout:false
+          },
+          viewPath:path.resolve(__dirname,'../views'),
+          extName:'.handlebars'
+        }
+        
+        transporter.use('compile', hbs(handlebarOptions))
+        
+        var mailOptions = {
+          from:process.env.user,
+          to:email,
+          subject:'Refund',
+          template:'refund',
+          context:{
+            items:result,
+            subtotal:subtotal,
+            totalAmount:totalAmount,
+            address:address,
+            paymentCreate:paymentCreate,
+            orderId:orderId,
+            deliveryOptions:deliveryOptions,
+            deliveryPrice:deliveryPrice
+          }
+        }
+        
+        await transporter.sendMail(mailOptions)
+        res.status(200).json({success:true,message:'Email sent'})
+        }catch(err){
+        res.status(500).json(err.message)
+        }
+        
+  
+      })
+
+  
 
    
     

@@ -11,6 +11,8 @@ export default function AdminOrderInfo() {
  const {id} = useParams();
  const [orders,setorders] = useState([])
 
+ console.log(orders)
+
  const fetchData = async () => {
   const res = await axios.get(`/api/orders/_id/${id}`)
   setorders(res.data)
@@ -42,6 +44,19 @@ export default function AdminOrderInfo() {
     username:orders?.username,
     message:`You have refunded ${orders?.username} order`
   })
+
+  await axios.post('/emailproduct/refundemail', {
+    result:orders,
+    email:orders.email,
+    subtotal:orders.subtotal,
+    totalAmount:orders.amount,
+    orderId:orders.orderId,
+    address:orders.address,
+    paymentCreate:orders.paymentCreate,
+    deliveryOptions:orders.deliveryOptions,
+    deliveryPrice:orders.deliveryPrice
+  })
+
   toast.success("You have successfully refunded customer's orders")
   setTimeout(function() {
     window.location.href="/admin/dashboard"
@@ -65,10 +80,24 @@ await axios.post('/orders/adminmessage', {
   message:`${orders?.username} order has been delivered`
 })
 
+
+await axios.post('/emailproduct/deliveredemail', {
+  result:orders,
+  email:orders.email,
+  subtotal:orders.subtotal,
+  totalAmount:orders.amount,
+  orderId:orders.orderId,
+  address:orders.address,
+  paymentCreate:orders.paymentCreate,
+  deliveryOptions:orders.deliveryOptions,
+  deliveryPrice:orders.deliveryPrice
+})
+
+
 toast.success('Delivered')
 setTimeout(function(){
   window.location.href="/admin/dashboard"
-})
+},1500)
 
  }
 
@@ -86,6 +115,19 @@ setTimeout(function(){
     username:orders?.username,
     message:`You have cancelled ${orders?.username} order`
   })
+
+  await axios.post('/emailproduct/confirmOrderCancelemail', {
+    result:orders,
+    email:orders.email,
+    subtotal:orders.subtotal,
+    totalAmount:orders.amount,
+    orderId:orders.orderId,
+    address:orders.address,
+    paymentCreate:orders.paymentCreate,
+    deliveryOptions:orders.deliveryOptions,
+    deliveryPrice:orders.deliveryPrice
+  })
+
   toast.success("You have cancelled user's order");
   setTimeout(function(){
   window.location.href="/admin/dashboard"
