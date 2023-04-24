@@ -10,7 +10,7 @@ export default function Createproducts() {
     const [Company,setCompany] = useState('')
     const [quantity,setquantity] = useState(0)
     const [price,setprice] = useState(0)
-    const [category,setcategory] = useState(0)
+    const [category,setcategory] = useState('')
     const [description,setdescription] = useState('')
     const [difficulty,setdifficulty] = useState('')
     const [position,setposition] = useState('')

@@ -332,6 +332,48 @@
   }
 }
 
+.aquascape-pic {
+  display: block;
+  position: relative;
+}
+
+.aquascape-pic div {
+  position: absolute;
+  color: white;
+}
+
+.aquascape-pic div label {
+  margin-left: 5px;
+  font-size: 10px;
+}
+
+.button {
+  border: 0;
+  color: white;
+  padding: 2px 5px;
+  background: seagreen;
+}
+
+.btn-1 {
+  bottom: 20%;
+  right: 10%;
+}
+
+.btn-2 {
+  bottom: 5%;
+  left: 10%;
+}
+
+.btn-3 {
+  top: 25%;
+  right: 30%;
+}
+
+.btn-4 {
+  bottom: 40%;
+  left: 10%;
+}
+
 @media screen and (min-width: 720px) {
   .parallax {
     min-height: 600px;
@@ -357,6 +399,40 @@
   }
   .product-grid > div {
     height: 300px;
+  }
+  .aquascape-pic {
+    display: block;
+    position: relative;
+  }
+  .aquascape-pic div {
+    position: absolute;
+    color: white;
+  }
+  .aquascape-pic div label {
+    margin-left: 5px;
+    font-size: 15px;
+  }
+  .button {
+    border: 0;
+    color: white;
+    padding: 5px 10px;
+    background: seagreen;
+  }
+  .btn-1 {
+    bottom: 20%;
+    right: 20%;
+  }
+  .btn-2 {
+    bottom: 5%;
+    left: 10%;
+  }
+  .btn-3 {
+    top: 30%;
+    right: 30%;
+  }
+  .btn-4 {
+    bottom: 35%;
+    left: 10%;
   }
 }
 
@@ -432,6 +508,9 @@
     -ms-grid-column: 3;
     -ms-grid-column-span: 2;
     grid-column: 3/5;
+  }
+  .aquascape-pic div label {
+    font-size: 20px;
   }
 }
 

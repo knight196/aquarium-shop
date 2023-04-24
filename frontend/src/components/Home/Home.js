@@ -264,6 +264,40 @@ export default function Home() {
 
                 </div>
 
+                <div className="aquascape-pic">
+                   <img className="w-100 h-100" src='https://www.adana.co.jp/wp-content/uploads/sites/3/2019/05/nitg_aj283_02.jpg' alt="aquascape"/>
+                
+                <div className="btn-1">
+                    <Link to="/api/plants/slug/Cryptocoryne-backettii-petchii">
+                <button className="button"><i className="bi bi-cart"></i></button>
+                    </Link> 
+                   <label>Cryptocoryne Backetti</label>
+                </div>
+                
+                <div className="btn-2">
+                    <Link to="/api/plants/slug/Eleocharis-parvula">
+                <button className="button"><i className="bi bi-cart"></i></button>
+                    </Link>
+                  <label>Eleocharis Parvula</label>
+                </div>
+
+                <div className="btn-3">
+                    <Link to="/api/plants/slug/Ludwigia-repens-'Rubin'">
+                <button className="button"><i className="bi bi-cart"></i></button>
+                    </Link>
+                   <label>Ludwigia Repens</label>
+                </div>
+                
+                
+                <div className="btn-4">
+                <Link to="/api/plants/slug/Microsorum-pteropus">
+                <button className="button"><i className="bi bi-cart"></i></button>
+                </Link>
+                    <label>Microsorum Pteropus</label>
+                </div>
+
+                </div>
+
                 <div className="containerfluid bg-secondary">
 
                     <div className="footer-details d-flex justify-content-between px-2 py-4">

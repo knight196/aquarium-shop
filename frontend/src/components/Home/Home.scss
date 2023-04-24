@@ -291,6 +291,48 @@ overflow:hidden;
 
 }
 
+.aquascape-pic{
+  display:block;
+  position:relative;
+
+   div{
+    position:absolute;
+    color:white;
+
+  label{
+    margin-left:5px;
+    font-size: 10px;
+  }
+  
+  }
+
+  
+}
+
+.button{
+  border:0;
+  color:white;
+  padding:2px 5px;
+  background:seagreen;
+}
+
+.btn-1{
+  bottom:20%;
+  right:10%;
+}
+.btn-2{
+  bottom:5%;
+  left:10%;
+}
+.btn-3{
+  top:25%;
+  right:30%;
+}
+.btn-4{
+  bottom:40%;
+  left:10%;
+}
+
 
 
 @media screen and (min-width:720px){
@@ -325,6 +367,49 @@ overflow:hidden;
   }
 
 }
+
+.aquascape-pic{
+  display:block;
+  position:relative;
+
+   div{
+    position:absolute;
+    color:white;
+
+  label{
+    margin-left:5px;
+    font-size: 15px;
+  }
+  
+  }
+
+  
+}
+
+.button{
+  border:0;
+  color:white;
+  padding:5px 10px;
+  background:seagreen;
+}
+
+.btn-1{
+  bottom:20%;
+  right:20%;
+}
+.btn-2{
+  bottom:5%;
+  left:10%;
+}
+.btn-3{
+  top:30%;
+  right:30%;
+}
+.btn-4{
+  bottom:35%;
+  left:10%;
+}
+
 
 }
 
@@ -374,6 +459,7 @@ overflow:hidden;
       width:350px;
     }
   }
+
 }
 
 
@@ -404,6 +490,15 @@ overflow:hidden;
     grid-column: 3/5;
   }
 
+}
+
+.aquascape-pic{
+
+  div{ 
+    label{
+      font-size:20px;
+    }
+  }
 }
 
 }
