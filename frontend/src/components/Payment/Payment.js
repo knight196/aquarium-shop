@@ -15,6 +15,10 @@ function Payment() {
   const [{ address, basket, user,deliveryOptions }, dispatch] = useStateValue();
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
+  const [processing,setprocessing] = useState('')
+  const [error,seterror] = useState(null)
+  const [disabled,setdisabled] = useState(true)
+  const [succeeded,setsucceeded] = useState(false)
 
   const navigate = useNavigate();
 
@@ -66,7 +70,7 @@ function Payment() {
 
   const totalPrice = (getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
 
-  console.log(totalPrice)
+
 
   useEffect(() => {
     const fetchClientSecret = async () => {
@@ -79,14 +83,32 @@ function Payment() {
     console.log('client secret is ', clientSecret)
   }, [])
 
+const handleChange = (e) => {
+
+  setdisabled(e.empty)
+  seterror(e.error ? e.error.message: '')
+
+}
+
 
   const handlePayment = async (e) => {
     e.preventDefault();
+
+    setprocessing(true)
 
     await stripe.confirmCardPayment(clientSecret,{
       payment_method: {
         card:elements.getElement(CardNumberElement), 
       }  
+    }).then(({paymentIntent}) => {
+      setsucceeded(true)
+      setprocessing(false)
+      seterror(null)
+
+      navigate('/')
+      toast.success('Payment successful')
+      window.localStorage.removeItem('cartItems')
+  
     })
 
     const paymentCreate = await stripe.createPaymentMethod({
@@ -125,12 +147,7 @@ function Payment() {
     dispatch({
       type: "EMPTY_BASKET",
     });
-    navigate('/')
-    toast.success('Payment successful')
-    window.localStorage.removeItem('cartItems')
-
-      .catch((err) => console.warn(err));
-
+   
 
     }
 
@@ -213,23 +230,14 @@ function Payment() {
 
           <hr />
 
-          <div>
+          <form onSubmit={handlePayment}>
 
 
-  
-            {/* {stripePromise && clientSecret && (
-              <Elements stripe={stripePromise} options={{clientSecret}}>
-              <form id="payment-form" onSubmit={handlePayment}>
-    <PaymentElement id="payment-element"/>
-    <button className="p-2 bg-primary btn text-white border-0 m-2 rounded-1">Pay Now</button>
-  </form>
-              </Elements>
-    )} */}
 <div className="bg-white bg-opacity-50 p-2">
 
 
 <small>Card Number</small>
-<CardNumberElement className="bg-white rounded-1 p-2"/>
+<CardNumberElement className="bg-white rounded-1 p-2"  onChange={handleChange}/>
 
 <div className="d-flex justify-content-between">
   <div className="w-50">
@@ -244,16 +252,19 @@ function Payment() {
             </div>
 </div>
          
+            {/* <CardElement onChange={handleChange}/> */}
 
 </div>
 
 
-            {/* <CardElement /> */}
             <div className="text-center ">
-            <button className="bg-warning px-2 py-1 m-2 rounded-1 border-0" onClick={handlePayment}>Confirm Payment</button>
+              {error && <p>{error}</p>}
+            <button disabled={processing || disabled || succeeded} className="bg-warning px-2 py-1 m-2 rounded-1 border-0">
+              <span>{processing ? <span className="spinner-border text-primary spinner-border-sm"></span> : 'Confirm Payment'}</span>
+              </button>
             </div>
             
-          </div>
+          </form>
 
 
         </div>

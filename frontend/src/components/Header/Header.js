@@ -21,6 +21,7 @@ export default function Header(props) {
         user: null,
       });
       navigate("/");
+      window.localStorage.removeItem('user','token')
       toast.success('you have logout successfully')
     })
   };
