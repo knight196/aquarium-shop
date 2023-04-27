@@ -126,8 +126,6 @@ const handleChange = (e) => {
       iconStyle: "solid",
     };
 
-
- 
   return (
     <>
 
@@ -218,12 +216,17 @@ const handleChange = (e) => {
   <div className="w-50">
 
   <small>Expiry</small>
-            <CardExpiryElement className="bg-white p-2 rounded-1"/> 
+  <div>
+            <CardExpiryElement className="bg-white p-2 h-50 rounded-1"/> 
+  </div>
   </div>
     
             <div style={{marginLeft:'10px'}} className="w-50">
             <small>CVC</small>
-            <CardCvcElement className="bg-white p-2 rounded-1" options={inputStyle}/>
+            <div className="cvc">
+            <CardCvcElement className="bg-white p-2 rounded-1" />
+            <img style={{width:'40px', height:'40px'}} src="https://cdn2.iconfinder.com/data/icons/credit-cards-6/156/security_code_back-512.png" alt="cvc"/>
+            </div>
             </div>
 </div>
          

@@ -84,6 +84,17 @@
   }
 }
 
+.cvc {
+  position: relative;
+}
+
+.cvc img {
+  position: absolute;
+  top: -4px;
+  right: 5px;
+  bottom: 0;
+}
+
 @media (min-width: 720px) {
   .checkout-form {
     -webkit-box-orient: horizontal !important;
