@@ -35,36 +35,6 @@ function Payment() {
 
 
 
-
-
-  // const handlePayment = async (e) => {
-  //   e.preventDefault();
-  //   await stripe.confirmCardPayment({
-  //     elements,
-  //     confirmParams:{
-  //       return_url:'/'
-  //     }
-  //   })
-  //   .then((result) => {
-  //       if(result.paymentIntent){
-  //    axios.post("/orders/add", {
-  //       basket: basket,
-  //       price: getBasketTotal(basket),
-  //       email: user?.email,
-  //       username:user?.username,
-  //       address: address,
-  //     });
-
-  //     dispatch({
-  //       type: "EMPTY_BASKET",
-  //     });
-  //     navigate("/");
-  //     toast.success('Payment successful')
-  //   }
-  //   })
-  //   .catch((err) => console.warn(err));
-  // }
-
   const elements = useElements();
   const stripe = useStripe();
 
@@ -150,6 +120,11 @@ const handleChange = (e) => {
    
 
     }
+
+    const inputStyle = {
+      showIcon: true,
+      iconStyle: "solid",
+    };
 
 
  
@@ -237,7 +212,7 @@ const handleChange = (e) => {
 
 
 <small>Card Number</small>
-<CardNumberElement className="bg-white rounded-1 p-2"  onChange={handleChange}/>
+<CardNumberElement className="bg-white rounded-1 p-2" options={inputStyle} onChange={handleChange}/>
 
 <div className="d-flex justify-content-between">
   <div className="w-50">
@@ -248,7 +223,7 @@ const handleChange = (e) => {
     
             <div style={{marginLeft:'10px'}} className="w-50">
             <small>CVC</small>
-            <CardCvcElement className="bg-white p-2 rounded-1"/>
+            <CardCvcElement className="bg-white p-2 rounded-1" options={inputStyle}/>
             </div>
 </div>
          
