@@ -167,7 +167,7 @@ setTimeout(function(){
     toast.success("You have dispatched user's orders");
     setTimeout(function(){
     window.location.href="/admin/dashboard"
-    },1500)
+    },1200)
   }
  
  

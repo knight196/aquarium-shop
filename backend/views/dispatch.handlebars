@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 
 .order-body{
@@ -59,7 +58,8 @@ padding:20px;
 <body>
 
 <h2>Great News!</h2>
-    <p>Your order has been dispatched.</p>
+
+    <p>Your Order has been dispatched.</p>
 
 <div class="order-body">
 
@@ -131,7 +131,7 @@ padding:20px;
 </div>
 
 <hr>
-{{#each paymentCreate}}
+    {{#each paymentCreate}}
 <div>
     <h5>Payment Info:</h5>
  <p style="font-size:18px;">Card: {{this.card.brand}}</p>
@@ -144,7 +144,7 @@ padding:20px;
 
 </div>
 
-<p>Thank you for shopping at Aquature</p>
+<p>Thank you for shopping at Aquature...
 
 
 </body>
