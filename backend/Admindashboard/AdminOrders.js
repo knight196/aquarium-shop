@@ -41,6 +41,29 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
 })
 
 
+//dispatch the item
+router.put('/dispatch/:id', async (req,res) => {
+
+try{
+
+  const dispatchId = await Orders.findOne({orderId:req.params.id})
+
+  const dispatched = await Orders.findOneAndUpdate(
+    {orderId: req.params.id},
+    {Dispatch:!dispatchId.Dispatch}
+  )
+
+  await dispatched.save()
+
+  return res.status(200).json(dispatched)
+
+}catch(err){
+  console.log(err)
+  res.status(500).send(err)
+}
+
+})
+
 //refund option from admindashboard
 router.put('/orders/:id', async(req,res)=> {
     try{

@@ -111,6 +111,50 @@ export default function OrdersInfo() {
 
 <h1>Order Details</h1>
 <hr></hr>
+
+
+<div className="d-flex align-items-center">
+
+<div className="text-center">
+
+<p>Paid Not Sent</p>
+
+<i className="bi bi-check bg-white text-success p-1"></i>
+
+</div>
+
+<div style={{width:'50%',height:'3px'}} className={orders.Dispatch === false ? 'bg-secondary' : 'bg-success'}></div>
+
+<div className="text-center">
+
+<p>Dispatched</p>
+
+{orders.Dispatch === false ?
+<span className="bg-white text-secondary p-1">X</span>
+: <i className="bi bi-check bg-white text-success p-1"></i>
+}
+
+</div>
+
+<div style={{width:'50%',height:'3px'}} className={orders.Delivered === false ? 'bg-secondary' : 'bg-success'}></div>
+
+
+<div className="text-center">
+
+<p>Delivered</p>
+{orders.Delivered === false ?
+  <span className="bg-white text-secondary p-1">X</span>
+: <i className="bi bi-check bg-white text-success p-1"></i>
+}
+
+</div>
+
+
+
+</div>
+
+<hr></hr>
+
 <div className="d-flex justify-content-between orders-date">
   
   <div>

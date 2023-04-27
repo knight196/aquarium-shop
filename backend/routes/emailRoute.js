@@ -338,6 +338,61 @@ productRouter.post('/sendemail', async (req,res) => {
   
       })
 
+      //dispatch the item 
+
+      productRouter.post('/dispatchitem', async (req,res) => {
+
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+      
+        try{
+
+          var transporter = nodemailer.createTransport({
+            service:'hotmail',
+          auth : {  
+            user:process.env.user,
+            pass:process.env.pass
+          }
+        })
+        
+        const handlebarOptions = {
+          viewEngine:{
+            extName: '.handlebars',
+            partialDir: path.resolve(__dirname,'../views'),
+            defaultLayout:false
+          },
+          viewPath:path.resolve(__dirname,'../views'),
+          extName:'.handlebars'
+        }
+        
+        transporter.use('compile', hbs(handlebarOptions))
+        
+        var mailOptions = {
+          from:process.env.user,
+          to:email,
+          subject:'Dispatched',
+          template:'dispatch',
+          context:{
+            items:result,
+            subtotal:subtotal,
+            totalAmount:totalAmount,
+            address:address,
+            paymentCreate:paymentCreate,
+            orderId:orderId,
+            deliveryOptions:deliveryOptions,
+            deliveryPrice:deliveryPrice
+          }
+        }
+        
+        
+
+        await transporter.sendMail(mailOptions)
+        res.status(200).json({success:true,message:'Email sent'})
+      }catch(err){
+        res.status(500).json(err.message)
+      }
+
+      })
+
   
 
    

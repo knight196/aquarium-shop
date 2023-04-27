@@ -134,6 +134,41 @@ setTimeout(function(){
   },1500)
   }
 
+  const [dispatchOrder,setdispatch] = useState(orders)
+
+  const dispatchBtn = async (id) => {
+
+    await axios.put(`/api/dispatch/${id}`)
+
+    await axios.post('/orders/addusermessage',{
+      orderId:orders?.orderId,
+      username:orders?.username,
+      message:'Your order has been dispatch'
+    })
+
+    await axios.post('/orders/adminmessage', {
+      orderId:orders?.orderId,
+      username:orders?.username,
+      message:`You have dispatched ${orders?.username} order`
+    })
+  
+
+    await axios.post('/emailproduct/dispatchitem', {
+      result:orders,
+      email:orders.email,
+      subtotal:orders.subtotal,
+      totalAmount:orders.amount,
+      orderId:orders.orderId,
+      address:orders.address,
+      paymentCreate:orders.paymentCreate,
+      deliveryOptions:orders.deliveryOptions,
+      deliveryPrice:orders.deliveryPrice
+    })
+    toast.success("You have dispatched user's orders");
+    setTimeout(function(){
+    window.location.href="/admin/dashboard"
+    },1500)
+  }
  
  
   return (
@@ -145,6 +180,50 @@ setTimeout(function(){
     
     <h1>Order Details</h1>
     <hr></hr>
+
+
+    <div className="d-flex align-items-center">
+
+<div className="text-center">
+
+<p>Paid Not Sent</p>
+
+<i className="bi bi-check bg-white text-success p-1"></i>
+
+</div>
+
+<div style={{width:'50%',height:'3px'}} className={orders.Dispatch === false ? 'bg-secondary' : 'bg-success'}></div>
+
+<div className="text-center">
+
+<p>Dispatched</p>
+
+{orders.Dispatch === false ?
+<span className="bg-white text-secondary p-1">X</span>
+: <i className="bi bi-check bg-white text-success p-1"></i>
+}
+
+</div>
+
+<div style={{width:'50%',height:'3px'}} className={orders.Delivered === false ? 'bg-secondary' : 'bg-success'}></div>
+
+
+<div className="text-center">
+
+<p>Delivered</p>
+{orders.Delivered === false ?
+  <span className="bg-white text-secondary p-1">X</span>
+: <i className="bi bi-check bg-white text-success p-1"></i>
+}
+
+</div>
+
+
+
+</div>
+
+<hr></hr>
+
     <div className="d-flex justify-content-between orders-date">
       
       <div>
@@ -275,7 +354,7 @@ setTimeout(function(){
   <hr></hr>
   <small style={{fontWeight:'bold'}}>Payment Info</small>
   <div className="d-flex justify-content-between align-items-center">
-  <small>Card: <i className={`h6 fa-brands fa-cc-${item.card.brand}`}></i></small>
+  <small>Card: <i className={`h6 fa-brands fa-cc-${item.card.brand}`}></i></small>
   <small>Ending in: {item.card.last4}</small>
   </div>
   </>
@@ -300,6 +379,10 @@ setTimeout(function(){
 
           <button style={{position:'relative',zIndex:'10'}} className={delivered === orders.orderId === orders.Delivered === true ? "my-2 px-2 bg-success btn border-0 text-white" : 'd-none'} onClick={()=> {deliveredItem(orders.orderId);setdelivered(orders.orderId,!delivered)}}>Delivered</button>
           
+          <br></br>
+
+          <button className={dispatch === orders.orderId === orders.Dispatch === true ? "m-2 px-2 bg-secondary btn border-0 text-white" : 'd-none'} onClick={()=> {dispatchBtn(orders.orderId); setdispatch(orders.orderId,!dispatchOrder)}}>Dispatch</button>
+
           </div>
     
     
