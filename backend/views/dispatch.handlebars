@@ -67,7 +67,7 @@ padding:20px;
   <hr>
 <h1 style="text-align:center;">OrderId: {{orderId}}</h1>
 <hr>
-{{#each items}}
+{{#each items.products}}
     <div class="items">
 
         <div class="items-img">
@@ -131,11 +131,14 @@ padding:20px;
 </div>
 
 <hr>
+{{#each paymentCreate}}
 <div>
     <h5>Payment Info:</h5>
- <p style="font-size:18px;">Card: {{paymentCreate.card.brand}}</p>
-<p>Ending in: {{paymentCreate.card.last4}}</p>
+ <p style="font-size:18px;">Card: {{this.card.brand}}</p>
+<p>Ending in: {{this.card.last4}}</p>
     </div>
+
+    {{/each}}
 
     </div>
 
