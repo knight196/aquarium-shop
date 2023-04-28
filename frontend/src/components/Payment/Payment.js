@@ -20,6 +20,7 @@ function Payment() {
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
 
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,6 +62,57 @@ const handleChange = (e) => {
 }
 
 
+
+var today = new Date()
+
+var dd = String(today.getDate()).padStart(2,'0')
+
+var mm = String(today.getMonth() + 1).padStart(2,'0')
+
+var yyyy = today.getFullYear()
+
+var fullDate = dd + '.' + mm + '.' + yyyy
+
+var someDate = new Date()
+
+
+
+      
+      //standard delivery
+
+    var numberOfDaysToAdd = deliveryOptions.options === 'Standard' ? 2 : 1
+    
+  someDate.setDate(someDate.getDate() + numberOfDaysToAdd)
+
+  var DD = String(someDate.getDate()).padStart(2,'0')
+
+  var MM = String(someDate.getMonth() + 1).padStart(2,'0')
+
+  var y = someDate.getFullYear()
+  
+  var someFormattedDate = DD + '.' + MM + '.' + y
+  
+  today = fullDate + ' - ' + someFormattedDate
+
+
+  //nextDay delivery
+
+    
+  someDate.setDate(someDate.getDate() + numberOfDaysToAdd)
+
+  var date = String(someDate.getDate()).padStart(2,'0')
+
+  var month = String(someDate.getMonth() + 1).padStart(2,'0')
+
+  var year = someDate.getFullYear()
+  
+  var someFormattedDates = date + '.' + month + '.' + year
+  
+  today = fullDate + ' - ' + someFormattedDates
+
+  
+  
+  
   const handlePayment = async (e) => {
     e.preventDefault();
 
@@ -98,7 +150,8 @@ const handleChange = (e) => {
       paymentCreate: paymentCreate.paymentMethod,
       orderId:orderId,
       deliveryOptions:deliveryOptions.options,
-      deliveryPrice:deliveryOptions.price
+      deliveryPrice:deliveryOptions.price,
+     deliveryDate: today
     });
 
     axios.post('/emailproduct/sendemail', {
@@ -110,7 +163,9 @@ const handleChange = (e) => {
       paymentCreate:paymentCreate.paymentMethod,
       orderId:orderId,
       deliveryOptions:deliveryOptions.options,
-      deliveryPrice:deliveryOptions.price
+      deliveryPrice:deliveryOptions.price,
+      deliveryDate:today
+      
     })
     
     
@@ -126,6 +181,8 @@ const handleChange = (e) => {
       iconStyle: "solid",
     };
 
+
+    
   return (
     <>
 
@@ -156,10 +213,14 @@ const handleChange = (e) => {
 
           <div className="mt-2">
 
+          <p>Estimated Delivery</p>
+          <p className="d-flex"><i className="bi bi-truck"></i> <span className="mx-1">{today}</span></p>
+
+    <hr></hr>
 
             <h6>Order History</h6>
-        
-             
+
+
           <Basket/>
            
           </div>

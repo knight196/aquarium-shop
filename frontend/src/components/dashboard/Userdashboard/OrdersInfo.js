@@ -57,7 +57,8 @@ export default function OrdersInfo() {
           address:orders.address,
           paymentCreate:orders.paymentCreate,
           deliveryOptions:orders.deliveryOptions,
-          deliveryPrice:orders.deliveryPrice
+          deliveryPrice:orders.deliveryPrice,
+          deliveryDate:orders.deliveryDate
         })
        
 
@@ -91,7 +92,7 @@ export default function OrdersInfo() {
             address:orders.address,
             paymentCreate:orders.paymentCreate,
             deliveryOptions:orders.deliveryOptions,
-            deliveryPrice:orders.deliveryPrice
+            deliveryPrice:orders.deliveryPrice,
           })
 
           toast.success('You have opened the return request')
@@ -270,6 +271,14 @@ export default function OrdersInfo() {
     <div className="d-flex justify-content-between align-items-center">
   <h5>Subtotal</h5>
   <p>£{orders.subtotal}</p>
+</div>
+
+<hr></hr>
+
+<div>
+
+<h5>Estimated Date</h5>
+<p>{orders.deliveryDate}</p>
 </div>
 
 <hr></hr>

@@ -63,6 +63,7 @@ router.post("/add", async(req, res) => {
   const orderId = req.body.orderId
   const deliveryOptions = req.body.deliveryOptions
   const deliveryPrice = req.body.deliveryPrice
+  const deliveryDate = req.body.deliveryDate
 
   const orderDetail = {
     products: products,
@@ -74,7 +75,8 @@ router.post("/add", async(req, res) => {
     username:username,
     orderId:orderId,
     deliveryOptions:deliveryOptions,
-    deliveryPrice:deliveryPrice
+    deliveryPrice:deliveryPrice,
+    deliveryDate: deliveryDate
   };
 
   Orders.create(orderDetail, (err, result) => {

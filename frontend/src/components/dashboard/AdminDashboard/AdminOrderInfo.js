@@ -90,7 +90,8 @@ await axios.post('/emailproduct/deliveredemail', {
   address:orders.address,
   paymentCreate:orders.paymentCreate,
   deliveryOptions:orders.deliveryOptions,
-  deliveryPrice:orders.deliveryPrice
+  deliveryPrice:orders.deliveryPrice,
+  deliveryDate:orders.deliveryDate
 })
 
 
@@ -125,7 +126,8 @@ setTimeout(function(){
     address:orders.address,
     paymentCreate:orders.paymentCreate,
     deliveryOptions:orders.deliveryOptions,
-    deliveryPrice:orders.deliveryPrice
+    deliveryPrice:orders.deliveryPrice,
+    deliveryDate:orders.deliveryDate
   })
 
   toast.success("You have cancelled user's order");
@@ -162,12 +164,13 @@ setTimeout(function(){
       address:orders.address,
       paymentCreate:orders.paymentCreate,
       deliveryOptions:orders.deliveryOptions,
-      deliveryPrice:orders.deliveryPrice
+      deliveryPrice:orders.deliveryPrice,
+      deliveryDate:orders.deliveryDate,
     })
     toast.success("You have dispatched user's orders");
     setTimeout(function(){
     window.location.href="/admin/dashboard"
-    },1200)
+    },1000)
   }
  
  
@@ -325,6 +328,16 @@ setTimeout(function(){
         <div className="d-flex justify-content-between align-items-center">
   <h5>Subtotal</h5>
   <p>£{orders.subtotal}</p>
+</div>
+
+<hr></hr>
+
+<div>
+
+<h5>Estimated Date</h5>
+
+<p>{orders.deliveryDate}</p>
+
 </div>
 
 <hr></hr>

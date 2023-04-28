@@ -16,7 +16,7 @@ dotenv.config({path:path.resolve(__dirname, '../.env')});
 //order confirmation 
 productRouter.post('/sendemail', async (req,res) => {
   
-  const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+  const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
   
 
     try{
@@ -54,7 +54,8 @@ productRouter.post('/sendemail', async (req,res) => {
         paymentCreate:paymentCreate,
         orderId:orderId,
         deliveryOptions:deliveryOptions,
-        deliveryPrice:deliveryPrice
+        deliveryPrice:deliveryPrice,
+        deliveryDate:deliveryDate
       }
     }
     
@@ -69,7 +70,7 @@ productRouter.post('/sendemail', async (req,res) => {
     //cancellation request
     productRouter.post('/cancelemail', async (req,res) => {
 
-      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
     
     
       try{
@@ -107,7 +108,8 @@ productRouter.post('/sendemail', async (req,res) => {
           paymentCreate:paymentCreate,
           orderId:orderId,
           deliveryOptions:deliveryOptions,
-          deliveryPrice:deliveryPrice
+          deliveryPrice:deliveryPrice,
+          deliveryDate:deliveryDate
         }
       }
       
@@ -123,7 +125,7 @@ productRouter.post('/sendemail', async (req,res) => {
     //order cancelled confirmed
     productRouter.post('/confirmOrderCancelemail', async (req,res) => {
 
-      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+      const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
     
     
       try{
@@ -161,7 +163,8 @@ productRouter.post('/sendemail', async (req,res) => {
           paymentCreate:paymentCreate,
           orderId:orderId,
           deliveryOptions:deliveryOptions,
-          deliveryPrice:deliveryPrice
+          deliveryPrice:deliveryPrice,
+          deliveryDate:deliveryDate
         }
       }
       
@@ -177,7 +180,7 @@ productRouter.post('/sendemail', async (req,res) => {
       //order cancelled confirmed
       productRouter.post('/deliveredemail', async (req,res) => {
 
-        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
       
       
         try{
@@ -215,7 +218,8 @@ productRouter.post('/sendemail', async (req,res) => {
             paymentCreate:paymentCreate,
             orderId:orderId,
             deliveryOptions:deliveryOptions,
-            deliveryPrice:deliveryPrice
+            deliveryPrice:deliveryPrice,
+            deliveryDate:deliveryDate
           }
         }
         
@@ -231,7 +235,7 @@ productRouter.post('/sendemail', async (req,res) => {
          //return 
          productRouter.post('/returnemail', async (req,res) => {
 
-          const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+          const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
         
         
           try{
@@ -269,7 +273,8 @@ productRouter.post('/sendemail', async (req,res) => {
               paymentCreate:paymentCreate,
               orderId:orderId,
               deliveryOptions:deliveryOptions,
-              deliveryPrice:deliveryPrice
+              deliveryPrice:deliveryPrice,
+              deliveryDate:deliveryDate
             }
           }
           
@@ -287,7 +292,7 @@ productRouter.post('/sendemail', async (req,res) => {
           
       productRouter.post('/refundemail', async (req,res) => {
 
-        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
       
       
         try{
@@ -325,7 +330,8 @@ productRouter.post('/sendemail', async (req,res) => {
             paymentCreate:paymentCreate,
             orderId:orderId,
             deliveryOptions:deliveryOptions,
-            deliveryPrice:deliveryPrice
+            deliveryPrice:deliveryPrice,
+            deliveryDate:deliveryDate
           }
         }
         
@@ -342,7 +348,7 @@ productRouter.post('/sendemail', async (req,res) => {
 
       productRouter.post('/dispatchitem', async (req,res) => {
 
-        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice}  = req.body;
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
       
         try{
 
@@ -379,7 +385,8 @@ productRouter.post('/sendemail', async (req,res) => {
             paymentCreate:paymentCreate,
             orderId:orderId,
             deliveryOptions:deliveryOptions,
-            deliveryPrice:deliveryPrice
+            deliveryPrice:deliveryPrice,
+            deliveryDate:deliveryDate
           }
         }
         

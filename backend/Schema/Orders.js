@@ -12,6 +12,7 @@ const OrderSchema = mongoose.Schema(
   orderId:String,
   deliveryOptions:String,
   deliveryPrice:Number,
+  deliveryDate:String,
   Cancel:{type:Boolean,default:false},
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},
