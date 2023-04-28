@@ -278,7 +278,7 @@ export default function OrdersInfo() {
 <div>
 
 <h5>Estimated Date</h5>
-<p>{orders.deliveryDate}</p>
+<p><i className="bi bi-truck"></i> {orders.deliveryDate}</p>
 </div>
 
 <hr></hr>
