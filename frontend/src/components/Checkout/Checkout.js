@@ -5,6 +5,7 @@ import { getBasketTotal,getTotalBasketQty } from '../../reducer'
 import { qty } from '../../reducer'
 import './Checkout.css'
 import Basket from './Basket'
+import CheckoutSteps from '../CheckoutSteps'
 
 
 export default function Total() {
@@ -66,12 +67,18 @@ const deliverySelect = (e,price) => {
 
     <>
 
+
 {basket.length === 0 && (<p className="text-center h1">Your Cart is Empty</p>) }
 {basket.length !== 0 && (
-
- 
+  <>
+  {!user ? 
+  <CheckoutSteps step2></CheckoutSteps>
+  :
+  <CheckoutSteps step1 step2></CheckoutSteps>
+}
+  
       
-  <div className="checkout h-100 bg-white rounded-1 bg-opacity-50">
+  <div className="checkout h-100 bg-white rounded-1 mt-5 bg-opacity-50">
 
     <Basket/>
 
@@ -108,7 +115,7 @@ const deliverySelect = (e,price) => {
 </div>
 
 </div>
-
+</>
 )}
 </>
   )

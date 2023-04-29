@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {useStateValue} from '../../StateProvider'
 import {useNavigate} from 'react-router-dom'
 import {Link} from 'react-router-dom'
+import CheckoutSteps from '../CheckoutSteps'
 function Address() {
 
     const [{}, dispatch] = useStateValue();
@@ -43,7 +44,11 @@ function Address() {
     }
 
   return (
-    <div className="p-2">
+    <>
+    
+    <CheckoutSteps step1 step2 step3></CheckoutSteps>
+
+    <div className="p-2 mt-5">
       <h5 className="text-center">Customer's Address</h5>
       <hr></hr>
     <div className="address-input">
@@ -67,6 +72,7 @@ function Address() {
     </div>
 
     </div>
+    </>
   )
 }
 

@@ -5,11 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { getBasketTotal, getTotalBasketQty, qty } from '../../reducer'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
+import CheckoutSteps from '../CheckoutSteps';
 
 import Basket from '../Checkout/Basket'
 
 import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
 import axios from 'axios'
+
 
 function Payment() {
   const [{ address, basket, user,deliveryOptions }, dispatch] = useStateValue();
@@ -186,9 +188,11 @@ var someDate = new Date()
   return (
     <>
 
+    <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
+
       {basket.length === 0 && (window.location.href = "/") && (window.localStorage.removeItem('basket'))}
 
-      <h2 className="text-center">Checkout Form</h2>
+      <h2 className="text-center mt-5">Checkout Form</h2>
 
       <hr></hr>
 
