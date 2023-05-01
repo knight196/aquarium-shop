@@ -11,7 +11,7 @@ function Address() {
     const [street,setStreet] = useState('');
     const [city,setCity] = useState('');
     const [postcode,setPostCode] = useState('');
-    const [phone,setPhone] = useState('')
+ 
 
     const navigate = useNavigate()
 
@@ -21,22 +21,25 @@ function Address() {
       dispatch({
         type:'SET_ADDRESS',
         item: {
-         
           street,
           city,
           postcode,
-          phone
         }
       })
 
+      const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/
+
+    
       if (street === ''){
         alert('Please enter your street Name')
       }else if(city === ''){
         alert('Please enter your city')
-      }else if(postcode === ''){
-        alert('Please enter your PostCode')
-      }else if(phone === ''){
-        alert('Please enter your phone Number')
+      }else if(!regex.test(postcode)){
+        if(postcode === ''){
+          alert('Please enter your PostCode')
+        }else{
+          alert('Enter a valid postcode')
+        }
       }
       else{
         navigate('/Payment')
@@ -61,8 +64,8 @@ function Address() {
                         <input type="text" className="w-100 p-1 border-0" onChange={(e)=> setCity(e.target.value)} value={city} placeholder="Enter your Address" requird/>
                         <p>Post Code</p>
                         <input type="text" onChange={(e) => setPostCode(e.target.value)} value={postcode} className="w-100 p-1 border-0" placeholder="Enter your PostCode" required/>
-                        <p>Phone Number</p>
-                        <input type="number" onChange={(e) => setPhone(e.target.value)} value={phone} className="w-100 border-0 p-1" placeholder="Enter your Phone Number" required/>
+                       
+                     
     </div>
 
 
