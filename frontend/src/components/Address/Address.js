@@ -29,16 +29,21 @@ function Address() {
 
       const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/
 
+      const streetName = /^\d{1,3}.?\d{0,3}\s[a-zA-Z]{2,30}\s[a-zA-Z]{2,15}/
     
-      if (street === ''){
-        alert('Please enter your street Name')
+      if (!streetName.test(street)){
+        if(street === ''){
+          alert('Please enter your street Name')
+        }else{
+          alert('Please Enter a valid street Name')
+        }
       }else if(city === ''){
         alert('Please enter your city')
       }else if(!regex.test(postcode)){
         if(postcode === ''){
           alert('Please enter your PostCode')
         }else{
-          alert('Enter a valid postcode')
+          alert('Please Enter a valid postcode')
         }
       }
       else{
