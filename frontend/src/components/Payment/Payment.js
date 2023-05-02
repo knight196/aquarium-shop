@@ -207,6 +207,7 @@ var someDate = new Date()
             <p><span>Street:</span> {address.street}</p>
             <p><span>City:</span> {address.city}</p>
             <p><span>PostCode:</span> {address.postcode}</p>
+            <p><span>Contact No:</span> {address.phone}</p>
             <p><span>Email:</span> {!user ? 'Guest@this.com' : user?.email}</p>
            
           </div>

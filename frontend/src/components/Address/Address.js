@@ -11,7 +11,7 @@ function Address() {
     const [street,setStreet] = useState('');
     const [city,setCity] = useState('');
     const [postcode,setPostCode] = useState('');
- 
+  const [phone,setphone] = useState(0)
 
     const navigate = useNavigate()
 
@@ -24,12 +24,15 @@ function Address() {
           street,
           city,
           postcode,
+          phone
         }
       })
 
       const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/
 
       const streetName = /^\d{1,3}.?\d{0,3}\s[a-zA-Z]{2,30}\s[a-zA-Z]{2,15}/
+
+      const ContactNo = /^07\d{3}(\s)?\d{6}/
     
       if (!streetName.test(street)){
         if(street === ''){
@@ -44,6 +47,12 @@ function Address() {
           alert('Please enter your PostCode')
         }else{
           alert('Please Enter a valid postcode')
+        }
+      }else if(!ContactNo.test(phone)){
+        if(phone === ''){
+          alert('Please enter your Contact Number')
+        }else{
+          alert('Please enter a valid Contact number')
         }
       }
       else{
@@ -69,6 +78,9 @@ function Address() {
                         <input type="text" className="w-100 p-1 border-0" onChange={(e)=> setCity(e.target.value)} value={city} placeholder="Enter your Address" requird/>
                         <p>Post Code</p>
                         <input type="text" onChange={(e) => setPostCode(e.target.value)} value={postcode} className="w-100 p-1 border-0" placeholder="Enter your PostCode" required/>
+                       
+                        <p>Contact No</p>
+                        <input type="number" onChange={(e) => setphone(e.target.value)} value={phone} className="w-100 p-1 border-0" placeholder="Enter your Contact No" required/>
                        
                      
     </div>
