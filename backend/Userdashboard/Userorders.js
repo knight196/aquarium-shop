@@ -49,6 +49,7 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
     }
   })
 
+
 //api for orders
 // API TO add ORDER DETAILS
 
@@ -64,6 +65,7 @@ router.post("/add", async(req, res) => {
   const deliveryOptions = req.body.deliveryOptions
   const deliveryPrice = req.body.deliveryPrice
   const deliveryDate = req.body.deliveryDate
+  const paymentConfirm = req.body.paymentConfirm
 
   const orderDetail = {
     products: products,
@@ -76,7 +78,8 @@ router.post("/add", async(req, res) => {
     orderId:orderId,
     deliveryOptions:deliveryOptions,
     deliveryPrice:deliveryPrice,
-    deliveryDate: deliveryDate
+    deliveryDate: deliveryDate,
+    paymentConfirm:paymentConfirm
   };
 
   Orders.create(orderDetail, (err, result) => {

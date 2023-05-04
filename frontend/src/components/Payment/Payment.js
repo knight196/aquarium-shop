@@ -6,7 +6,6 @@ import { getBasketTotal, getTotalBasketQty, qty } from '../../reducer'
 import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import CheckoutSteps from '../CheckoutSteps';
-
 import Basket from '../Checkout/Basket'
 
 import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
@@ -22,8 +21,8 @@ function Payment() {
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
 
-
   const navigate = useNavigate();
+
 
   useEffect(() => {
     fetch("/config").then(async (r) => {
@@ -80,9 +79,9 @@ var someDate = new Date()
 
 
       
-      //standard delivery
+      //delivery Options
 
-    var numberOfDaysToAdd = deliveryOptions.options === 'Standard' ? 2 : 1
+    var numberOfDaysToAdd = deliveryOptions.options === 'Standard' ? 3 : 1
     
   someDate.setDate(someDate.getDate() + numberOfDaysToAdd)
 
@@ -96,24 +95,9 @@ var someDate = new Date()
   
   today = fullDate + ' - ' + someFormattedDate
 
-
-  //nextDay delivery
-
-    
-  someDate.setDate(someDate.getDate() + numberOfDaysToAdd)
-
-  var date = String(someDate.getDate()).padStart(2,'0')
-
-  var month = String(someDate.getMonth() + 1).padStart(2,'0')
-
-  var year = someDate.getFullYear()
-  
-  var someFormattedDates = date + '.' + month + '.' + year
-  
-  today = fullDate + ' - ' + someFormattedDates
-
   
   
+  const orderId = crypto.randomUUID().slice(0,20)
   
   const handlePayment = async (e) => {
     e.preventDefault();
@@ -121,68 +105,101 @@ var someDate = new Date()
     setprocessing(true)
 
     await stripe.confirmCardPayment(clientSecret,{
+
       payment_method: {
         card:elements.getElement(CardNumberElement), 
-      }  
-    }).then(({paymentIntent}) => {
-      setsucceeded(true)
-      setprocessing(false)
+        billing_details:{
+          address:{
+            line1:address.street,
+            postal_code:address.postcode,
+            city:address.city,
+          },
+          email:user?.email,
+          phone:address.phone
+        },
+      }
+     })
+     .then(() => {
       seterror(null)
-
-      navigate('/')
+      setprocessing(false)
+      setsucceeded(true)
       toast.success('Payment successful')
-      window.localStorage.removeItem('cartItems')
-  
-    })
+       window.localStorage.removeItem('cartItems')    
+     })
 
-    const paymentCreate = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardNumberElement),
-    })
+          
+          
+          const paymentCreate = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(CardNumberElement),
+        billing_details:{
+          address:{
+            line1:address.street,
+            postal_code:address.postcode,
+            city:address.city,
+          },
+          email:user?.email,
+          phone:address.phone
+        },
+       })
+       
+       const {paymentIntent, error}  = await stripe.confirmCardPayment(clientSecret);
 
-    const orderId = crypto.randomUUID().slice(0,20)
-
-    axios.post("/orders/add", {
-      basket: basket,
-      subtotal:getBasketTotal(basket),
-      amount: totalPrice,
-      email: user?.email,
-      username: user?.username,
-      address: address,
-      paymentCreate: paymentCreate.paymentMethod,
-      orderId:orderId,
-      deliveryOptions:deliveryOptions.options,
-      deliveryPrice:deliveryOptions.price,
-     deliveryDate: today
-    });
-
+          
+      if (error) {
+        // Handle error here
+        toast.error('Your payment has been declined')
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Handle successful payment here
+        
+        axios.post("/orders/add", {
+          basket: basket,
+        subtotal:getBasketTotal(basket),
+       amount: totalPrice,
+       email: user?.email,
+       username: user?.username,
+       address: address,
+       paymentCreate: paymentCreate.paymentMethod,
+       orderId:orderId,
+       deliveryOptions:deliveryOptions.options,
+       deliveryPrice:deliveryOptions.price,
+      deliveryDate: today,
+      paymentConfirm: true
+     })
+    
+    
     axios.post('/emailproduct/sendemail', {
-      result:basket,
-      email:user?.email,
-      subtotal:getBasketTotal(basket),
-      totalAmount:totalPrice,
-      address:address,
-      paymentCreate:paymentCreate.paymentMethod,
-      orderId:orderId,
-      deliveryOptions:deliveryOptions.options,
-      deliveryPrice:deliveryOptions.price,
-      deliveryDate:today
-      
-    })
+       result:basket,
+       email:user?.email,
+       subtotal:getBasketTotal(basket),
+       totalAmount:totalPrice,
+       address:address,
+       paymentCreate:paymentCreate.paymentMethod,
+       orderId:orderId,
+       deliveryOptions:deliveryOptions.options,
+       deliveryPrice:deliveryOptions.price,
+       deliveryDate:today
+      })
+      }
     
     
+
     dispatch({
       type: "EMPTY_BASKET",
     });
-   
 
     }
 
-    const inputStyle = {
-      showIcon: true,
+  
+
+
+
+
+    
+  const inputStyle = {
+    showIcon: true,
       iconStyle: "solid",
     };
-
 
     
   return (
@@ -190,13 +207,14 @@ var someDate = new Date()
 
     <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
 
+
       {basket.length === 0 && (window.location.href = "/") && (window.localStorage.removeItem('basket'))}
 
       <h2 className="text-center mt-5">Checkout Form</h2>
 
       <hr></hr>
 
-      <div className="container-fluid checkout-form py-4">
+      <div  className="container-fluid checkout-form py-4">
 
         <div className="billing-address h-100 bg-white rounded-1 bg-opacity-50 px-2">
 
@@ -295,25 +313,23 @@ var someDate = new Date()
             </div>
             </div>
 </div>
-         
-            {/* <CardElement onChange={handleChange}/> */}
+       
 
 </div>
 
-
-            <div className="text-center ">
+   <div className="text-center ">
               {error && <p>{error}</p>}
-            <button disabled={processing || disabled || succeeded} className="bg-warning px-2 py-1 m-2 rounded-1 border-0">
+            <button disabled={processing || disabled || succeeded} className="bg-warning px-2 py-1 m-2 rounded-0 border-0">
               <span>{processing ? <span className="spinner-border text-primary spinner-border-sm"></span> : 'Confirm Payment'}</span>
               </button>
             </div>
-            
-          </form>
 
+          </form>
 
         </div>
 
       </div>
+
     </>
   )
 }

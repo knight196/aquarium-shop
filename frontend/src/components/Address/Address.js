@@ -3,9 +3,10 @@ import {useStateValue} from '../../StateProvider'
 import {useNavigate} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import CheckoutSteps from '../CheckoutSteps'
+import {toast} from 'react-toastify'
 function Address() {
 
-    const [{}, dispatch] = useStateValue();
+    const [{address}, dispatch] = useStateValue();
 
   
     const [street,setStreet] = useState('');
@@ -36,23 +37,23 @@ function Address() {
     
       if (!streetName.test(street)){
         if(street === ''){
-          alert('Please enter your street Name')
+          toast.warning('Please enter your street Name')
         }else{
-          alert('Please Enter a valid street Name')
+          toast.warning('Please Enter a valid street Name')
         }
       }else if(city === ''){
         alert('Please enter your city')
       }else if(!regex.test(postcode)){
         if(postcode === ''){
-          alert('Please enter your PostCode')
+          toast.warning('Please enter your PostCode')
         }else{
-          alert('Please Enter a valid postcode')
+          toast.warning('Please Enter a valid postcode')
         }
       }else if(!ContactNo.test(phone)){
         if(phone === ''){
-          alert('Please enter your Contact Number')
+          toast.warning('Please enter your Contact Number')
         }else{
-          alert('Please enter a valid Contact number')
+          toast.warning('Please enter a valid Contact number')
         }
       }
       else{
@@ -88,7 +89,7 @@ function Address() {
 
     <div className="d-flex justify-content-center m-2">
  
-    <button className="px-2 bg-primary btn text-white" onClick={deliver}>Proceed to Payment</button>
+    <button className="px-2 bg-warning btn rounded-0" onClick={deliver}>Proceed to Payment</button>
     </div>
 
     </div>

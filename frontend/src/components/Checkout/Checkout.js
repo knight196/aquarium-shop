@@ -108,7 +108,7 @@ const deliverySelect = (e,price) => {
   
   <div className="d-flex justify-content-center">
 
-<button className="border-0 bg-primary text-white p-1" onClick={process}>Procced to Checkout</button>
+<button className="border-0 bg-warning p-1" onClick={process}>Procced to Checkout</button>
 
   </div>
 </div>

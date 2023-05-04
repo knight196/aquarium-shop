@@ -118,9 +118,20 @@ export default function OrdersInfo() {
 
 <div className="text-center">
 
+{orders.paymentConfirm === 'true' ? 
+(
+<>
 <p>Paid Not Sent</p>
 
 <i className="bi bi-check bg-white text-success p-1"></i>
+</>
+) 
+: (
+<>
+<p>Payment Pending</p>
+<span className="bg-white text-secondary p-1">X</span>
+</>
+)}
 
 </div>
 
