@@ -78,6 +78,8 @@ import Passwordreset from '../components/Account/Passwordreset'
 import Emailconfirm from '../components/Account/Email'
 import EditProduct from '../components/dashboard/AdminDashboard/EditList'
 
+import FailedPayment from '../components/dashboard/Userdashboard/FailedPayment'
+
 export default function RootChange() {
 
   const stripePromise = loadStripe('pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37')
@@ -167,7 +169,9 @@ export default function RootChange() {
            <Route  path="/api/orders/_id/:id" element={<AdminOrderInfo/>}/>
            <Route  path="/payment" element={<Elements stripe={stripePromise}><Payment/></Elements>}/>
            <Route  path="/Contact" element={<Contact/>}/>
-        
+
+          <Route path="/failedpayment/:id" element={<Elements stripe={stripePromise}><FailedPayment/></Elements>}/>
+
         </Routes>
  
     </div>

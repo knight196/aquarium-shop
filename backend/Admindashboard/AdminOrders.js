@@ -109,10 +109,8 @@ router.put('/orders/:id', async(req,res)=> {
 router.delete('/orders/:id', async (req,res)=> {
     try{
       const deleteId = await Orders.findOneAndDelete(req.params.id)
-      if(!req.params.id){
-        return res.status(400).send()
-      }
-      res.send(deleteId)
+    
+      res.status(200).send(deleteId)
     }catch(err){
       res.status(500).send(err)
     }

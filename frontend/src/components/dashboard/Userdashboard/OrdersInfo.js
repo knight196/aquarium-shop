@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams,Link} from 'react-router-dom'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {useStateValue} from '../../../StateProvider'
@@ -12,7 +12,6 @@ export default function OrdersInfo() {
   const { id }=useParams();
   const [orders, setorders]=useState([])
 
-  console.log(orders)
 
 
   const fetchData = async () => {
@@ -332,10 +331,25 @@ export default function OrdersInfo() {
     <div>
       <h5>Actions</h5>
       <div className="d-flex justify-content-between">
-      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders.orderId)}>Delete</button>
+      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders?.orderId)}>Delete</button>
+      
+      
       <div className={orders.Delivered === true ? 'd-none' : 'd-block'}>
       <button className={cancelOrder === orders.orderId === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders.orderId);setcancelOrder(orders.orderId,!cancelOrder)}}>Cancel</button>
       </div>
+
+  {orders.paymentConfirm === 'true' ?      
+<></>
+: 
+        <div>
+      <Link to={`/failedpayment/${orders.orderId}`}>
+<button className="border-0 px-2 m-1 bg-secondary btn">
+  Payment
+  </button>
+</Link>
+      </div>
+        
+      }
       
       <div className={orders.Delivered === true ? 'd-block' : 'd-none'}>
       <button className={returnitem === orders.orderId === orders.Return === true ? 'd-block btn px-2 bg-secondary border-0' : 'd-none'} onClick={()=> {returned(orders.orderId); setreturnitem(orders.orderId, !returnitem)}}>Return</button>

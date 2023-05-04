@@ -27,6 +27,38 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
   }
 })
 
+//repayment of failed payment by order id
+router.get('/failedpayment/:id', async (req,res) => {
+
+const paymentId = await Orders.findOne({orderId:req.params.id})
+if(paymentId){
+  res.send(paymentId)
+}else{
+  res.status(404).send({message:'Orders Payment not found'})
+}
+
+})
+
+//paymentConfirm change when the payment is successful
+
+router.put('/repaymentsuccessful', async (req,res) => {
+  try{
+    const repayment = await Orders.findOneAndUpdate(
+      {orderId:req.body.orderId},
+      {$set:{paymentConfirm:req.body.paymentConfirm}},
+      {$set:{paymentCreate:req.body.paymentCreate}}
+    )
+
+    await repayment.save()
+
+    return res.status(200).json(repayment)
+
+  }catch(err){
+    console.loog(err)
+    res.status(500).send(err)
+  }
+})
+
 
   //return the item
 
@@ -130,11 +162,13 @@ router.put('/get/:id', async (req,res)=> {
   // delete orders from user dashboard
 router.delete('/get/:id', async (req,res)=> {
     try{
-      const deleteId = await Orders.findOneAndDelete(req.params.id)
-      if(!req.params.id){
-        return res.status(400).send()
-      }
-      res.send(deleteId)
+ 
+      const deleteOrders = await Orders.findOneAndDelete(
+        {orderId:req.params.id}
+      )
+
+      res.status(200).send(deleteOrders)
+
     }catch(err){
       res.status(500).send(err)
     }

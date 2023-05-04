@@ -76,7 +76,7 @@ var fullDate = dd + '.' + mm + '.' + yyyy
 
 var someDate = new Date()
 
-
+const orderId = crypto.randomUUID().slice(0,20)
 
       
       //delivery Options
@@ -94,10 +94,6 @@ var someDate = new Date()
   var someFormattedDate = DD + '.' + MM + '.' + y
   
   today = fullDate + ' - ' + someFormattedDate
-
-  
-  
-  const orderId = crypto.randomUUID().slice(0,20)
   
   const handlePayment = async (e) => {
     e.preventDefault();
@@ -151,6 +147,7 @@ var someDate = new Date()
         toast.error('Your payment has been declined')
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         // Handle successful payment here
+
         
         axios.post("/orders/add", {
           basket: basket,
