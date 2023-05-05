@@ -1,14 +1,20 @@
 import React from 'react'
 import './Payment.css';
+import {useNavigate} from 'react-router-dom'
 
-export default function Confirmloader({showModal,modal}) {
+export default function Confirmloader() {
+
+  const navigate = useNavigate()
+  
+  function homescreen(){
+    navigate('/')
+  }
+
   return (
-    <div className={modal === true ? "loading d-flex" : 'd-none'}>
-    <h5>Processing....</h5>
-    <button onClick={()=> showModal(false)} className="px-2 py-1 border-0">X</button>
-    <video width="20%" height="20%" loop="true" autoplay="true" muted>
-      <source src="https://cdn-icons-mp4.flaticon.com/512/8718/8718553.mp4"/>
-      </video>    
+    <div className="loading">
+      <i className="bi bi-check text-success"></i>
+      <p className="my-2">Payment Successful</p>
+      <button onClick={homescreen} className="bg-warning px-5 py-2 border-0">OK</button>
     </div>
       
   )

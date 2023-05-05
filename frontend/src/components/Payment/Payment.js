@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import CheckoutSteps from '../CheckoutSteps';
 import Basket from '../Checkout/Basket'
+import ConfirmLoader from './Confirmloader'
 
 import { CardElement, useElements,useStripe,CardCvcElement,CardExpiryElement,CardNumberElement} from '@stripe/react-stripe-js'
 import axios from 'axios'
@@ -14,22 +15,14 @@ import axios from 'axios'
 
 function Payment() {
   const [{ address, basket, user,deliveryOptions }, dispatch] = useStateValue();
-  const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const [processing,setprocessing] = useState('')
   const [error,seterror] = useState(null)
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
 
+
   const navigate = useNavigate();
-
-
-  useEffect(() => {
-    fetch("/config").then(async (r) => {
-      const { publishableKey } = await r.json();
-      setStripePromise(loadStripe(publishableKey));
-    });
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('address', JSON.stringify(address))
@@ -78,7 +71,7 @@ var someDate = new Date()
 
 const orderId = crypto.randomUUID().slice(0,20)
 
-      
+
       //delivery Options
 
     var numberOfDaysToAdd = deliveryOptions.options === 'Standard' ? 3 : 1
@@ -119,13 +112,10 @@ const orderId = crypto.randomUUID().slice(0,20)
       seterror(null)
       setprocessing(false)
       setsucceeded(true)
-      toast.success('Payment successful')
-       window.localStorage.removeItem('cartItems')    
+      window.localStorage.removeItem('cartItems')
      })
 
-          
-          
-          const paymentCreate = await stripe.createPaymentMethod({
+       const paymentCreate = await stripe.createPaymentMethod({
         type: 'card',
         card: elements.getElement(CardNumberElement),
         billing_details:{
@@ -138,33 +128,22 @@ const orderId = crypto.randomUUID().slice(0,20)
           phone:address.phone
         },
        })
-       
-       const {paymentIntent, error}  = await stripe.confirmCardPayment(clientSecret);
 
-          
-      if (error) {
-        // Handle error here
-        toast.error('Your payment has been declined')
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Handle successful payment here
+       axios.post("/orders/add", {
+            basket: basket,
+       subtotal:getBasketTotal(basket),
+      amount: totalPrice,
+      email: user?.email,
+      username: user?.username,
+      address: address,
+      paymentCreate: paymentCreate.paymentMethod,
+      orderId:orderId,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price,
+     deliveryDate: today,
+     paymentConfirm: succeeded
+    })
 
-        
-        axios.post("/orders/add", {
-          basket: basket,
-        subtotal:getBasketTotal(basket),
-       amount: totalPrice,
-       email: user?.email,
-       username: user?.username,
-       address: address,
-       paymentCreate: paymentCreate.paymentMethod,
-       orderId:orderId,
-       deliveryOptions:deliveryOptions.options,
-       deliveryPrice:deliveryOptions.price,
-      deliveryDate: today,
-      paymentConfirm: true
-     })
-    
-    
     axios.post('/emailproduct/sendemail', {
        result:basket,
        email:user?.email,
@@ -177,20 +156,46 @@ const orderId = crypto.randomUUID().slice(0,20)
        deliveryPrice:deliveryOptions.price,
        deliveryDate:today
       })
-      }
-    
-    
 
+      const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
+  if (paymentIntent && paymentIntent.status === 'succeeded') {
+    // Handle successful payment here
+    
+    axios.put('/orders/updatepayment', {
+      orderId:orderId,
+      paymentConfirm: paymentIntent.status
+    })
+
+    navigate('/')
+    toast.success('Payment successful')
+
+  } else {
+    // Handle unsuccessful, processing, or canceled payments and API errors here
+    axios.post('/emailproduct/failedpayment', {
+      result:basket,
+      email:user?.email,
+      subtotal:getBasketTotal(basket),
+      totalAmount:totalPrice,
+      address:address,
+      paymentCreate:paymentCreate.paymentMethod,
+      orderId:orderId,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price,
+      deliveryDate:today,
+
+    })
+
+    navigate('/')
+    toast.error('Payment declined')
+  
+  }
+ 
+      
     dispatch({
       type: "EMPTY_BASKET",
     });
 
     }
-
-  
-
-
-
 
     
   const inputStyle = {
@@ -204,14 +209,15 @@ const orderId = crypto.randomUUID().slice(0,20)
 
     <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
 
-
-      {basket.length === 0 && (window.location.href = "/") && (window.localStorage.removeItem('basket'))}
+    {/* {succeeded ? 
+    <ConfirmLoader succeeded={succeeded}/>
+  : <></>} */}
 
       <h2 className="text-center mt-5">Checkout Form</h2>
 
       <hr></hr>
 
-      <div  className="container-fluid checkout-form py-4">
+      <div style={succeeded ? {filter:'brightness(50%)',pointerEvents:'none'} : {filter:'brightness(100%)',pointerEvents:'auto'}} className="container-fluid checkout-form py-4">
 
         <div className="billing-address h-100 bg-white rounded-1 bg-opacity-50 px-2">
 

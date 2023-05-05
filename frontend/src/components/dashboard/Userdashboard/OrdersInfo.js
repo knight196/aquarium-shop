@@ -13,7 +13,6 @@ export default function OrdersInfo() {
   const [orders, setorders]=useState([])
 
 
-
   const fetchData = async () => {
       const res = await axios.get(`/orders/get/_id/${id}`)
       setorders(res.data)
@@ -117,7 +116,7 @@ export default function OrdersInfo() {
 
 <div className="text-center">
 
-{orders.paymentConfirm === 'true' ? 
+{orders.paymentConfirm === 'succeeded' ? 
 (
 <>
 <p>Paid Not Sent</p>
@@ -338,7 +337,7 @@ export default function OrdersInfo() {
       <button className={cancelOrder === orders.orderId === orders.Cancel === true ? 'd-block btn px-2 bg-warning border-0 m-1' : "d-none" } onClick={()=> {cancel(orders.orderId);setcancelOrder(orders.orderId,!cancelOrder)}}>Cancel</button>
       </div>
 
-  {orders.paymentConfirm === 'true' ?      
+  {orders.paymentConfirm === 'succeeded' ?      
 <></>
 : 
         <div>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+
+.order-body{
+    background:whitesmoke;
+    padding:20px;
+}
+.company-logo{
+    background:black;
+    color:white;
+    padding:20px;
+}
+
+.items{
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-direction: column;
+    margin:auto;
+}
+.items-img{
+   width:50%;
+}
+.items-img img{
+    width:50%;
+}
+
+.order-address{
+background:grey;
+padding:20px;
+}
+
+@media screen and (min-width:720px){
+    .items{
+        flex-direction: row;
+        text-align: center;
+    }
+    
+.product-variant{
+    display:flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+}
+
+
+</style>
+
+<body>
+
+    <p>Failed Payment process.</p>
+
+    <p>{{{link}}}</p>
+
+<div class="order-body">
+
+  <h1 class="company-logo">Aquature</h1>
+  <hr>
+<h1 style="text-align:center;">OrderId: {{orderId}}</h1>
+<hr>
+{{#each items}}
+    <div class="items">
+
+        <div class="items-img">
+            <p>{{this.title}}</p>
+            <img src={{this.image.url}} alt={{this.title}}/>
+        </div>
+            
+        <div class="product-variant">
+
+<div>
+
+        {{#if this.packaging}}
+        <p>Packaging:{{this.packaging}}</p>
+        {{else}}
+        <p></p>
+        {{/if}}
+</div>
+
+<div>
+
+
+        {{#if this.color}}
+        <p>Color: {{this.color}}</p>
+        {{else}}
+        <p></p>
+        {{/if}}
+</div>
+
+<div>
+        <p>Price: £{{this.price}}</p>
+        <p>Quantity: £{{this.quantity}}</p>
+</div>
+
+
+        </div>
+
+    </div>
+    {{/each}}
+
+
+<hr>
+
+<p>Estimated-Date : {{deliveryDate}}</p>
+
+<hr>
+
+<div>
+    <p>SubTotal: £{{subtotal}}</p>
+    <p>DeliveryOptions: {{deliveryOptions}}</p>
+    <p>DeliveryPrice: £{{deliveryPrice}}</p>
+    <p>TotalAmount: £{{totalAmount}}</p>
+</div>
+
+<hr>
+
+<div class="order-address">
+
+    <div>
+
+
+    <h5>Customer's address:</h5>
+<p>StreetName:{{address.street}}</p>
+<p>City: {{address.city}}</p>
+<p>PostCode: {{address.postcode}}</p>
+</div>
+
+<hr>
+<div>
+    <h5>Payment Info:</h5>
+ <p style="font-size:18px;">Card: {{paymentCreate.card.brand}}</p>
+<p>Ending in: {{paymentCreate.card.last4}}</p>
+    </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

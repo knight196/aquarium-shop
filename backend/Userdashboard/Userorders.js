@@ -6,7 +6,6 @@ const productModel = require('../Schema/addProduct')
 
 const router = express.Router();
 
-
 //finding specific order by one id from user
 router.get('/get/_id/:id', async (req,res)=> {
   const orderId = await Orders.findOne({orderId:req.params.id})
@@ -54,9 +53,32 @@ router.put('/repaymentsuccessful', async (req,res) => {
     return res.status(200).json(repayment)
 
   }catch(err){
-    console.loog(err)
+    console.log(err)
     res.status(500).send(err)
   }
+})
+
+
+//payment status 
+
+router.put('/updatepayment', async (req,res) => {
+
+  try{
+
+    const success = await Orders.findOneAndUpdate(
+      {orderId:req.body.orderId},
+      {$set:{paymentConfirm:req.body.paymentConfirm}}
+      )
+
+    res.status(200).send(success)
+
+  }
+
+  catch(err){
+    console.log(err)
+    res.status(500).send(err)
+  }
+
 })
 
 

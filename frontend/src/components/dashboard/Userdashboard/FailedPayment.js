@@ -26,10 +26,9 @@ export default function FailedPayment() {
         fetchData(orders.orders);
         },[orders.orders])
 
-        console.log(orders)
 
-        const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState("");
+     
+  const [clientSecret, setClientSecret] = useState(true);
   const [processing,setprocessing] = useState('')
   const [error,seterror] = useState(null)
   const [disabled,setdisabled] = useState(true)
@@ -37,13 +36,6 @@ export default function FailedPayment() {
 
   const elements = useElements();
   const stripe = useStripe();
-
-  useEffect(() => {
-    fetch("/config").then(async (r) => {
-      const { publishableKey } = await r.json();
-      setStripePromise(loadStripe(publishableKey));
-    });
-  }, []);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
@@ -54,7 +46,9 @@ export default function FailedPayment() {
     }
     fetchClientSecret()
     console.log('client secret is ', clientSecret)
-  }, [])
+  }, [orders])
+
+  console.log(clientSecret)
 
 const handleChange = (e) => {
 
@@ -71,6 +65,7 @@ const handleChange = (e) => {
     await stripe.confirmCardPayment(clientSecret,{
 
       payment_method: {
+        type:'card',
         card:elements.getElement(CardNumberElement), 
         billing_details:{
           address:{
@@ -87,8 +82,6 @@ const handleChange = (e) => {
       seterror(null)
       setprocessing(false)
       setsucceeded(true)
-      toast.success('Payment successful')
-      navigate('/') 
      })
 
           
@@ -106,23 +99,27 @@ const handleChange = (e) => {
           phone:orders.address?.phone
         },
        })
-       
-       const {paymentIntent, error}  = await stripe.confirmCardPayment(clientSecret);
 
-          
-      if (error) {
-        // Handle error here
-        toast.error('Your payment has been declined')
-      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Handle successful payment here    
+       const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
+       if (paymentIntent && paymentIntent.status === 'succeeded') {
+         // Handle successful payment here
+         
+         axios.put('/orders/repaymentsuccessful', {
+          orderId:orders.orderId,
+          paymentCreate:paymentCreate.paymentMethod,
+          paymentConfirm:paymentIntent.status
+      })
 
-        axios.put('/repaymentsuccessful', {
-            orderId:orders.orderId,
-            paymentCreate:paymentCreate.paymentMethod,
-            paymentConfirm:succeeded
-        })
+      navigate('/')
+      toast.success('Payment successful')
 
-    }
+      navigate('/') 
+       } else {
+         // Handle unsuccessful, processing, or canceled payments and API errors here
+         navigate('/')
+         toast.error('Payment declined')
+       }
+
 
 }
 
@@ -146,7 +143,7 @@ const handleChange = (e) => {
     
     <div className="text-center">
     
-    {orders.paymentConfirm !== 'true' ? 
+    {orders.paymentConfirm === 'succeeded' ? 
     (
     <>
     <p>Paid Not Sent</p>

@@ -113,6 +113,25 @@
  }
 
 
+ .loading{
+
+
+padding:30px 50px;
+  background:whitesmoke;
+  position:absolute;
+  z-index:1;
+  text-align: center;
+  top:50%;
+  left:20%;
+  i{
+    font-size: 50px;
+    border:solid darkolivegreen;
+    border-radius: 100px;
+    padding:10px 20px;
+  }
+ }
+
+
    @include for-size(tablet){
 
     .checkout-form{
@@ -125,6 +144,16 @@
 
     .cart-list{
       margin:0 5px;
+    }
+
+    .loading{
+      height:50%;
+      width:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction: column;
+      left:25%;
     }
 
    }
@@ -145,6 +174,10 @@
     .cart-list{
       width:50%;
     }
+
+  .loading{
+    height:60%;
+  }    
 
    }
 

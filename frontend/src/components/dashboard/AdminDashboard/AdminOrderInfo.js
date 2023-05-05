@@ -189,7 +189,7 @@ setTimeout(function(){
 
 <div className="text-center">
 
-{orders.paymentConfirm === 'true' ? 
+{orders.paymentConfirm === 'succeeded' ? 
 (
 <>
 <p>Paid Not Sent</p>

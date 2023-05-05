@@ -49,12 +49,6 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // API for PAYMENT
 
-app.get("/config", (req, res) => {
-    res.send({
-      publishableKey:'pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37'
-    });
-  });
-
   app.post("/create-payment", async (req, res) => {
     const {amount} = req.body
     try {
@@ -75,8 +69,6 @@ app.get("/config", (req, res) => {
       });
     }
   });
-
-    
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/index.html')))
 
