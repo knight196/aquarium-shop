@@ -145,28 +145,28 @@ const orderId = crypto.randomUUID().slice(0,20)
      paymentConfirm: succeeded
     })
 
-    axios.post('/emailproduct/sendemail', {
-       result:basket,
-       email:user?.email,
-       subtotal:getBasketTotal(basket),
-       totalAmount:totalPrice,
-       address:address,
-       paymentCreate:paymentCreate.paymentMethod,
-       orderId:orderId,
-       deliveryOptions:deliveryOptions.options,
-       deliveryPrice:deliveryOptions.price,
-       deliveryDate:today
-      })
-
       const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
   if (paymentIntent && paymentIntent.status === 'succeeded') {
     // Handle successful payment here
+    
+    
+    axios.post('/emailproduct/sendemail', {
+      result:basket,
+      email:user?.email,
+      subtotal:getBasketTotal(basket),
+      totalAmount:totalPrice,
+      address:address,
+      paymentCreate:paymentCreate.paymentMethod,
+      orderId:orderId,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price,
+      deliveryDate:today
+    })
     
     axios.put('/orders/updatepayment', {
       orderId:orderId,
       paymentConfirm: paymentIntent.status
     })
-
     navigate('/')
     toast.success('Payment successful')
 
