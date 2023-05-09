@@ -41,14 +41,20 @@ if(paymentId){
 //paymentConfirm change when the payment is successful
 
 router.put('/repaymentsuccessful', async (req,res) => {
+
+
+  const  data =  {
+
+    paymentConfirm:req.body.paymentConfirm,
+    paymentCreate:req.body.paymentCreate
+
+  }
+
   try{
     const repayment = await Orders.findOneAndUpdate(
       {orderId:req.body.orderId},
-      {$set:{paymentConfirm:req.body.paymentConfirm}},
-      {$set:{paymentCreate:req.body.paymentCreate}}
+      {$set:data}
     )
-
-    await repayment.save()
 
     return res.status(200).json(repayment)
 

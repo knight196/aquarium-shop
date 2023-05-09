@@ -405,6 +405,64 @@ productRouter.post('/sendemail', async (req,res) => {
 
       })
 
+      //send the successful message for the payment 
+
+         //send the payment error message when payment is rejected or failed
+
+         productRouter.post('/successrepayment', async (req,res) => {
+
+          const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
+        
+          try{
+  
+            var transporter = nodemailer.createTransport({
+              service:'hotmail',
+            auth : {  
+              user:process.env.user,
+              pass:process.env.pass
+            }
+          })
+          
+          const handlebarOptions = {
+            viewEngine:{
+              extName: '.handlebars',
+              partialDir: path.resolve(__dirname,'../views'),
+              defaultLayout:false
+            },
+            viewPath:path.resolve(__dirname,'../views'),
+            extName:'.handlebars'
+          }
+          
+          transporter.use('compile', hbs(handlebarOptions))
+          
+          var mailOptions = {
+            from:process.env.user,
+            to:email,
+            subject:'Payment Successful',
+            template:'repaymentSuccess',
+            context:{
+              items:result,
+              subtotal:subtotal,
+              totalAmount:totalAmount,
+              address:address,
+              paymentCreate:paymentCreate,
+              orderId:orderId,
+              deliveryOptions:deliveryOptions,
+              deliveryPrice:deliveryPrice,
+              deliveryDate:deliveryDate,
+            }
+          }
+          
+          
+  
+          await transporter.sendMail(mailOptions)
+          res.status(200).json({success:true,message:'Email sent'})
+        }catch(err){
+          res.status(500).json(err.message)
+        }
+  
+        })
+
 
          //dispatch the item 
 

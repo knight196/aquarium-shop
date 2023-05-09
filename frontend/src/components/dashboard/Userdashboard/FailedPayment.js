@@ -48,7 +48,6 @@ export default function FailedPayment() {
     console.log('client secret is ', clientSecret)
   }, [orders])
 
-  console.log(clientSecret)
 
 const handleChange = (e) => {
 
@@ -65,30 +64,7 @@ const handleChange = (e) => {
     await stripe.confirmCardPayment(clientSecret,{
 
       payment_method: {
-        type:'card',
         card:elements.getElement(CardNumberElement), 
-        billing_details:{
-          address:{
-            line1:orders.address?.street,
-            postal_code:orders.address?.postcode,
-            city:orders.address?.city,
-          },
-          email:orders.email,
-          phone:orders.address?.phone
-        },
-      }
-     })
-     .then(() => {
-      seterror(null)
-      setprocessing(false)
-      setsucceeded(true)
-     })
-
-          
-          
-          const paymentCreate = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardNumberElement),
         billing_details:{
           address:{
             line1:orders.address?.street,
@@ -98,22 +74,59 @@ const handleChange = (e) => {
           email:orders?.email,
           phone:orders.address?.phone
         },
-       })
+      }
+     })
+     .then(() => {
+      seterror(null)
+      setprocessing(false)
+      setsucceeded(true)
+     })
+          
+          
+     const paymentCreate = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardNumberElement),
+      billing_details:{
+        address:{
+          line1:orders.address?.street,
+          postal_code:orders.address?.postcode,
+          city:orders.address?.city,
+        },
+        email:orders?.email,
+        phone:orders.address?.phone
+      },
+     })
+     
 
-       const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
-       if (paymentIntent && paymentIntent.status === 'succeeded') {
-         // Handle successful payment here
+     
+     
+     const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
+     if (paymentIntent && paymentIntent.status === 'succeeded') {
+       // Handle successful payment here
          
+
          axios.put('/orders/repaymentsuccessful', {
           orderId:orders.orderId,
           paymentCreate:paymentCreate.paymentMethod,
           paymentConfirm:paymentIntent.status
       })
 
+      await axios.post('/emailproduct/successrepayment', {
+        result:orders,
+        email:orders.email,
+        subtotal:orders.subtotal,
+        totalAmount:orders.amount,
+        orderId:orders.orderId,
+        address:orders.address,
+        paymentCreate:paymentCreate.paymentMethod,
+        deliveryOptions:orders.deliveryOptions,
+        deliveryPrice:orders.deliveryPrice,
+        deliveryDate:orders.deliveryDate,
+      })
       navigate('/')
       toast.success('Payment successful')
 
-      navigate('/') 
+      
        } else {
          // Handle unsuccessful, processing, or canceled payments and API errors here
          navigate('/')

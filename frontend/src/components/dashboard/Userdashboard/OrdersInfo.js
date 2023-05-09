@@ -12,6 +12,7 @@ export default function OrdersInfo() {
   const { id }=useParams();
   const [orders, setorders]=useState([])
 
+  console.log(orders)
 
   const fetchData = async () => {
       const res = await axios.get(`/orders/get/_id/${id}`)
@@ -312,6 +313,8 @@ export default function OrdersInfo() {
 </div>
 
 <div>
+
+
 {orders.paymentCreate?.map((item) => (
   <>
   <hr></hr>
@@ -322,6 +325,8 @@ export default function OrdersInfo() {
   </div>
   </>
 ))}
+
+
 </div>
 
 <hr></hr>
