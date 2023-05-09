@@ -72,6 +72,7 @@ var someDate = new Date()
 const orderId = crypto.randomUUID().slice(0,20)
 
 
+
       //delivery Options
 
     var numberOfDaysToAdd = deliveryOptions.options === 'Standard' ? 3 : 1
@@ -182,7 +183,6 @@ const orderId = crypto.randomUUID().slice(0,20)
       deliveryOptions:deliveryOptions.options,
       deliveryPrice:deliveryOptions.price,
       deliveryDate:today,
-
     })
 
     navigate('/')

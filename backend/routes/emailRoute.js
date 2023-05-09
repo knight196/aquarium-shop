@@ -345,14 +345,14 @@ productRouter.post('/sendemail', async (req,res) => {
   
       })
 
- 
+    
       
 
       //send the payment error message when payment is rejected or failed
 
       productRouter.post('/failedpayment', async (req,res) => {
 
-        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate,paymentlink}  = req.body;
+        const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
       
         try{
 
@@ -391,6 +391,7 @@ productRouter.post('/sendemail', async (req,res) => {
             deliveryOptions:deliveryOptions,
             deliveryPrice:deliveryPrice,
             deliveryDate:deliveryDate,
+          
           }
         }
         
