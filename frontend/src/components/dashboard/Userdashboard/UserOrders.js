@@ -35,7 +35,7 @@ const [orders,setOrders] = useState([]);
      
      {order.products.slice(0,1).map((item) => (
 
-       <Link to={`/orders/get/_id/${order.orderId}`}>
+       <Link to={`/orders/ordersInfo/${order.orderId}`}>
 
        <div className="d-flex align-items-center justify-content-between user-orders-card px-2">
        

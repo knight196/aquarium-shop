@@ -39,6 +39,20 @@ background:grey;
 padding:20px;
 }
 
+a{
+    text-decoration: none;
+    color:black;
+}
+
+.btnlink{
+    width:100%;
+    border:none;
+    text-align:center;
+    background:darkcyan;
+    padding:10px 20px;
+}
+
+
 @media screen and (min-width:720px){
     .items{
         flex-direction: row;
@@ -59,6 +73,10 @@ padding:20px;
 <body>
 
     <p>Transaction failed.</p>
+
+<button class="btnlink">
+    <a href="https://aquarium-shop-t2o8.onrender.com/orders/ordersInfo/{{orderId}}">Order Details</a>
+</button>
 
 
 <div class="order-body">

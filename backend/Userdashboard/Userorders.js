@@ -7,7 +7,7 @@ const productModel = require('../Schema/addProduct')
 const router = express.Router();
 
 //finding specific order by one id from user
-router.get('/get/_id/:id', async (req,res)=> {
+router.get('/ordersInfo/:id', async (req,res)=> {
   const orderId = await Orders.findOne({orderId:req.params.id})
   if(orderId){
    res.send(orderId)

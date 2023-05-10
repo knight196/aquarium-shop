@@ -163,7 +163,7 @@ export default function RootChange() {
           <Route path="/api/editProduct/:slug" element={<EditProduct/>}/>
            <Route  path="/api/products/slug/:slug" element={<ProductDetail/>}/>
           <Route path="/api/plants/slug/:slug" element={<PlantsProductDetail/>}/>
-           <Route  path="/orders/get/_id/:id" element={<UserOrderInfo/>}/>
+           <Route  path="/orders/ordersInfo/:id" element={<UserOrderInfo/>}/>
            <Route  path="/orders/addcontactmsg/_id/:id" element={<Usercontactmsg/>}/>
            <Route  path="/api/addcontactmsg/_id/:id" element={<AdminContactmsg/>}/>
            <Route  path="/api/orders/_id/:id" element={<AdminOrderInfo/>}/>
