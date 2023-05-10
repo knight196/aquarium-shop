@@ -18,7 +18,7 @@ export default function FailedPayment() {
   
   
     const fetchData = async () => {
-        const res = await axios.get(`/orders/get/_id/${id}`)
+        const res = await axios.get(`/orders/ordersInfo/${id}`)
         setorders(res.data)
     }
   

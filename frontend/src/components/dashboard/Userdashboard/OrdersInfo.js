@@ -12,10 +12,9 @@ export default function OrdersInfo() {
   const { id }=useParams();
   const [orders, setorders]=useState([])
 
-  console.log(orders)
 
   const fetchData = async () => {
-      const res = await axios.get(`/orders/get/_id/${id}`)
+      const res = await axios.get(`/orders/ordersInfo/${id}`)
       setorders(res.data)
   }
 

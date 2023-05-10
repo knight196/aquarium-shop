@@ -26,17 +26,6 @@ router.get('/addcontactmsg/_id/:id', async (req,res)=> {
   }
 })
 
-//repayment of failed payment by order id
-router.get('/failedpayment/:id', async (req,res) => {
-
-const paymentId = await Orders.findOne({orderId:req.params.id})
-if(paymentId){
-  res.send(paymentId)
-}else{
-  res.status(404).send({message:'Orders Payment not found'})
-}
-
-})
 
 //paymentConfirm change when the payment is successful
 
