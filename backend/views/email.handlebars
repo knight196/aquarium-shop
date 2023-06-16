@@ -89,7 +89,11 @@ a{
 
         <div class="items-img">
             <p>{{this.title}}</p>
+            {{#if this.image.url}}
             <img src={{this.image.url}} alt={{this.title}}/>
+            {{else}}
+            <img src={{this.image}} alt={{this.title}}/>
+            {{/if}}
         </div>
             
         <div class="product-variant">
@@ -154,8 +158,12 @@ a{
 <hr>
 <div>
     <h5>Payment Info:</h5>
+    {{#if paymentCreate.card}}
  <p style="font-size:18px;">Card: {{paymentCreate.card.brand}}</p>
 <p>Ending in: {{paymentCreate.card.last4}}</p>
+{{else}}
+<p>{{paymentCreate}}</p>
+    {{/if}}
     </div>
 
     </div>

@@ -3,6 +3,7 @@ export const initialState = {
     user: JSON.parse(localStorage.getItem("user")),
     address: JSON.parse(localStorage.getItem('address') || '{}'),
     deliveryOptions: JSON.parse(localStorage.getItem('deliveryOptions') || '[]'),
+
 }
 
 
@@ -59,6 +60,7 @@ const reducer = (state, action) => {
                 ...state, deliveryOptions: action.payload
             }
 
+ 
 
         case 'SET_USER':
             return {

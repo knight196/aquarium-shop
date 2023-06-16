@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef,useMemo } from 'react';
 import './Payment.css';
 import { useStateValue } from "../../StateProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useSearchParams } from "react-router-dom";
 import { getBasketTotal, getTotalBasketQty, qty } from '../../reducer'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import CheckoutSteps from '../CheckoutSteps';
 import Basket from '../Checkout/Basket'
@@ -14,12 +14,41 @@ import axios from 'axios'
 
 
 function Payment() {
+
+
   const [{ address, basket, user,deliveryOptions }, dispatch] = useStateValue();
   const [clientSecret, setClientSecret] = useState("");
+  const [cardSecret, setCardSecret] = useState("");
   const [processing,setprocessing] = useState('')
   const [error,seterror] = useState(null)
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
+
+
+  const [params] = useSearchParams()
+
+  const arr = Object.fromEntries(params) 
+
+
+  const renderAfterCalled = useRef(false)
+
+
+  useEffect(() => {
+    if(!renderAfterCalled.current){
+      if(arr.redirect_status === 'succeeded'){
+        renderAfterCalled.current = true
+        toast.success('Your payment was successful')
+        setTimeout(function (){
+          window.localStorage.removeItem('cartItems')
+          window.location.href="/"
+        },1500)
+      }
+    }
+      
+  },[])
+
+
+  const orderId = crypto.randomUUID().slice(0,20)
 
 
   const navigate = useNavigate();
@@ -28,36 +57,13 @@ function Payment() {
     localStorage.setItem('address', JSON.stringify(address))
   },[address])
 
-
-
   const elements = useElements();
   const stripe = useStripe();
 
   const totalPrice = (getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
+  
 
-
-
-  useEffect(() => {
-    const fetchClientSecret = async () => {
-      const data = await axios.post('/create-payment', {
-        amount: totalPrice
-      })
-      setClientSecret(data.data.clientSecret)
-    }
-    fetchClientSecret()
-    console.log('client secret is ', clientSecret)
-  }, [])
-
-const handleChange = (e) => {
-
-  setdisabled(e.empty)
-  seterror(e.error ? e.error.message: '')
-
-}
-
-
-
-var today = new Date()
+  var today = new Date()
 
 var dd = String(today.getDate()).padStart(2,'0')
 
@@ -68,8 +74,6 @@ var yyyy = today.getFullYear()
 var fullDate = dd + '.' + mm + '.' + yyyy
 
 var someDate = new Date()
-
-const orderId = crypto.randomUUID().slice(0,20)
 
 
 
@@ -88,13 +92,53 @@ const orderId = crypto.randomUUID().slice(0,20)
   var someFormattedDate = DD + '.' + MM + '.' + y
   
   today = fullDate + ' - ' + someFormattedDate
+
+ 
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const data = await axios.post('/webhook/create-payment', {
+        basket,
+        orderId,
+        subtotal:getBasketTotal(basket),
+      email: user?.email,
+      username: user?.username,
+      address: address,
+      deliveryOptions:deliveryOptions.options,
+      deliveryPrice:deliveryOptions.price,
+     deliveryDate: today,
+        amount: totalPrice,
+      })
+      setClientSecret(data.data.clientSecret)
+    }
+    fetchClientSecret()
+
+  },[])
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const data = await axios.post('/card-payment', {
+        amount: totalPrice,
+      })
+      setCardSecret(data.data.clientSecret)
+    }
+    fetchClientSecret()
+
+  },[])
+
+
+const handleChange = (e) => {
+
+  setdisabled(e.empty)
+  seterror(e.error ? e.error.message: '')
+
+}
   
   const handlePayment = async (e) => {
     e.preventDefault();
 
     setprocessing(true)
 
-    await stripe.confirmCardPayment(clientSecret,{
+    await stripe.confirmCardPayment(cardSecret,{
 
       payment_method: {
         card:elements.getElement(CardNumberElement), 
@@ -113,7 +157,8 @@ const orderId = crypto.randomUUID().slice(0,20)
       seterror(null)
       setprocessing(false)
       setsucceeded(true)
-      window.localStorage.removeItem('cartItems')
+      
+    window.localStorage.removeItem('cartItems')
      })
 
        const paymentCreate = await stripe.createPaymentMethod({
@@ -145,7 +190,7 @@ const orderId = crypto.randomUUID().slice(0,20)
      paymentConfirm: succeeded
     })
 
-      const {paymentIntent} = await stripe.retrievePaymentIntent(clientSecret);
+      const {paymentIntent} = await stripe.retrievePaymentIntent(cardSecret);
   if (paymentIntent && paymentIntent.status === 'succeeded') {
     // Handle successful payment here
     
@@ -167,6 +212,7 @@ const orderId = crypto.randomUUID().slice(0,20)
       orderId:orderId,
       paymentConfirm: paymentIntent.status
     })
+
     navigate('/')
     toast.success('Payment successful')
 
@@ -196,13 +242,43 @@ const orderId = crypto.randomUUID().slice(0,20)
     });
 
     }
-
     
   const inputStyle = {
     showIcon: true,
       iconStyle: "solid",
     };
 
+
+    const [paymenttab,setpaymenttab] = useState(1)
+    
+    const [email,setemail] = useState('')
+
+    const tab = (index) => {
+      setpaymenttab(index)
+    }
+
+    const handleKlarna = async (e) => {
+
+      e.preventDefault()
+
+   
+        await stripe.confirmKlarnaPayment(clientSecret, {
+        payment_method:{
+          billing_details:{
+            address:{
+              line1:address.street,
+              postal_code:address.postcode,
+              city:address.city,
+              country:'GB'
+            },
+            email:user?.email,
+          },
+          },
+        return_url:'http://localhost:3000/payment'
+      })
+
+   
+}
     
   return (
     <>
@@ -217,7 +293,13 @@ const orderId = crypto.randomUUID().slice(0,20)
 
       <hr></hr>
 
-      <div style={succeeded ? {filter:'brightness(50%)',pointerEvents:'none'} : {filter:'brightness(100%)',pointerEvents:'auto'}} className="container-fluid checkout-form py-4">
+      {basket.length === 0 && navigate("/") }
+
+
+      {basket.length !== 0 && (
+
+
+      <div  style={succeeded ? {filter:'brightness(50%)',pointerEvents:'none'} : {filter:'brightness(100%)',pointerEvents:'auto'}} className="container-fluid checkout-form py-4">
 
         <div className="billing-address h-100 bg-white rounded-1 bg-opacity-50 px-2">
 
@@ -245,7 +327,6 @@ const orderId = crypto.randomUUID().slice(0,20)
     <hr></hr>
 
             <h6>Order History</h6>
-
 
           <Basket/>
            
@@ -290,7 +371,12 @@ const orderId = crypto.randomUUID().slice(0,20)
 
           <hr />
 
-          <form onSubmit={handlePayment}>
+          <div>
+
+<button className={paymenttab === 1 ? "btn rounded-0 btn-primary" : 'btn rounded-0 btn-secondary'} onClick={()=> tab(1)}>Card</button>
+<button className={paymenttab === 2 ? "btn rounded-0 btn-primary mx-1" : 'btn rounded-0 btn-secondary mx-1'} onClick={()=> tab(2)}>Klarna</button>
+
+          <form onSubmit={handlePayment} className={paymenttab === 1 ? "d-block" : 'd-none'}>
 
 
 <div className="bg-white bg-opacity-50 p-2">
@@ -329,10 +415,27 @@ const orderId = crypto.randomUUID().slice(0,20)
 
           </form>
 
+          <div>
+
+          <form className={paymenttab === 2 ? "d-block bg-white bg-opacity-50 p-2 text-center" : 'd-none'} onSubmit={handleKlarna}>
+
+          <h5>Email</h5>
+          <input type="email" value={user?.email} className="w-100 px-2 py-1" placeholder="Enter your email address"/>
+            <br></br>
+            <br></br>
+            <button className="btn btn-warning rounded-0 px-2 py-1 ">Confirm Payment</button>
+
+          </form>
+
+          </div>
+
         </div>
 
       </div>
 
+        </div>
+
+        )}
     </>
   )
 }

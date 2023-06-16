@@ -130,8 +130,6 @@ const colordecrement  = async (item,quantity, id) => {
 
 
 
-
-
   return (
 <>
 

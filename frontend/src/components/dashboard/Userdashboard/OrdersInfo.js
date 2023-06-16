@@ -190,7 +190,8 @@ export default function OrdersInfo() {
           <div style={{border:'1px solid darkgray'}} className="d-flex my-1 px-2 align-items-center justify-content-between orders-list">
 
           <div className="py-2">
-            <img src={item.image.url} alt=""/>
+
+            <img src={!item.image.url ? item.image : item.image.url} alt=""/>
           </div>
 
             <div className="w-50 px-2 text-center">
@@ -319,9 +320,13 @@ export default function OrdersInfo() {
   <hr></hr>
   <small style={{fontWeight:'bold'}}>Payment Info</small>
   <div className="d-flex justify-content-between align-items-center">
-  <small>Card: <i className={`h6 fa-brands fa-cc-${item.card.brand}`}></i></small>
+    {!item.card ? <small>{item}</small> :
+  <>
+  <small>Card: {item.card.brand}</small>
   <small>Ending in: {item.card.last4}</small>
-  </div>
+  </>
+    }
+    </div>
   </>
 ))}
 

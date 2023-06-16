@@ -40,7 +40,7 @@ const [orders,setOrders] = useState([]);
        <div className="d-flex align-items-center justify-content-between user-orders-card px-2">
        
        <div>
-       <img style={{width:'200px', height:'200px'}} src={ item.image.url} alt={item.title}/>
+       <img style={{width:'200px', height:'200px'}} src={!item.image.url ? item.image : item.image.url} alt={item.title}/>
        </div>
        
        <div className="user-orders-card-info">

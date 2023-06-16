@@ -46,9 +46,10 @@ const deliverySelect = (e,price) => {
         }
       })
     },[deliveryOption])
+  
+
     
-    
-    
+   
       useEffect(() => {
         localStorage.setItem('deliveryOptions', JSON.stringify(deliveryOptions))
       },[deliveryOptions])
@@ -58,6 +59,7 @@ const deliverySelect = (e,price) => {
           navigate('/Login')
         }else{
           navigate('/Address')
+          
         }
       }
  

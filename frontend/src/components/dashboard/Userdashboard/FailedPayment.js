@@ -39,7 +39,7 @@ export default function FailedPayment() {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const data = await axios.post('/create-payment', {
+      const data = await axios.post('/create-card-payment', {
         amount: orders.amount
       })
       setClientSecret(data.data.clientSecret)

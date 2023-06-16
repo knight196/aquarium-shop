@@ -170,7 +170,8 @@ export default function RootChange() {
            <Route  path="/payment" element={<Elements stripe={stripePromise}><Payment/></Elements>}/>
            <Route  path="/Contact" element={<Contact/>}/>
 
-          <Route path="/failedpayment/:id" element={<Elements stripe={stripePromise}><FailedPayment/></Elements>}/>
+           <Route path="/failedpayment/:id" element={<Elements stripe={stripePromise}><FailedPayment/></Elements>}/>
+
 
         </Routes>
  
