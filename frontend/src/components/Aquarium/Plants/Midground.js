@@ -5,31 +5,32 @@ import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
 import UpdatedComponent from '../../HOC'
 import Loaders from '../../Loaders'
+import './Plants.css'
+import FilterProduct from './FilterProduct'
 
-function Midground({selectedBrand,handleBrandChange,filteredlist,loading}) {
+function Midground({selectedBrand,handleBrandChange,filteredlist,loading,handleChange,handleInput,highPrice,lowPrice,data,price}) {
 
   return (
     <>
-       <select
-    id="brand-input"
-    value={selectedBrand}
-    onChange={handleBrandChange}
-  >
-    <option value="">All</option>
-    <option value="Easy">Easy</option>
-    <option value="Medium">Medium</option>
 
-  </select>
+<div className="filter-data">
 
-{loading ?  
+
+<FilterProduct data={data} price={price} lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} selectedBrand={selectedBrand}/>
+
+
+<hr></hr>
+
+  {loading ? 
 
     <div className="product">
-    {filteredlist.map((item)=> {
+    {filteredlist.filter(item => {return item.price > parseInt(price,10)}).map((item)=> {
 if(item.position=== 'Midground'){
 return(
 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
 <img  src={item.image.url} alt={item.title}/>
 <p>{item.title}</p>
+<p>£{item.price}</p>
 <button className="btn bg-dark"><Link className="text-white" to={`/api/plants/slug/${item.slug}`}>View More</Link></button>
 </motion.div>
 )
@@ -37,7 +38,9 @@ return(
 })}
 </div> : <Loaders/>
 }
-</>
+</div>
+
+    </>
   )
 }
  export default UpdatedComponent(Midground)

@@ -8,6 +8,7 @@ import axios from 'axios'
 import slideshow from './data'
 import plants from './Plantsdata'
 
+
 export default function Home() {
 
 
@@ -99,12 +100,13 @@ export default function Home() {
 
             <input className="w-100 p-1 border-0" type="text" placeholder="SEARCH YOUR PRODUCT" value={searchTerm} onChange={handleSearch} />
 
-            <div className="search-filter">
+            <div className={!searchTerm ? "d-none" : "d-block"}>
+
+                <div className="search-filter">
+
             {filtered.map((filterproduct) => {
                 return (
-
-                    <div className={!searchTerm ? "d-none" : "d-block m-4 text-center"}>
-                           
+                             <div className={!searchTerm ? "d-none" : "d-block m-4 text-center"}>
                         <img style={{width:'300px',height:'300px'}} src={filterproduct.image.url} alt="" />
                         <p key={filterproduct.slug}>{filterproduct.title}</p>
                         <p>£ {filterproduct.price}</p>
@@ -116,15 +118,17 @@ export default function Home() {
                             
                             :
                             <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/products/slug/${filterproduct.slug}`}>View More</Link></button>
-                           
-
+                            
+                            
                             )
                             }
 
-                      
-                           </div> 
-                )
-            })}
+                    </div> 
+                        
+                        
+                        )
+                    })}
+                    </div>
             </div>
 
             <div animate={{opacity:1, transition:'0.5s all'}} className={!searchTerm ? "d-block" : "d-none"}>

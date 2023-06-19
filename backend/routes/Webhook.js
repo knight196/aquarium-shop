@@ -50,6 +50,7 @@ Router.post("/create-payment", async (req, res) => {
           amount:amount,
           address:JSON.stringify(address)
         },
+        receipt_email:email
       });
   
       // Send publishable key and PaymentIntent details to client

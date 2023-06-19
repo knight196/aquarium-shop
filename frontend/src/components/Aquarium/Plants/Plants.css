@@ -26,4 +26,16 @@
      object-fit: cover;
   height: 300px;
 }
+
+@media screen and (min-width: 1020px) {
+  .filter-data {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .filter-selection {
+    width: 200px;
+    background: darkkhaki;
+  }
+}
 /*# sourceMappingURL=Plants.css.map */
