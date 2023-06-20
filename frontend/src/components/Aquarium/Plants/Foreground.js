@@ -8,7 +8,7 @@ import Loaders from '../../Loaders'
 import './Plants.css'
 import FilterProduct from './FilterProduct'
 
-function Foreground({selectedBrand,handleBrandChange,filteredlist,loading,handleChange,handleInput,price,highPrice,lowPrice,data}) {
+function Foreground({plantdifficulty,handleBrandChange,filteredlist,loading,handleChange,handleInput,price,highPrice,lowPrice,data}) {
 
 
   return (
@@ -17,17 +17,17 @@ function Foreground({selectedBrand,handleBrandChange,filteredlist,loading,handle
 
 <div className="filter-data">
 
-<FilterProduct data={data} lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} selectedBrand={selectedBrand} price={price}/>
+<FilterProduct data={data} lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} plantdifficulty={plantdifficulty} price={price}/>
 
 <hr></hr>
 
   {loading ? 
 
     <div className="product">
-    {filteredlist.filter(item => {return item.price > parseInt(price,10)}).map((item)=> {
+    {filteredlist.filter(item => {return item.price <= parseInt(price)}).map((item)=> {
 if(item.position=== 'Foreground'){
 return(
-<motion.div initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
+<motion.div layout className="product-card" >
 <img  src={item.image.url} alt={item.title}/>
 <p>{item.title}</p>
 <p>£{item.price}</p>
@@ -36,7 +36,10 @@ return(
 )
 }
 })}
-</div> : <Loaders/>
+</div> : 
+<div className="loader">
+<Loaders/>
+</div>
 }
 </div>
 

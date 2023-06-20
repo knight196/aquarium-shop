@@ -27,6 +27,13 @@
   height: 300px;
 }
 
+.loader {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+}
+
 @media screen and (min-width: 1020px) {
   .filter-data {
     display: -webkit-box;
@@ -34,8 +41,13 @@
     display: flex;
   }
   .filter-selection {
-    width: 200px;
+    width: 300px;
     background: darkkhaki;
+  }
+  .loader {
+    left: 55%;
+    right: 55%;
+    top: 15%;
   }
 }
 /*# sourceMappingURL=Plants.css.map */

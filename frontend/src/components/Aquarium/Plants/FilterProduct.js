@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default function FilterProduct({selectedBrand,handleBrandChange,handleChange,handleInput,price,highPrice,lowPrice,data}) {
+export default function FilterProduct({plantdifficulty,handleBrandChange,handleChange,handleInput,price,highPrice,lowPrice,data}) {
   return (
     <div>
       <div className="filter-selection p-2 h-100">
 
 <select
 id="brand-input"
-value={selectedBrand}
+value={plantdifficulty}
 onChange={handleBrandChange}
 >
 <option value="">All</option>
@@ -31,6 +31,11 @@ onChange={handleBrandChange}
 
 <br></br>
 
+<hr></hr>
+
+<input type="range" max="6" onChange={handleInput}/>
+
+<p>£ {price}</p>
 
 <hr></hr>
 

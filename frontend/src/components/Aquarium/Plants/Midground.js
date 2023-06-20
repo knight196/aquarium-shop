@@ -8,7 +8,7 @@ import Loaders from '../../Loaders'
 import './Plants.css'
 import FilterProduct from './FilterProduct'
 
-function Midground({selectedBrand,handleBrandChange,filteredlist,loading,handleChange,handleInput,highPrice,lowPrice,data,price}) {
+function Midground({plantdifficulty,handleBrandChange,filteredlist,loading,handleChange,handleInput,highPrice,lowPrice,data,price}) {
 
   return (
     <>
@@ -16,7 +16,7 @@ function Midground({selectedBrand,handleBrandChange,filteredlist,loading,handleC
 <div className="filter-data">
 
 
-<FilterProduct data={data} price={price} lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} selectedBrand={selectedBrand}/>
+<FilterProduct data={data}  lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} plantdifficulty={plantdifficulty} price={price}/>
 
 
 <hr></hr>
@@ -24,10 +24,10 @@ function Midground({selectedBrand,handleBrandChange,filteredlist,loading,handleC
   {loading ? 
 
     <div className="product">
-    {filteredlist.filter(item => {return item.price > parseInt(price,10)}).map((item)=> {
+    {filteredlist.filter(item => {return item.price <= parseInt(price)}).map((item)=> {
 if(item.position=== 'Midground'){
 return(
-<motion.div initial={{opacity:0}} animate={{opacity:1}} className="product-card" >
+<motion.div layout className="product-card" >
 <img  src={item.image.url} alt={item.title}/>
 <p>{item.title}</p>
 <p>£{item.price}</p>
@@ -36,7 +36,9 @@ return(
 )
 }
 })}
-</div> : <Loaders/>
+</div> : <div className="loader">
+<Loaders/>
+</div>
 }
 </div>
 

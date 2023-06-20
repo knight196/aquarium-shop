@@ -47,21 +47,21 @@ function UpdatedComponent(OriginalComponent) {
         },[])
     
         
-        const [selectedBrand, setSelectedBrand] = useState("");
+        const [plantdifficulty, setPlantDifficulty] = useState("");
     
     const filterByBrand = (filteredData) => {
       // Avoid filter for empty string
-      if (!selectedBrand) {
+      if (!plantdifficulty) {
         return filteredData;
       }
     
-      const filteredCars = filteredData.filter(
-        (car) => car.difficulty.split(" ").indexOf(selectedBrand) !== -1
+      const filteredPriceData = filteredData.filter(
+        (plant) => plant.difficulty.split(" ").indexOf(plantdifficulty) !== -1
       );
-      return filteredCars;
+      return filteredPriceData;
     };
 
-    const [price, setPrice] = useState(0)
+    const [price, setPrice] = useState(6)
 
 
 const handleInput = (e) =>{
@@ -71,7 +71,7 @@ const handleInput = (e) =>{
     
     // Update seletedBrand state
     const handleBrandChange = (event) => {
-      setSelectedBrand(event.target.value);
+      setPlantDifficulty(event.target.value);
     };
 
     const handleChange = e => {
@@ -95,7 +95,7 @@ const handleInput = (e) =>{
     useEffect(() => {
       var filteredData = filterByBrand(addedproducts);
       setfilteredlist(filteredData);
-    }, [selectedBrand]);
+    }, [plantdifficulty]);
 
     const [high] = useState('ASC')
     const [low] = useState('DES')
@@ -120,7 +120,7 @@ const handleInput = (e) =>{
   
   
 
-    return <OriginalComponent handleBrandChange={handleBrandChange} handleChange={handleChange} loading={loading} filteredlist={filteredlist} selectedBrand={selectedBrand} handleInput={handleInput} price={price} highPrice={highPrice} lowPrice={lowPrice} data={data}/>    
+    return <OriginalComponent handleBrandChange={handleBrandChange} handleChange={handleChange} loading={loading} filteredlist={filteredlist} plantdifficulty={plantdifficulty} handleInput={handleInput} price={price} highPrice={highPrice} lowPrice={lowPrice} data={data}/>    
     }
 
     return NewComponent
