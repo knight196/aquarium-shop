@@ -118,6 +118,7 @@ var someDate = new Date()
     const fetchClientSecret = async () => {
       const data = await axios.post('/card-payment', {
         amount: totalPrice,
+        email:user?.email
       })
       setCardSecret(data.data.clientSecret)
     }

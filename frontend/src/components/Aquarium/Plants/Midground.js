@@ -3,12 +3,12 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-import UpdatedComponent from '../../HOC'
+import UpdatedComponent from './HOC'
 import Loaders from '../../Loaders'
 import './Plants.css'
 import FilterProduct from './FilterProduct'
 
-function Midground({plantdifficulty,handleBrandChange,filteredlist,loading,handleChange,handleInput,highPrice,lowPrice,data,price}) {
+function Midground({plantdifficulty,handleBrandChange,filteredlist,loading,handleChange,handleInput,highPrice,lowPrice,addedproducts,price}) {
 
   return (
     <>
@@ -16,7 +16,7 @@ function Midground({plantdifficulty,handleBrandChange,filteredlist,loading,handl
 <div className="filter-data">
 
 
-<FilterProduct data={data}  lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} plantdifficulty={plantdifficulty} price={price}/>
+<FilterProduct  addedproducts={addedproducts} lowPrice={lowPrice} highPrice={highPrice} handleInput={handleInput} handleChange={handleChange} handleBrandChange={handleBrandChange} plantdifficulty={plantdifficulty} price={price}/>
 
 
 <hr></hr>

@@ -6,17 +6,6 @@ function UpdatedComponent(OriginalComponent) {
   
     function NewComponent(){
 
-      const data =[
-        {
-          label:'Easy'
-        },
-        {
-          label:'Medium'
-        },
-        {
-          label:'Advanced'
-        }
-      ]
 
         const [addedproducts,setaddedproducts] = useState([])
         const [filteredlist,setfilteredlist] = useState([])
@@ -76,10 +65,11 @@ const handleInput = (e) =>{
 
     const handleChange = e => {
 
+
       if(e.target.checked){
         setProducts([...item, e.target.value])
       }else{
-        setProducts(item.filter(id => id !== e.target.value))
+        setProducts(item.filter(item => item !== e.target.value))
       }
       
     }
@@ -120,7 +110,7 @@ const handleInput = (e) =>{
   
   
 
-    return <OriginalComponent handleBrandChange={handleBrandChange} handleChange={handleChange} loading={loading} filteredlist={filteredlist} plantdifficulty={plantdifficulty} handleInput={handleInput} price={price} highPrice={highPrice} lowPrice={lowPrice} data={data}/>    
+    return <OriginalComponent handleBrandChange={handleBrandChange} handleChange={handleChange} loading={loading} filteredlist={filteredlist} plantdifficulty={plantdifficulty} handleInput={handleInput} price={price} highPrice={highPrice} lowPrice={lowPrice} addedproducts={addedproducts}/>    
     }
 
     return NewComponent

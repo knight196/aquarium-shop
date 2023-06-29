@@ -49,14 +49,15 @@ app.use('/webhook', webhook)
 app.post('/card-payment', async (req,res) => {
 
 
-  const {amount} = req.body
+  const {amount,email} = req.body
 
   try {
 
     const paymentIntent = await stripe.paymentIntents.create({   
       currency: "GBP",
       amount: amount * 100,
-      payment_method_types:['card','klarna'],
+      payment_method_types:['card'],
+      receipt_email:email
     });
 
     // Send publishable key and PaymentIntent details to client

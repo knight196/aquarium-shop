@@ -1,6 +1,11 @@
 import React from 'react'
 
-export default function FilterProduct({plantdifficulty,handleBrandChange,handleChange,handleInput,price,highPrice,lowPrice,data}) {
+export default function FilterProduct({plantdifficulty,addedproducts,handleBrandChange,handleChange,handleInput,price,highPrice,lowPrice}) {
+  
+const checkedlist = addedproducts.map(item => item.difficulty)
+.filter((v,i,a) => a.indexOf(v) === i)
+.filter(Boolean)
+
   return (
     <div>
       <div className="filter-selection p-2 h-100">
@@ -19,17 +24,12 @@ onChange={handleBrandChange}
 
 <hr></hr>
 
-<div>
-
-{data.map(item => (
-<>
-<input  className="input-check" type="checkbox" onChange={handleChange} label={item.label} value={item.label}/> 
-<label className="mx-1">{item.label}</label>
-</>
-))}  
-</div>
-
-<br></br>
+{checkedlist.map(item => 
+  <>
+  <input  className="input-check" type="checkbox" onChange={handleChange} label={item} value={item}/> 
+<label className="mx-1">{item}</label>
+  </>
+  )}
 
 <hr></hr>
 
