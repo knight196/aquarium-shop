@@ -7,7 +7,7 @@ import 'aos/dist/aos.css'
 import axios from 'axios'
 import slideshow from './data'
 import plants from './Plantsdata'
-
+import Pagination from './Pagination'
 
 export default function Home() {
 
@@ -28,21 +28,31 @@ export default function Home() {
       
     const [searchTerm, setSearchTerm] = useState('');
 
+   
  
+    const [currentPage,setCurrentPage] = useState(1)
+
+    const [perPage,setPerPage] = useState(5)
+
 
     useEffect(()=> {
         AOS.init()
     },[])
 
+
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1)
     };
 
+  
     const filtered = !searchTerm
         ? products
-        : products.filter((y) =>
-            y.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        : products.filter((y) =>y.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      
+
+
 
         const [current, setCurrent] = useState(0);
     const [slide] = useState(slideshow);
@@ -95,16 +105,23 @@ export default function Home() {
     }
 
 
-    return (
-        <motion.div initial={{opacity:0}} animate={{opacity:1,transition:{duration:0.5}}}>
+const indexOfLastPost = currentPage * perPage
+const indexOfFirstPost = indexOfLastPost - perPage
+const currentPosts = filtered.slice(indexOfFirstPost,indexOfLastPost)
+
+
+return (
+    <motion.div initial={{opacity:0}} animate={{opacity:1,transition:{duration:0.5}}}>
 
             <input className="w-100 p-1 border-0" type="text" placeholder="SEARCH YOUR PRODUCT" value={searchTerm} onChange={handleSearch} />
 
+
             <div className={!searchTerm ? "d-none" : "d-block"}>
+        
 
                 <div className="search-filter">
 
-            {filtered.map((filterproduct) => {
+            {currentPosts.map((filterproduct) => {
                 return (
                              <div className={!searchTerm ? "d-none" : "d-block m-4 text-center"}>
                         <img style={{width:'300px',height:'300px'}} src={filterproduct.image.url} alt="" />
@@ -125,10 +142,12 @@ export default function Home() {
 
                     </div> 
                         
-                        
                         )
                     })}
                     </div>
+
+                    <Pagination currentPosts={currentPosts} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+                            
             </div>
 
             <div animate={{opacity:1, transition:'0.5s all'}} className={!searchTerm ? "d-block" : "d-none"}>
