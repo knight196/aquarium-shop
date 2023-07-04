@@ -11,10 +11,13 @@ function ProductDetail(props) {
     const { slug }=useParams();
     const [details, setDetails]=useState([])
 
+
+
     const [loading,setloading] = useState(false)
 
     const fetchData = async () => {
         const res = await axios.get(`/api/plants/slug/${slug}`)
+     
         setDetails(res.data)
         setloading(true)
     }

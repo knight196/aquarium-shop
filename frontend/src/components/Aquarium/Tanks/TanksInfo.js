@@ -8,6 +8,7 @@ import SelectorButton from './SelectorButton';
 import './Tanks.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import GetProductReview from '../../GetProductReview'
 // import { useAlert } from 'react-alert';
 
 function TanksInfo(props) {
@@ -206,6 +207,21 @@ return (
     ))}
   </div>
 
+  <hr></hr>
+
+      <div className="d-flex justify-content-between align-item-center">
+
+      <h5>Reviews</h5>
+      <Link to={`WriteProductReview`}>
+      <button className="btn bg-success text-white border-0 px-2 py-1">Write Review</button>
+      </Link>
+
+      </div>
+
+      <hr></hr>
+
+      <GetProductReview Product={Product}/>
+  
   
 
 </motion.div>

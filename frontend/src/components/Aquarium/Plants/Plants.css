@@ -34,6 +34,10 @@
   right: 0;
 }
 
+.star {
+  color: orange;
+}
+
 @media screen and (min-width: 1020px) {
   .filter-data {
     display: -webkit-box;

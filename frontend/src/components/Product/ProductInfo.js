@@ -8,6 +8,7 @@ import './Product.css'
 import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import GetProductReview from '../GetProductReview'
 
 
 function ProductInfo(props) {
@@ -114,6 +115,22 @@ return (
       </ul>
     ))}
   </div>
+
+  <hr></hr>
+
+<div className="d-flex justify-content-between align-item-center">
+
+<h5>Reviews</h5>
+<Link to={`WriteProductReview`}>
+<button className="btn bg-success text-white border-0 px-2 py-1">Write Review</button>
+</Link>
+
+</div>
+
+<hr></hr>
+
+<GetProductReview Product={Product}/>
+
 
   
 

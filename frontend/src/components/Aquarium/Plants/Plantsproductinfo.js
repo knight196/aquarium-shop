@@ -3,12 +3,13 @@ import React, {useEffect, useState} from 'react';
 // import styled from "styled-components";
 import { useStateValue } from '../../../StateProvider';
 import Select from 'react-select';
-import {Link,useNavigate} from "react-router-dom";
+import {Link,useNavigate,useParams} from "react-router-dom";
 import './Plants.css'
 import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 // import { useAlert } from 'react-alert';
+import GetProductReview from '../../GetProductReview';
 
 function Plantsproductinfo(props) {
 
@@ -171,6 +172,20 @@ return (
     ))}
   </div>
 
+  <hr></hr>
+
+      <div className="d-flex justify-content-between align-item-center">
+
+      <h5>Reviews</h5>
+      <Link to={`WriteProductReview`}>
+      <button className="btn bg-success text-white border-0 px-2 py-1">Write Review</button>
+      </Link>
+
+      </div>
+
+      <hr></hr>
+
+      <GetProductReview Product={Product}/>
   
 
 </motion.div>

@@ -277,8 +277,6 @@ const handleChange = (e) => {
           },
         return_url:'https://aquarium-shop-t2o8.onrender.com/payment'
       })
-
-   
 }
     
   return (

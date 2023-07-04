@@ -6,6 +6,7 @@ import { useNavigate,Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import Userorders from './UserOrders'
 import Messagetab from './Messagetab'
+import Reviewtab from './Reviewtab'
 
 export default function Userdashboard() {
 
@@ -42,6 +43,7 @@ const signOut = () => {
       <div className={toggleState ===1 ? "active-tabs" : "tabs"} onClick={() => toggleTab(1)}>Profile</div>
       <div className={toggleState ===2 ? "active-tabs" : "tabs"} onClick={() => toggleTab(2)}>Orders</div>
       <div className={toggleState ===3 ? "active-tabs" : "tabs"} onClick={() => toggleTab(3)}>Message</div>
+      <div className={toggleState ===4 ? "active-tabs" : "tabs"} onClick={() => toggleTab(4)}>Review</div>
     </div>
 
     <div className="content-tabs">
@@ -66,6 +68,12 @@ const signOut = () => {
 <div className={toggleState === 3 ? "content active-content" : "content"}>
 
 <Messagetab/>
+
+    </div>
+
+<div className={toggleState === 4 ? "content active-content" : "content"}>
+
+<Reviewtab/>
 
     </div>
 

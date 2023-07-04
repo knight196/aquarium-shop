@@ -80,6 +80,11 @@ import EditProduct from '../components/dashboard/AdminDashboard/EditList'
 
 import FailedPayment from '../components/dashboard/Userdashboard/FailedPayment'
 
+//review of the products
+import PlantsReview from '../components/Aquarium/Plants/PlantsProductReview'
+import ProductReview from '../components/Product/Productreview'
+
+
 export default function RootChange() {
 
   const stripePromise = loadStripe('pk_test_51LtvUXJI0em1KAyRvQVz8eLL2Q1Mva0cNgWH5jMqyLR4682taIOg8K56mJUei50MTl1iMvj37iGhfwlgRBJ39dEy00nhy5zi37')
@@ -172,6 +177,8 @@ export default function RootChange() {
 
            <Route path="/failedpayment/:id" element={<Elements stripe={stripePromise}><FailedPayment/></Elements>}/>
 
+          <Route path="/api/plants/slug/:slug/WriteProductReview" element={<PlantsReview/>}/>
+          <Route path="/api/products/slug/:slug/WriteProductReview" element={<ProductReview/>}/>
 
         </Routes>
  
