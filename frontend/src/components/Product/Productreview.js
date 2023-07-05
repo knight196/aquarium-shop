@@ -46,6 +46,15 @@ export default function ProductReview() {
           reviewBody
       })
 
+      await axios.post('/emailproduct/reviewEmail', {
+        image:details.image?.url,
+        slug:details?.slug,
+        email,
+        selectedrating,
+        reviewTitle,
+        reviewBody
+      })
+
       toast.success('Thank you for your feedback.')
 
   }

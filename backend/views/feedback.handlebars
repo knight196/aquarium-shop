@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+
+.feedback{
+    background:whitesmoke;
+    padding:20px;
+}
+
+.star{
+    background:orange;
+}
+
+.image{
+    width:100px;
+    height:100px;
+}
+
+</style>
+
+</head>
+
+<body>
+    
+<div class="feedback">
+
+<img class="image" src={{image}} alt=""/><span>{{slug}}</span>
+
+<br>
+
+{{{star selectedrating}}}
+
+<h3>{{reviewTitle}}</h3>
+
+<p>{{reviewBody}}</p>
+
+</div>
+
+<h5>Thank you for your feedback.</h5>
+
+</body>
+</html>

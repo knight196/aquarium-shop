@@ -14,16 +14,39 @@ const [review,setreview] = useState([])
 
   }
 
+  
 
   useEffect(() => {
-
-      reviewProduct()
+    
+    reviewProduct()
 
   },[Product])
+
+ 
+
+
+  const star = () => {
+    const scores = review.map(review => review.selectedrating)
+    
+    const average = scores.reduce((totalRates,score) => totalRates + score,0)
+    const averageTotal = parseInt(average / review.length) || 0
+   
+    const star =  [...Array(averageTotal).keys()].map(i=> {
+    return (
+      <i className="bi bi-star-fill text-warning"></i>
+      )
+    })
+
+    return star
+    
+  }
 
   return (
     <>
     {review.length === 0 && (<p>No Reviews</p>)}
+ 
+    {star()} <span>{review.length} customer reviews</span>
+
     {review.length !== 0 && (
       <>
       {review.map(item => (

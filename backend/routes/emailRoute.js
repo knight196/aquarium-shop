@@ -12,7 +12,123 @@ const bcrypt = require('bcryptjs');
 
 dotenv.config({path:path.resolve(__dirname, '../.env')});
 
+//feedback 
 
+productRouter.post('/reviewEmail', async (req,res) => {
+
+const {email,image,slug,reviewBody,reviewTitle,selectedrating} = req.body
+
+
+try{
+    
+  var transporter = nodemailer.createTransport({
+    service:'hotmail',
+  auth : {  
+    user:process.env.user,
+    pass:process.env.pass
+  }
+})
+
+const handlebarOptions = {
+  viewEngine:{
+    extName: '.handlebars',
+    partialDir: path.resolve(__dirname,'../views'),
+    defaultLayout:false
+  },
+  viewPath:path.resolve(__dirname,'../views'),
+  extName:'.handlebars'
+}
+
+transporter.use('compile', hbs(handlebarOptions))
+
+var mailOptions = {
+  from:process.env.user,
+  to:email,
+  subject:'Order confirmation',
+  template:'feedback',
+  context:{
+    image,
+    slug,
+    reviewBody,
+    reviewTitle,
+    selectedrating
+  }
+}
+
+await transporter.sendMail(mailOptions)
+res.status(200).json({success:true,message:'Email sent'})
+}catch(err){
+res.status(500).json(err.message)
+}
+
+})
+
+//feedback product
+handlebars.registerHelper('star', function (star) {
+
+
+  const array = [...Array(star).keys()].map(i=> {
+    return new handlebars.SafeString('<span style="color:orange">&#9733</span>')
+  })
+return array
+})
+
+
+
+//cancellation request
+productRouter.post('/cancelemail', async (req,res) => {
+
+  const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
+
+
+  try{
+  
+    var transporter = nodemailer.createTransport({
+      service:'hotmail',
+    auth : {  
+      user:process.env.user,
+      pass:process.env.pass
+    }
+  })
+  
+  const handlebarOptions = {
+    viewEngine:{
+      extName: '.handlebars',
+      partialDir: path.resolve(__dirname,'../views'),
+      defaultLayout:false
+    },
+    viewPath:path.resolve(__dirname,'../views'),
+    extName:'.handlebars'
+  }
+  
+  transporter.use('compile', hbs(handlebarOptions))
+  
+  var mailOptions = {
+    from:process.env.user,
+    to:email,
+    subject:'Order Cancel confirmation',
+    template:'cancelemail',
+    context:{
+      items:result,
+      subtotal:subtotal,
+      totalAmount:totalAmount,
+      address:address,
+      paymentCreate:paymentCreate,
+      orderId:orderId,
+      deliveryOptions:deliveryOptions,
+      deliveryPrice:deliveryPrice,
+      deliveryDate:deliveryDate
+    }
+  }
+  
+  await transporter.sendMail(mailOptions)
+  res.status(200).json({success:true,message:'Email sent'})
+  }catch(err){
+  res.status(500).json(err.message)
+  }
+  
+
+})
 
 //order confirmation 
 productRouter.post('/sendemail', async (req,res) => {
