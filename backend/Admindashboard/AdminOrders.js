@@ -128,19 +128,6 @@ router.delete('/:id', async(req,res)=> {
       res.status(500).send(err)
     }
   })
-  
-  //get new created products
-  router.get('/newproducts', async(req,res) => {
-    const newproducts = await addProduct.find()
-
-    try{
-      res.json({
-        newproducts: newproducts
-      })
-    }catch(err){
-      res.status(500).send(err)
-    }
-  })
 
   //get all user
 

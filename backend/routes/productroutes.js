@@ -5,12 +5,25 @@ const Product = require('../Schema/addProduct')
 
 const productRouter = express.Router();
 
-
+//get all the products
 productRouter.get('/products', async (req,res) => {
     const products = await Product.find()
   res.json({
     products:products  
   })
+})
+
+ //get new created products
+ router.get('/newproducts', async(req,res) => {
+  const newproducts = await addProduct.find()
+
+  try{
+    res.json({
+      newproducts: newproducts
+    })
+  }catch(err){
+    res.status(500).send(err)
+  }
 })
 
 
