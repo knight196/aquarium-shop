@@ -10,8 +10,6 @@ const [uploadlist,setuploadlist] = useState([])
 const [filteredlist,setfilteredlist] = useState([])
 
 
-console.log(filteredlist)
-
 
 const fetchData = async () => {
     const res = await axios.get('/product/newproducts')
@@ -20,7 +18,7 @@ const fetchData = async () => {
 
 
 const filteredata = async () => {
-  const res = await axios.get('/api/newproducts')
+  const res = await axios.get('/product/newproducts')
   setuploadlist(res.data.newproducts)
 }
 
@@ -93,7 +91,7 @@ return (
 
 <p>{item.quantity === 0 ? <small className="text-danger">Out of Stock</small> : ''}</p>
 
-        <Link to={`/api/editProduct/${item.slug}`}>
+        <Link to={`/product/editProduct/${item.slug}`}>
         <button style={{fontSize:'10px'}} className="btn w-100 bg-primary text-white">Edit</button>
         </Link>
         <button onClick={()=> deletelist(item._id)} style={{fontSize:'10px'}} className="btn w-100 bg-danger text-white">Delete</button>
