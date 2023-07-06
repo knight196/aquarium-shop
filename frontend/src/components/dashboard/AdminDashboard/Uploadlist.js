@@ -74,7 +74,7 @@ return (
     <option value="Soil">Soil</option>
     <option value="Lighting">Lighting</option>
     <option value="Filter">Filter</option>
-    <option value="Heater">Heater</option>
+    <option value="heater">Heater</option>
     <option value="fertiliser">Fertiliser</option>
     <option value="hardscaping">Hardscaping</option>
     <option value="other">Other</option>
