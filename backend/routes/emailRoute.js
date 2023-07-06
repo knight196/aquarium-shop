@@ -70,7 +70,7 @@ handlebars.registerHelper('star', function (star) {
   const array = [...Array(star).keys()].map(i=> {
     return new handlebars.SafeString('<span style="color:orange">&#9733</span>')
   })
-return array
+return array.join('')
 })
 
 
