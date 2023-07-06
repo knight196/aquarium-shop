@@ -10,8 +10,11 @@ const [uploadlist,setuploadlist] = useState([])
 const [filteredlist,setfilteredlist] = useState([])
 
 
+console.log(filteredlist)
+
+
 const fetchData = async () => {
-    const res = await axios.get('/api/newproducts')
+    const res = await axios.get('/product/newproducts')
     setfilteredlist(res.data.newproducts)
 }
 
@@ -81,12 +84,15 @@ return (
 
   </select>
       {filteredlist.map((item)=> (
-        <div className="uploadproduct d-flex justify-content-between align-items-center bg-secondary my-2 p-2">
+        <div className="uploadproduct d-flex justify-content-between align-items-center bg-white bg-opacity-50 my-2 p-2">
         <img style={{width:'100px',height:'100px'}} src={item.image.url} alt=""/>
         <p>{item.title}</p>
         <div>
             <p5>CreatedAt</p5>
         <p>{item.createdAt.substring(0,10)}</p>
+
+<p>{item.quantity === 0 ? <small className="text-danger">Out of Stock</small> : ''}</p>
+
         <Link to={`/api/editProduct/${item.slug}`}>
         <button style={{fontSize:'10px'}} className="btn w-100 bg-primary text-white">Edit</button>
         </Link>

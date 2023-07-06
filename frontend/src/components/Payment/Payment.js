@@ -24,7 +24,6 @@ function Payment() {
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
 
-
   const [params] = useSearchParams()
 
   const arr = Object.fromEntries(params) 

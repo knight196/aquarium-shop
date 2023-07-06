@@ -27,7 +27,7 @@ const [images,setimages] = useState([])
 
   const getproducts = async () => {
 
-    const res = await axios.get(`/api/editProduct/${slug}`)
+    const res = await axios.get(`/product/editProduct/${slug}`)
     setslugName(res.data.slug)
     settitle(res.data.title)
     setprice(res.data.price)
