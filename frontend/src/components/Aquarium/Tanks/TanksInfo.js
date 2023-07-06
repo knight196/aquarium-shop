@@ -102,11 +102,11 @@ const addToBasket = async (e,id) =>{
 
     
       if(color !== selectedcolor){
-        await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
-        await axios.put(`/api/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
+        await axios.put(`/product/colordecrement/${id}`, {slug: Product.slug})
+        await axios.put(`/product/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
       }else{
-        await axios.put(`/api/colordecrement/${id}`, {slug: Product.slug})
-        await axios.put(`/api/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
+        await axios.put(`/product/colordecrement/${id}`, {slug: Product.slug})
+        await axios.put(`/product/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
       }
       window.location.href="/Checkout"
       

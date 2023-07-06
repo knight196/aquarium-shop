@@ -14,7 +14,7 @@ export default function ProductReview() {
     const [details, setDetails]=useState([])
 
     const fetchData = async () => {
-        const res = await axios.get(`/api/products/slug/${slug}`)
+        const res = await axios.get(`/product/products/slug/${slug}`)
         setDetails(res.data)
     }
 

@@ -53,7 +53,7 @@ const addToBasket= async (item,slug) =>{
     
     window.location.href="/Checkout"
     
-    await axios.put(`/api/productdecrement/${slug}`)
+    await axios.put(`/product/productdecrement/${slug}`)
       }
  
   }

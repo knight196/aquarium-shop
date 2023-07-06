@@ -12,7 +12,7 @@ export default function Soil() {
     const [loading,setloading] = useState(false)
 
     const getadded = async () => {
-      const res = await axios.get('/api/products')
+      const res = await axios.get('/product/products')
       setaddedproducts(res.data.products)
       setloading(true)
     }

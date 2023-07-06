@@ -17,12 +17,12 @@ function UpdatedComponent(OriginalComponent) {
 
     
         const getadded = async () => {
-          const res = await axios.get('/api/products')
+          const res = await axios.get('/product/products')
           setfilteredlist(res.data.products)
           setloading(true)
         }
         const filteredata = async () => {
-          const res = await axios.get('/api/newproducts')
+          const res = await axios.get('/product/newproducts')
           setaddedproducts(res.data.newproducts)
         }
 

@@ -96,12 +96,12 @@ if(updateFinal === 0){
   })
 
   if( plantsvariant !== packaging?.value){
-    await axios.put(`/api/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
-    await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
+    await axios.put(`/product/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
+    await axios.put(`/product/decrement/${id}`, {slug: Product.slug})
     
   }else{
-    await axios.put(`/api/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
-    await axios.put(`/api/decrement/${id}`, {slug: Product.slug})
+    await axios.put(`/product/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
+    await axios.put(`/product/decrement/${id}`, {slug: Product.slug})
     
   }
   

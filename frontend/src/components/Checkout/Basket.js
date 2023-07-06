@@ -13,7 +13,7 @@ function Checkout() {
   //product variant stock quantity decrement for plants selection
 const updatecart  = async (item,quantity, id) => {
 
-await axios.put(`/api/decrement/${id}`, {slug: item.slug})
+await axios.put(`/product/decrement/${id}`, {slug: item.slug})
 
     dispatch({
       type:'ADD_TO_BASKET',
@@ -28,7 +28,7 @@ await axios.put(`/api/decrement/${id}`, {slug: item.slug})
 //product variant stock quantity increment for plants selection
 const incrementCart  = async (item,quantity,id) => {
 
-  await axios.put(`/api/increment/${id}`, {slug: item.slug})
+  await axios.put(`/product/increment/${id}`, {slug: item.slug})
 
   dispatch({
     type:'ADD_TO_BASKET',
@@ -42,7 +42,7 @@ const incrementCart  = async (item,quantity,id) => {
   //remove the plants product from the basket
   const removePlantsIncrement = async(item,id) => {
 
-await axios.put(`/api/removePlantsIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
+await axios.put(`/product/removePlantsIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
     
 
     dispatch({type:'REMOVE_FROM_BASKET', item:item})
@@ -53,7 +53,7 @@ await axios.put(`/api/removePlantsIncrement/${id}`, {slug:item.slug,quantity:ite
 //without product variant stock change  increment
 const incrementProduct  = async (item,quantity,slug) => {
 
-  await axios.put(`/api/productincrement/${slug}`)
+  await axios.put(`/product/productincrement/${slug}`)
 
   dispatch({
     type:'ADD_TO_BASKET',
@@ -69,7 +69,7 @@ const incrementProduct  = async (item,quantity,slug) => {
 
   const decrementProduct = async (item,quantity,slug) => {
 
-    await axios.put(`/api/productdecrement/${slug}`)
+    await axios.put(`/product/productdecrement/${slug}`)
 
     dispatch({
       type:'ADD_TO_BASKET',
@@ -83,7 +83,7 @@ const incrementProduct  = async (item,quantity,slug) => {
     //remove the  product from the basket
     const removeProductIncrement = async(item,slug) => {
 
-      await axios.put(`/api/removeProductIncrement/${slug}`, {quantity:item.quantity})
+      await axios.put(`/product/removeProductIncrement/${slug}`, {quantity:item.quantity})
           
       
           dispatch({type:'REMOVE_FROM_BASKET', item:item})
@@ -94,7 +94,7 @@ const incrementProduct  = async (item,quantity,slug) => {
     //product variant stock quantity decrement for color selection
 const colordecrement  = async (item,quantity, id) => {
 
-  await axios.put(`/api/colordecrement/${id}`, {slug: item.slug})
+  await axios.put(`/product/colordecrement/${id}`, {slug: item.slug})
   
       dispatch({
         type:'ADD_TO_BASKET',
@@ -108,7 +108,7 @@ const colordecrement  = async (item,quantity, id) => {
   //product variant stock quantity increment for color selection
   const colorincrement  = async (item,quantity,id) => {
   
-    await axios.put(`/api/colorincrement/${id}`, {slug: item.slug})
+    await axios.put(`/product/colorincrement/${id}`, {slug: item.slug})
   
     dispatch({
       type:'ADD_TO_BASKET',
@@ -123,7 +123,7 @@ const colordecrement  = async (item,quantity, id) => {
   //remove the color product from the basket
   const removeColorIncrement = async(item,id) => {
 
-    await axios.put(`/api/removeColorIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
+    await axios.put(`/product/removeColorIncrement/${id}`, {slug:item.slug,quantity:item.quantity})
         dispatch({type:'REMOVE_FROM_BASKET', item:item})
         window.location.reload();
     }

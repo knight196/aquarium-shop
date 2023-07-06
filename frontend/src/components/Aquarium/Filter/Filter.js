@@ -14,7 +14,7 @@ export default function Filter() {
   const [loading,setloading] = useState(false)
 
   const getaddedoase = async () => {
-    const res = await axios.get('/api/products')
+    const res = await axios.get('/product/products')
     setaddedoase(res.data.products)
     setloading(true)
   }

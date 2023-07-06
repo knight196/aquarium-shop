@@ -14,7 +14,7 @@ export default function TanksDetail() {
   const [loading,setloading] = useState(false)
 
   const fetchData = async () => {
-    const res = await axios.get(`/api/tanks/slug/${slug}`)
+    const res = await axios.get(`/product/tanks/slug/${slug}`)
     setdetails(res.data)
     setloading(true)
   }

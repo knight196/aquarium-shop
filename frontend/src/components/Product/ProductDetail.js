@@ -16,7 +16,7 @@ function ProductDetail(props) {
 
 
     const fetchData = async () => {
-        const res = await axios.get(`/api/products/slug/${slug}`)
+        const res = await axios.get(`/product/products/slug/${slug}`)
         setDetails(res.data)
         setloading(true)
     }

@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(cors())
 
 
-app.use('/api', productRouter)
+app.use('/product', productRouter)
 app.use('/orders', Userdashboard)
 app.use('/api/', Admindashboard)
 app.use('/newproduct', newProduct)

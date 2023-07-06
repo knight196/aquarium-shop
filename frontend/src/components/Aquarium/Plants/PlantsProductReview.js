@@ -14,7 +14,7 @@ export default function PlantsReview() {
     const [details, setDetails]=useState([])
 
     const fetchData = async () => {
-        const res = await axios.get(`/api/plants/slug/${slug}`)
+        const res = await axios.get(`/product/plants/slug/${slug}`)
         setDetails(res.data)
     }
 
