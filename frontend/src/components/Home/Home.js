@@ -15,7 +15,7 @@ export default function Home() {
     const [products,setproducts] = useState([])
 
     const fetchdata = async () => {
-        const res = await axios.get('/api/newproducts')
+        const res = await axios.get('/product/newproducts')
         setproducts(res.data.newproducts)
     }
 

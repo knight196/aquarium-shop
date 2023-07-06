@@ -15,7 +15,7 @@ productRouter.get('/products', async (req,res) => {
 
  //get new created products
  productRouter.get('/newproducts', async(req,res) => {
-  const newproducts = await addProduct.find()
+  const newproducts = await Product.find()
 
   try{
     res.json({
