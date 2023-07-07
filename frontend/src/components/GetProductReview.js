@@ -41,12 +41,40 @@ const [review,setreview] = useState([])
     
   }
 
+  const [mostRecent] = useState('mostRecent')
+  const [topRated] = useState('topRated')
+
+  function filterRating(col){
+  if(topRated === 'topRated'){
+    const sorted = [...review].sort((a,b) => 
+    a[col] < b[col] ? 1 : -1
+    )
+    setreview(sorted)
+  }else if(mostRecent === 'mostRecent'){
+    const sorted = [...review].sort((a,b) => 
+    a[col] < b[col] ? 1 : -1
+    )
+    setreview(sorted)
+  }
+  }
+
+
   return (
     <>
     {review.length === 0 && (<p>No Reviews</p>)}
  
-    {star()} <span>{review.length} customer reviews</span>
+ <div className="d-flex justify-content-between align-items-center">
 
+<div>
+    {star()} <span>{review.length} customer reviews</span>
+  </div>  
+
+<div>
+    <button className="btn btn-primary mx-2" onClick={()=> filterRating('createdAt')}>MostRecent</button>
+    <button className="btn btn-primary" onClick={()=> filterRating('selectedrating')}>Top Rated</button>
+</div>
+
+ </div>
     {review.length !== 0 && (
       <>
       {review.map(item => (

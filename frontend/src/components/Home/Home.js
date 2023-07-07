@@ -9,6 +9,7 @@ import slideshow from './data'
 import plants from './Plantsdata'
 import Pagination from './Pagination'
 
+
 export default function Home() {
 
 
@@ -19,9 +20,11 @@ export default function Home() {
         setproducts(res.data.newproducts)
     }
 
+  
     
     useEffect(() => {
         fetchdata()
+      
     },[])
 
 
@@ -123,10 +126,15 @@ return (
 
             {currentPosts.map((filterproduct) => {
                 return (
-                             <div className={!searchTerm ? "d-none" : "d-block m-4 text-center"}>
+                             <div className='m-4 text-center'>
                         <img style={{width:'300px',height:'300px'}} src={filterproduct.image.url} alt="" />
                         <p key={filterproduct.slug}>{filterproduct.title}</p>
                         <p>£ {filterproduct.price}</p>
+
+                   
+
+                        <br></br>
+
                         {filterproduct.category === 'Tanks' ? (
                             <button className="btn bg-white px-2 rounded-0 py-1 text-white border-2 border-dark"><Link to={`/api/tanks/slug/${filterproduct.slug}`}>View More</Link></button>
                             ):(
@@ -140,10 +148,12 @@ return (
                             )
                             }
 
-                    </div> 
-                        
-                        )
-                    })}
+                                </div> 
+                                    
+                                    )
+                                })}
+                           
+
                     </div>
 
                     <Pagination currentPosts={currentPosts} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
