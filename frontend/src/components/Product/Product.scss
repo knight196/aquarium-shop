@@ -35,8 +35,28 @@
   color:orange;
 }
 
+.review-star{
+  font-size: 13px;
+}
+
+.filter-btn{
+display:flex;
+flex-direction: column;
+justify-content:space-between;
+
+button:nth-child(1){
+  margin:10px 0;
+}
+
+button{
+  font-size: 12px;
+}
+
+}
+
 
 @media screen and (min-width:720px){
+
 
   .product-info{
     flex-direction: row;
@@ -49,6 +69,23 @@
     height:400px;
   }
  }
+ .review-star{
+  font-size: 15px;
+ }
+
+ .filter-btn{
+  flex-direction: row;
+
+  button:nth-child(1){
+    margin:0 10px;
+  }
+
+  button{
+    font-size: 15px;
+  }
+
+ }
+
 }
 
 @media screen and (min-width:1020px){

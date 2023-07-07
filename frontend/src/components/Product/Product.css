@@ -43,6 +43,31 @@
   color: orange;
 }
 
+.review-star {
+  font-size: 13px;
+}
+
+.filter-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.filter-btn button:nth-child(1) {
+  margin: 10px 0;
+}
+
+.filter-btn button {
+  font-size: 12px;
+}
+
 @media screen and (min-width: 720px) {
   .product-info {
     -webkit-box-orient: horizontal;
@@ -53,6 +78,21 @@
   .product-img img {
     width: 400px;
     height: 400px;
+  }
+  .review-star {
+    font-size: 15px;
+  }
+  .filter-btn {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .filter-btn button:nth-child(1) {
+    margin: 0 10px;
+  }
+  .filter-btn button {
+    font-size: 15px;
   }
 }
 

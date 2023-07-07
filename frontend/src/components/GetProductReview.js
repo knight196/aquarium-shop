@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react'
 import axios from 'axios'
+import './Product/Product.css'
 
 export default function GetProductReview({Product}) {
 
@@ -65,16 +66,17 @@ const [review,setreview] = useState([])
  
  <div className="d-flex justify-content-between align-items-center">
 
-<div>
+<div className="review-star">
     {star()} <span>{review.length} customer reviews</span>
   </div>  
 
-<div>
-    <button className="btn btn-primary mx-2" onClick={()=> filterRating('createdAt')}>MostRecent</button>
+<div className="filter-btn">
+    <button className="btn btn-primary" onClick={()=> filterRating('createdAt')}>MostRecent</button>
     <button className="btn btn-primary" onClick={()=> filterRating('selectedrating')}>Top Rated</button>
 </div>
 
  </div>
+
     {review.length !== 0 && (
       <>
       {review.map(item => (
