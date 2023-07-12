@@ -1,7 +1,6 @@
 const express = require('express')
 const addRating = require('../Schema/ReviewProduct')
 
-
 const productRouter = express.Router()
 
 
@@ -40,6 +39,22 @@ const reviewSlug = req.body.slug
   })
 
 })
+
+
+productRouter.get('/showReview', async (req,res) => {
+
+const showReview = await addRating.find()
+
+try{
+
+  res.status(200).json(showReview)
+
+}catch(err){
+  res.status(500).send(err)
+}
+
+})
+
 
 
 productRouter.post('/getUserReview', async (req,res) => {
