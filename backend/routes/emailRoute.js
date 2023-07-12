@@ -44,7 +44,7 @@ transporter.use('compile', hbs(handlebarOptions))
 var mailOptions = {
   from:process.env.user,
   to:email,
-  subject:'Order confirmation',
+  subject:'Review',
   template:'feedback',
   context:{
     image,
