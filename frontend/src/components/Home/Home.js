@@ -417,8 +417,9 @@ export default function Home() {
                             <i className="h2 fab fa-facebook"></i>
                             <br></br>
                             <h5>Accept</h5>
+                            <img src="https://play-lh.googleusercontent.com/tDXSaAt_I_qx6am_rTcQ1WHaXo6ncfiB-b742DnSXZkJGASvs15yRYnvzogzbYwse0QD" style={{height:'40px', width:'50px'}} alt="visa"/>
                             <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="mastercard" />
-                            <img src="https://img.icons8.com/fluency/48/000000/bank-card-front-side.png" alt="debit card" />
+                            <img src="https://img.icons8.com/?size=50&id=13608&format=png" alt="debit card" />
                         </div>
 
                     </div>
