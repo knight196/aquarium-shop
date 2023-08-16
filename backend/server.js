@@ -13,6 +13,11 @@ const bodyParser = require('body-parser')
 const webhook = require('./routes/Webhook')
 const dotenv = require('dotenv')
 const path = require('path')
+const {graphqlHTTP} = require('express-graphql')
+const {GraphQLSchema} = require('graphql')
+const mutation = require('./GraphQLSchema/mutation')
+const query = require('./GraphQLSchema/RootQuery')
+
 
 dotenv.config({path:path.resolve(__dirname, './.env')});
 
@@ -22,25 +27,33 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const app = express();
 const port = process.env.PORT || 5000
 
+const schema = new GraphQLSchema({
+  query:query,
+  mutation:mutation
+})
+
+app.use('/Graphql', graphqlHTTP({
+schema,
+graphiql:port
+}))
+
 app.post('/webhook/webhook', express.json({
   verify:(req,res,buf) => {
     req.rawBody = buf.toString()
   }
 }))
 
+// app.use(cors())
 app.use(express.json({limit:'25mb'}))
 app.use(express.urlencoded({limit:'25mb', extended:true}))
 app.use(morgan('dev'))
 app.use('/api/auth', authRoutes)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cors())
-
-
 app.use('/product', productRouter)
 app.use('/orders', Userdashboard)
 app.use('/api/', Admindashboard)
-app.use('/newproduct', newProduct)
+// app.use('/newproduct', newProduct)
 app.use('/emailproduct', emailProduct)
 app.use('/ratingProduct', ratingProduct)
 app.use('/webhook', webhook)
@@ -91,6 +104,8 @@ app.use('/*', (req,res) => res.sendFile(path.join(__dirname, '../frontend/build/
 app.listen(port, () => {
     console.log(`serve at http://localhost:${port}`)
   })
+
+
 
 
 

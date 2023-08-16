@@ -1,9 +1,10 @@
 {
   "name": "frontend",
- 
+  
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@emailjs/browser": "^3.10.0",
     "@stripe/react-stripe-js": "^1.16.4",
     "@stripe/stripe-js": "^1.41.0",
@@ -15,6 +16,7 @@
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
     "framer-motion": "^7.5.4",
+    "graphql": "^16.7.1",
     "gsap": "^3.11.3",
     "js-cookie": "^3.0.1",
     "react": "^18.2.0",

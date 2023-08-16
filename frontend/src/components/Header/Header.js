@@ -33,6 +33,9 @@ export default function Header(props) {
 const [click, setClick] = useState(false);
 const handleClick = () => setClick(!click);
 
+const pageLink = (value) => {
+  window.location.href= value
+}
 
   return (
     <nav className="bg-dark">
@@ -99,21 +102,18 @@ const handleClick = () => setClick(!click);
       })
     }
 
-
-
-            
-            
       <div className="accordion px-2">
       {isAuthenticated() && isAuthenticated().role === 0 && (
         <p>
-       <NavLink to="/user/dashboard">Dashboard</NavLink>
+        <NavLink onClick={() => pageLink("/user/dashboard")}>Dashboard
+    </NavLink>
     </p>
   )}
   {isAuthenticated() && isAuthenticated().role === 1 && (
     <p>
-       <NavLink to="/admin/dashboard">Dashboard</NavLink>
-    
-       </p>
+    <NavLink onClick={() => pageLink("/admin/dashboard")}>Dashboard
+       </NavLink>
+    </p>
   )}
   </div>
 

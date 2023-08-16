@@ -3,36 +3,42 @@ import {useParams,Link} from 'react-router-dom'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {useStateValue} from '../../../StateProvider'
+import {useQuery} from '@apollo/client'
+import {ordersArray} from '../../GraphQLData/Orders'
+import { DeleteOrders } from '../../GraphQLData/Mutation'
+import {useMutation} from '@apollo/client'
 
 export default function OrdersInfo() {
 
-      
-    const [{user}, dispatch] = useStateValue();
-
+  
+  
+  const [{user}, dispatch] = useStateValue();
+  
   const { id }=useParams();
+  const {data} = useQuery(ordersArray,{variables:{orderId:id}})
   const [orders, setorders]=useState([])
-
+  const [deleteOrders] = useMutation(DeleteOrders, {variables: {orderId:id}, refetchQueries:[{query: ordersArray}]})
+  
 
   const fetchData = async () => {
-      const res = await axios.get(`/orders/ordersInfo/${id}`)
-      setorders(res.data)
+      if(data){
+        setorders(data.ordersId)
+      }
   }
 
       useEffect(()=> {
       fetchData(orders.orders);
-      },[orders.orders])
+      },[data])
 
       const [cancelOrder, setcancelOrder] = useState(orders)
 
       const deletelist = async (id) => {
-        await axios.delete(`/orders/get/${id}`)
+        deleteOrders()
         toast.success('Your product has been deleted successfully')
         setTimeout(function (){
          window.location.href="/user/dashboard"
         },1500)
        }
-      
-      
 
       const cancel = async () => {
         await axios.post('/orders/adminmessage', {
@@ -339,7 +345,7 @@ export default function OrdersInfo() {
     <div>
       <h5>Actions</h5>
       <div className="d-flex justify-content-between">
-      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist(orders?.orderId)}>Delete</button>
+      <button className="border-0 px-2 m-1 bg-danger btn" onClick={()=> deletelist()}>Delete</button>
       
       
       <div className={orders.Delivered === true ? 'd-none' : 'd-block'}>

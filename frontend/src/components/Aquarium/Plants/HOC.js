@@ -1,11 +1,14 @@
 import {useEffect,useState} from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import {useQuery} from '@apollo/client'
+import {GetProducts} from '../../GraphQLData/GetProducts'
 
 function UpdatedComponent(OriginalComponent) {
   
     function NewComponent(){
 
+      const {data} = useQuery(GetProducts)
 
         const [addedproducts,setaddedproducts] = useState([])
         const [filteredlist,setfilteredlist] = useState([])
@@ -15,15 +18,18 @@ function UpdatedComponent(OriginalComponent) {
 
         const [loading,setloading] = useState(false)
 
-    
         const getadded = async () => {
-          const res = await axios.get('/product/products')
-          setfilteredlist(res.data.products)
-          setloading(true)
+       
+          if(data){
+            setaddedproducts(data.products)
+            setloading(true)
+          }
         }
         const filteredata = async () => {
-          const res = await axios.get('/product/newproducts')
-          setaddedproducts(res.data.newproducts)
+       
+          if(data){
+            setfilteredlist(data.products)
+          }
         }
 
        
@@ -32,8 +38,7 @@ function UpdatedComponent(OriginalComponent) {
         useEffect(() => {
           getadded();
           filteredata();
-         
-        },[])
+        },[data])
     
         
         const [plantdifficulty, setPlantDifficulty] = useState("");

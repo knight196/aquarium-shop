@@ -10,8 +10,6 @@ import FilterProduct from './FilterProduct'
 
 function Foreground({plantdifficulty,handleBrandChange,filteredlist,loading,handleChange,handleInput,price,highPrice,lowPrice,data,addedproducts}) {
 
-
-  
   return (
 
     <>

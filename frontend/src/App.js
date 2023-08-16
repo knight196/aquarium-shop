@@ -10,15 +10,26 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { ToastContainer } from 'react-toastify'
 
+import {ApolloProvider,ApolloClient,InMemoryCache} from '@apollo/client'
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache({
+    addTypename:false
+  })
+})
+
 export default function App() {
   
   return (
     <div>
   
     <Header />
-   
+    
+    <ApolloProvider client={client}>
     <RootsChange/>
-
+    </ApolloProvider>
+      
     <ToastContainer position="bottom-right"/>
 
 

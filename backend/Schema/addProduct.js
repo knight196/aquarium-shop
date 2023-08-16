@@ -34,15 +34,15 @@ var addProductSchema = new mongoose.Schema(
        variants:[
         {
             packaging:{type:String},
-            price:{type:Number},
-            quantity:{type:Number}
+            price:{type:String},
+            quantity:{type:String}
 
     }
 ],
 colors:[
     {
         colors:{type:String},
-        quantity:{type:Number}
+        quantity:{type:String}
 }
 ]
     },

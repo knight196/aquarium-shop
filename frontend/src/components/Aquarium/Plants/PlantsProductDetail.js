@@ -3,33 +3,32 @@ import Plantsproductinfo from './Plantsproductinfo';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import Loaders from '../../Loaders'
+import {singleProduct} from '../../GraphQLData/GetProducts'
+import {useQuery} from '@apollo/client'
 
-function ProductDetail(props) {
+function ProductDetail() {
 
-    const {products} = props;
 
     const { slug }=useParams();
+
+    const {data} = useQuery(singleProduct, {variables:{slug:slug}})
+
     const [details, setDetails]=useState([])
-
-
 
     const [loading,setloading] = useState(false)
 
     const fetchData = async () => {
-        const res = await axios.get(`/product/plants/slug/${slug}`)
-     
-        setDetails(res.data)
+      if(data){
+        setDetails(data.product)
+      }
         setloading(true)
     }
 
         useEffect(()=> {
         fetchData();
-        },[slug])
+        },[data])
 
-        // useEffect(()=> {
-
-        //     setDetails(products.find(item => (item.slug) ===slug ))
-        // },[slug])
+    
 
 
     return (

@@ -2,10 +2,17 @@ import {useEffect,useState} from 'react'
 import {useParams} from 'react-router-dom'
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import {useQuery,useMutation} from '@apollo/client'
+import {GetProducts,singleProduct} from '../../GraphQLData/GetProducts'
+import {updateProduct} from '../../GraphQLData/Mutation'
+import { updateSingleImage,updateMultipleImages } from './UploadlistFile/UploadImages'
 
 export default function EditList() {
 
   const {slug} = useParams()
+
+  const {data} = useQuery(singleProduct, {variables:{slug:slug}})
+  
 
 
   const [slugName,setslugName] = useState('')
@@ -16,19 +23,36 @@ export default function EditList() {
     const [details,setdetails] = useState([])
     const [variants,setvariants] = useState([])
     const [colors,setcolors] = useState([]) 
-
     
-   const [image,setimage] = useState('')
-
+    const [image,setimage] = useState('')
+    
 const [images,setimages] = useState([])
 
+const [singleuploaded,setSingleUploaded] = useState('')
 
+const [multipleimages,setmultipleimages] = useState([])
+
+  const [updateMutation] = useMutation(updateProduct, {
+    variables:{
+      slug:slugName,
+      title:title,
+      description:description,
+      price:price.toString(),
+      quantity:quantity.toString(),
+      details:details,
+      variants:variants,
+      colors:colors,
+      image:{
+        url:!singleuploaded ? image : singleuploaded
+      },
+      images:!multipleimages ? images : multipleimages
+    }, 
+  refetchQueries:[{query:GetProducts}]})
 
 
   const getproducts = async () => {
-
     const res = await axios.get(`/product/editProduct/${slug}`)
-    setslugName(res.data.slug)
+     setslugName(res.data.slug)
     settitle(res.data.title)
     setprice(res.data.price)
     setquantity(res.data.quantity)
@@ -38,6 +62,18 @@ const [images,setimages] = useState([])
     setcolors(res.data.colors)
     setimage(res.data.image.url)
     setimages(res.data.images.map(item => item.url))
+    // if(data){
+    //   setslugName(data.product.slug)
+    //   settitle(data.product.title)
+    // setprice(data.product.price)
+    // setquantity(data.product.quantity)
+    // setdescription(data.product.description)
+    // setdetails(data.product.details)
+    // setvariants(data.product.variants)
+    // setcolors(data.product.colors)
+    // setimage(data.product.image.url)
+    // setimages(data.product.images.map(item => item.url))
+    // }
   }
 
   useEffect(() => {
@@ -45,31 +81,53 @@ const [images,setimages] = useState([])
   },[])
 
 
-  const handleImage = (e) => {
-    const file = e.target.files[0]
-    setFileToBase(file)
-  }
-  
-  const setFileToBase = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setimage(reader.result)
-    }
+
+
+  const handleImage = async (e) => {
+    e.preventDefault()
+    // const file = e.target.files[0]
+    // setFileToBase(file)
+    const data = await updateSingleImage(image)
+    setSingleUploaded(data.url.toString())
   }
 
-const updateImages = images.slice(4)
+  const listimages = async(e) => {
+    e.preventDefault()
+  // const files = Array.from(e.target.files)
+  // files.forEach(file => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file)
+  //   reader.onloadend = () => {
+  //     setimages(oldArray => [...oldArray, reader.result])
+  //   }
+  // })
+  let arr = []
 
-const submitform = async (e) => {
-  e.preventDefault();
- await axios.put(`/newproduct/updateItem/${slug}`, {
-  slugName,description,price,quantity,title,colors,variants,details,image,images,updateImages
- })
+  for(let i=0; i<multipleimages.length; i++){
+      const data = await updateMultipleImages(multipleimages[i])
+      arr.push(data)
+  }
+
+  setmultipleimages(arr)
+}
 
 
-//   public_id: "aquariumShop/c8pggarrossv8uvtccoo"
-// ​​
-// url: "https://res.cloudinary.com/personal-use-only/image/upload/v1677169914/aquariumShop/c8pggarrossv8uvtccoo.jpg"
+  // const setFileToBase = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     setimage(reader.result)
+  //   }
+  // }
+
+// const updateImages = images.slice(4)
+
+const submitform =  (e) => {
+//  await axios.put(`/newproduct/updateItem/${slug}`, {
+//   slugName,description,price,quantity,title,colors,variants,details,image,images,updateImages
+//  })
+
+updateMutation()
 
 
     toast.success('product updated successfully')
@@ -80,7 +138,6 @@ const submitform = async (e) => {
     
   
 }
-
 
 const handlecolorchange = (e,index) => {
   const {name,value} = e.target;
@@ -104,17 +161,6 @@ const handlechange = (e,index) => {
   setdetails(list)
 }
 
-const listimages = (e) => {
-  const files = Array.from(e.target.files)
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setimages(oldArray => [...oldArray, reader.result])
-    }
-  })
-}
-
 
 
   return (
@@ -125,20 +171,27 @@ const listimages = (e) => {
 
       <hr></hr>
       <h5>Image</h5>
-    <input  onChange={handleImage} type="file" />
+      <form onSubmit={handleImage}>
+    <input  onChange={e=> setimage(e.target.files[0])} type="file" />
+    <button type="submit">Upload</button>
+      </form>
     <br></br>
     <img style={{width:'100px', height:'100px'}} src={image} alt={title}/>
 
 <hr></hr>
 
 <h5>Variants Images</h5>
-<input type="file" onChange={listimages} multiple/>
+<form onSubmit={listimages}>
+
+<input type="file" onChange={e=> setmultipleimages(e.target.files)} multiple/>
   <br></br>
-{images.map(item => (
+  <button>Upload</button>
+  </form>
+{images?.map(item => (
   
   <img style={{width:'100px', height:'100px'}} src={item} alt={title}/>
   
-))}
+  ))}
 
 <hr></hr>
 

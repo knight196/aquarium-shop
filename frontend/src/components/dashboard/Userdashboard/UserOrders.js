@@ -3,22 +3,28 @@ import '../dashboard.css'
 import axios from 'axios'
 import {useStateValue} from '../../../StateProvider'
 import {Link} from 'react-router-dom'
+import {useQuery} from '@apollo/client'
+import {ordersEmail} from '../../GraphQLData/Orders'
 
 export default function UserOrders() {
 
+
     const [{user}, dispatch] = useStateValue();
+
+
+    const {data} = useQuery(ordersEmail,{variables:{email:user.email}})
     
 const [orders,setOrders] = useState([]);
 
-
-
-  const getorders = async () => {
-    const res = await axios.post('/orders/get', {email:user.email})
-    setOrders(res.data)
-  }
   useEffect(() => {
-  getorders();
-},[])
+    if(data){
+      setOrders(data.ordersByEmail);
+    }
+},[data])
+
+
+
+
 
 
   return (
@@ -27,7 +33,7 @@ const [orders,setOrders] = useState([]);
 
 {user !== null && (
    <div>
-   {orders.map((order)=> (
+   {orders?.map((order)=> (
          <div className="d-flex my-2 py-2 justify-content-between bg-secondary bg-opacity-50 customer-details" style={{position:'relative'}}>
      
      <div>
@@ -53,7 +59,7 @@ const [orders,setOrders] = useState([]);
          <br></br>
    <small>Placed Date</small>
    <br></br>
- <small>{order?.createdAt.slice(0,10)}</small>
+ <small>{order?.date.slice(0,10)}</small>
  </div>
  
        

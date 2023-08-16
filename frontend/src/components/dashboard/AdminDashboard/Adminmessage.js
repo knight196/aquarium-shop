@@ -29,7 +29,6 @@ const deletemsg= async (id) => {
     getusermsg();
   },[])
 
-  console.log(usermsg)
 
   return (
     <div className="text-center">

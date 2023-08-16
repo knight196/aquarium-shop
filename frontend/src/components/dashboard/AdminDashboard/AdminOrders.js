@@ -1,20 +1,24 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import {useQuery} from '@apollo/client'
+import {allOrders} from '../../GraphQLData/Orders'
 
 export default function AdminOrders() {
 
 
+  const {data} = useQuery(allOrders)
+
+
     const [orders,setOrders] = useState([])
-const getOrders = async () => {
-  const res = await axios.get('/api/orders');
-  setOrders(res.data.orders)
-}
+
 
 
 useEffect(() => {
-    getOrders();
-},[])
+    if(data){
+      setOrders(data.orders)
+    }
+},[data])
 
 
   return (
@@ -44,7 +48,7 @@ useEffect(() => {
             <br></br>
       <small>Placed Date</small>
       <br></br>
-    <small>{order?.createdAt.slice(0,10)}</small>
+    <small>{order?.date.slice(0,10)}</small>
     </div>
     
           

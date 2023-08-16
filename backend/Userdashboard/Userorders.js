@@ -76,9 +76,7 @@ router.put('/updatepayment', async (req,res) => {
 
 })
 
-
   //return the item
-
   router.put('/ordersreturn/:id', async (req,res)=> {
     try{
       const returnId = await Orders.findOne({orderId:req.params.id})
@@ -98,7 +96,6 @@ router.put('/updatepayment', async (req,res) => {
     }
   })
 
-
 //api for orders
 // API TO add ORDER DETAILS
 
@@ -115,6 +112,7 @@ router.post("/add", async(req, res) => {
   const deliveryPrice = req.body.deliveryPrice
   const deliveryDate = req.body.deliveryDate
   const paymentConfirm = req.body.paymentConfirm
+  const date = req.body.date
 
   const orderDetail = {
     products: products,
@@ -128,7 +126,8 @@ router.post("/add", async(req, res) => {
     deliveryOptions:deliveryOptions,
     deliveryPrice:deliveryPrice,
     deliveryDate: deliveryDate,
-    paymentConfirm:paymentConfirm
+    paymentConfirm:paymentConfirm,
+    date:date
   };
 
   Orders.create(orderDetail, (err, result) => {
@@ -138,7 +137,6 @@ router.post("/add", async(req, res) => {
       console.log("order added to database >> ", result);
     }
   });
-
 
 });
 

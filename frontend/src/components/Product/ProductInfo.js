@@ -9,15 +9,17 @@ import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import GetProductReview from '../GetProductReview'
-
+import {GetProducts} from '../GraphQLData/GetProducts'
+import {useMutation} from '@apollo/client'
+import { decrementQty } from '../GraphQLData/Mutation';
 
 function ProductInfo(props) {
 
   const [Product, setProduct] = useState([])
+
+  const [productDecrement] = useMutation(decrementQty, {variables:{slug:Product.slug},refetchQueries:[{query:GetProducts}]})
   
     const [{basket},dispatch]=useStateValue();
-    
-    
     
     let navigate = useNavigate();
 
@@ -52,8 +54,10 @@ const addToBasket= async (item,slug) =>{
     })
     
     window.location.href="/Checkout"
+
+    productDecrement()
     
-    await axios.put(`/product/productdecrement/${slug}`)
+    // await axios.put(`/product/productdecrement/${slug}`)
       }
  
   }

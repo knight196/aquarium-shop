@@ -8,20 +8,23 @@ import axios from 'axios'
 import slideshow from './data'
 import plants from './Plantsdata'
 import Pagination from './Pagination'
+import {GetProducts} from '../GraphQLData/GetProducts'
+import { gql,useQuery } from '@apollo/client'
 
 
-export default function Home() {
+export default function Home() {    
+    const {data} = useQuery(GetProducts)
 
 
     const [products, setproducts] = useState([])
-
-    const fetchdata = async () => {
-        const res = await axios.get('/product/newproducts')
-        setproducts(res.data.newproducts)
-    }
-
-
     const [review, setreview] = useState([])
+
+
+    const fetchData = () => {
+        if(data){
+            setproducts(data.products)
+        }
+    }
 
     const showReview = async () => {
 
@@ -31,13 +34,12 @@ export default function Home() {
 
     }
 
-    
     useEffect(() => {
-        fetchdata()
+        fetchData()
         showReview()
-    }, [])
+        
+    }, [data])
     
-    const [starReview,setstar] = useState('')
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -61,10 +63,7 @@ export default function Home() {
         ? products
         : products.filter((y) => y.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-
-
-
-
+    
     const [current, setCurrent] = useState(0);
     const [slide] = useState(slideshow);
 
@@ -151,13 +150,15 @@ export default function Home() {
                     )                  
         
             }
+        
+            
 
-          
+       
 
 
-
-    return (
+    return(
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.5 } }}>
+
 
             <input className="w-100 p-1 border-0" type="text" placeholder="SEARCH YOUR PRODUCT" value={searchTerm} onChange={handleSearch} />
 
@@ -170,7 +171,7 @@ export default function Home() {
                 
 
                     {currentPosts.map((filterproduct) => {
-                        return (
+                        return(
                             <div className='m-4 text-center'>
                                 <img style={{ width: '300px', height: '300px' }} src={filterproduct.image.url} alt="" />
                                 <p key={filterproduct.slug}>{filterproduct.title}</p>
@@ -195,6 +196,7 @@ export default function Home() {
 
                             </div>
 
+                        
                         )
                     })}
 

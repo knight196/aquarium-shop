@@ -3,25 +3,30 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import TanksInfo from './TanksInfo'
 import Loaders from '../../Loaders'
+import {singleProduct} from '../../GraphQLData/GetProducts'
+import {useQuery} from '@apollo/client'
 
 export default function TanksDetail() {
   
   
   const {slug} = useParams();
-  const [details,setdetails] = useState([])
 
+  const {data} = useQuery(singleProduct, {variables:{slug:slug}})
+
+  const [details,setdetails] = useState([])
 
   const [loading,setloading] = useState(false)
 
   const fetchData = async () => {
-    const res = await axios.get(`/product/tanks/slug/${slug}`)
-    setdetails(res.data)
-    setloading(true)
+    if(data){
+      setdetails(data.product)
+      setloading(true)
+    }
   }
 
   useEffect(()=> {
     fetchData();
-  },[slug])
+  },[data])
   
     return (
     <>

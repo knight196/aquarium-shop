@@ -16,70 +16,72 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
  })
 
-// cloudinary image upload 
-productRouter.post('/newproducts/add', async (req,res) => {
+// // cloudinary image upload 
+// productRouter.post('/newproducts/add', async (req,res) => {
 
-    const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants,images,colors} = req.body
-    try{
+//     const {slug,title,category,description,Company,price,image,position,difficulty,CompanyProductName,details,variants,images,colors} = req.body
+//     try{
   
-      const result = await cloudinary.uploader.upload(image, {
-        folder:'aquariumShop',
-        width:1920,
-        crop:'scale'
-      })
+//       const result = await cloudinary.uploader.upload(image, {
+//         folder:'aquariumShop',
+//         width:1920,
+//         crop:'scale'
+//       })
   
   
-      let images = [...req.body.images];
-      let imagesBuffer = []
+//       let images = [...req.body.images];
+//       let imagesBuffer = []
   
-      for(let i=0; i<images.length; i++){
-       const result = await cloudinary.uploader.upload(images[i], {
-          folder:'aquariumvariants',
-          width:1920,
-          crop:'scale'
-        })
+//       for(let i=0; i<images.length; i++){
+//        const result = await cloudinary.uploader.upload(images[i], {
+//           folder:'aquariumvariants',
+//           width:1920,
+//           crop:'scale'
+//         })
         
-        imagesBuffer.push({
-          public_id:result.public_id,
-          url:result.secure_url
-        })
+//         imagesBuffer.push({
+//           public_id:result.public_id,
+//           url:result.secure_url
+//         })
         
-      }
+//       }
         
-      req.body.images = imagesBuffer
+//       req.body.images = imagesBuffer
   
   
-      const listproducts = await addProduct.create({
-        slug,
-        title,
-        category,
-        description,
-        Company,
-        price,
-        image:{
-          public_id: result.public_id,
-          url:result.secure_url
-        },
-        position,
-        difficulty,
-        CompanyProductName,
-        details,
-        variants,
-        images:imagesBuffer,
-        colors,
+//       const listproducts = await addProduct.create({
+//         slug,
+//         title,
+//         category,
+//         description,
+//         Company,
+//         price,
+//         image:{
+//           public_id: result.public_id,
+//           url:result.secure_url
+//         },
+//         position,
+//         difficulty,
+//         CompanyProductName,
+//         details,
+//         variants,
+//         images:imagesBuffer,
+//         colors,
     
-      })
+//       })
     
-      res.status(201).json({
-        success:true,
-        listproducts
-      })
-    }catch(err){
-      console.log(err)
-    }
+//       res.status(201).json({
+//         success:true,
+//         listproducts
+//       })
+//     }catch(err){
+//       console.log(err)
+//     }
   
   
-  })
+//   })
+
+
 
   productRouter.put('/updateItem/:slug', async (req,res) => {
 

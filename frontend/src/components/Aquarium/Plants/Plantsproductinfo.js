@@ -8,6 +8,9 @@ import './Plants.css'
 import {motion} from 'framer-motion'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import {GetProducts} from '../../GraphQLData/GetProducts'
+import {useMutation} from '@apollo/client'
+import {Plantsdecrement,basketPlantsUpdate} from '../../GraphQLData/Mutation'
 // import { useAlert } from 'react-alert';
 import GetProductReview from '../../GetProductReview';
 
@@ -16,8 +19,6 @@ function Plantsproductinfo(props) {
   const [Product, setProduct] = useState([])
   
     const [{basket},dispatch]=useStateValue();
-
-
  
 let navigate = useNavigate();
 
@@ -66,7 +67,10 @@ const plantsId = basket.filter(item => item.slug === Product.slug).map(item => i
 const plantsvariant = basket.filter(item => item.slug  === Product.slug).map(item => item.packaging).toString()
 
 
-const addToBasket= async (e,id) =>{
+const [plantsDec] = useMutation(Plantsdecrement, {variables:{slug:Product.slug,_id:finalId}, refetchQueries:[{query:GetProducts}]})
+const [plantsUpdate] = useMutation(basketPlantsUpdate, {variables:{slug:plantslug,_id:plantsId,quantity:plantsquantity}, refetchQueries:[{query:GetProducts}]})
+
+const addToBasket= (e,id) =>{
   
   const quantity = 1
 
@@ -94,16 +98,6 @@ if(updateFinal === 0){
         plantsId:finalId
     },
   })
-
-  if( plantsvariant !== packaging?.value){
-    await axios.put(`/product/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
-    await axios.put(`/product/decrement/${id}`, {slug: Product.slug})
-    
-  }else{
-    await axios.put(`/product/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
-    await axios.put(`/product/decrement/${id}`, {slug: Product.slug})
-    
-  }
   
   window.location.href='/Checkout'  
 
@@ -113,6 +107,21 @@ if(updateFinal === 0){
 }
 
 };
+
+
+const plantsUpdates = () => {
+
+  if( plantsvariant !== packaging?.value){
+    plantsUpdate()
+    plantsDec()
+  }else{
+    plantsUpdate()
+    plantsDec()
+    // await axios.put(`/product/basketPlantsInc/${plantsId}`, {slug:plantslug, quantity:plantsquantity})
+    // await axios.put(`/product/decrement/${id}`, {slug: Product.slug})
+  }
+
+}
 
 
 
@@ -148,7 +157,7 @@ return (
 
 
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>addToBasket(Product,finalId)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={()=>{addToBasket(Product,finalId);plantsUpdates()}}>
             Add to basket
       </button>
     </div>

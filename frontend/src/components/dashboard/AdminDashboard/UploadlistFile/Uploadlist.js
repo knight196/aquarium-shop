@@ -2,38 +2,35 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import {Link} from 'react-router-dom'
+import {useQuery} from '@apollo/client'
+import {GetProducts} from '../../../GraphQLData/GetProducts'
+import Productsdelete from './Productsdelete'
+
 
 export default function Uploadlist() {
+  
+  const [uploadlist,setuploadlist] = useState([])
+  
+  const [filteredlist,setfilteredlist] = useState([])
 
-const [uploadlist,setuploadlist] = useState([])
-
-const [filteredlist,setfilteredlist] = useState([])
-
-
+  const {data} = useQuery(GetProducts)
 
 const fetchData = async () => {
-    const res = await axios.get('/product/newproducts')
-    setfilteredlist(res.data.newproducts)
+  if(data){
+    setfilteredlist(data.products)
+  }
 }
-
 
 const filteredata = async () => {
-  const res = await axios.get('/product/newproducts')
-  setuploadlist(res.data.newproducts)
-}
-
-const deletelist = async (id) => {
- await axios.delete(`/api/${id}`)
- toast.success('Your product has been deleted successfully')
- setTimeout(function (){
-  window.location.reload()
- },1500)
+  if(data){
+    setuploadlist(data.products)
+  }
 }
 
 useEffect(()=> {
 fetchData()
 filteredata();
-},[])
+},[data])
 
 const [selectedBrand, setSelectedBrand] = useState("");
 
@@ -86,15 +83,14 @@ return (
         <img style={{width:'100px',height:'100px'}} src={item.image.url} alt=""/>
         <p>{item.title}</p>
         <div>
-            <p5>CreatedAt</p5>
-        <p>{item.createdAt.substring(0,10)}</p>
+         
 
 <p>{item.quantity === 0 ? <small className="text-danger">Out of Stock</small> : ''}</p>
 
-        <Link to={`/product/editProduct/${item.slug}`}>
+        <Link to={`/editProduct/${item.slug}`}>
         <button style={{fontSize:'10px'}} className="btn w-100 bg-primary text-white">Edit</button>
         </Link>
-        <button onClick={()=> deletelist(item._id)} style={{fontSize:'10px'}} className="btn w-100 bg-danger text-white">Delete</button>
+      <Productsdelete id={item._id}/>
         </div>
         </div>
       ))}

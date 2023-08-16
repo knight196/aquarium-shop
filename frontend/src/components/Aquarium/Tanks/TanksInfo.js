@@ -10,6 +10,9 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import GetProductReview from '../../GetProductReview'
 // import { useAlert } from 'react-alert';
+import {useMutation} from '@apollo/client'
+import {GetProducts} from '../../GraphQLData/GetProducts'
+import {ColorDecrement,basketColorUpdate} from '../../GraphQLData/Mutation'
 
 function TanksInfo(props) {
 
@@ -17,7 +20,7 @@ function TanksInfo(props) {
   
     const [{basket},dispatch]=useStateValue();
 
-
+  
 let navigate = useNavigate();
 
 useEffect(()=>{
@@ -41,6 +44,7 @@ const [selectedcolor,setselectedcolor] = useState('')
 
 const [colorid,setid] = useState('')
 
+
 useEffect(() => {
 
   const color = Product.colors?.map(item => item.colors)
@@ -54,7 +58,8 @@ useEffect(() => {
 
   const productId = Product.colors?.filter(item => item.colors === selectedcolor)
   .map(item => item._id)
-  setid(productId)
+
+  setid(productId?.toString())
   
 
       if(!selectedcolor) setselectedcolor(color?.[0])
@@ -67,6 +72,9 @@ const handleOnClick = (type) =>{
       setToggleState(type)
 }
 
+
+
+
 const colorslug = basket.filter(item => item.slug === Product.slug).map(item => item.slug).toString()
 
 const colorquantity = parseInt(basket.filter(item => item.slug === Product.slug).map(item => item.quantity))
@@ -75,8 +83,12 @@ const colorId = basket.filter(item => item.slug === Product.slug).map(item => it
 
 const color = basket.filter(item => item.slug  === Product.slug).map(item => item.color).toString()
 
+const [colorDec] = useMutation(ColorDecrement, {variables:{slug:Product.slug, _id:colorid}, refetchQueries:[{query:GetProducts}]})
+const [basketColorInc] = useMutation(basketColorUpdate,{variables:{slug:colorslug, _id:colorId, quantity:colorquantity}, refetchQueries:[{query:GetProducts}]})
 
-const addToBasket = async (e,id) =>{
+
+
+const addToBasket = (e,id) =>{
 
  
   const quantity =  1
@@ -100,14 +112,6 @@ const addToBasket = async (e,id) =>{
         }
       })       
 
-    
-      if(color !== selectedcolor){
-        await axios.put(`/product/colordecrement/${id}`, {slug: Product.slug})
-        await axios.put(`/product/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
-      }else{
-        await axios.put(`/product/colordecrement/${id}`, {slug: Product.slug})
-        await axios.put(`/product/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
-      }
       window.location.href="/Checkout"
       
     }
@@ -122,6 +126,23 @@ const addToBasket = async (e,id) =>{
   } 
 
 };    
+
+
+const tankUpdates = () => {
+
+
+  if(color !== selectedcolor){
+    colorDec()
+    basketColorInc()
+   
+  }else{
+    colorDec()
+    basketColorInc()
+    // await axios.put(`/product/colordecrement/${id}`, {slug: Product.slug})
+    // await axios.put(`/product/baskecolorInc/${colorId}`, {slug:colorslug,quantity:colorquantity})
+  }
+
+}
 
 
 
@@ -184,7 +205,7 @@ return (
 
  
     <div className='button__cart'>    
-      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => addToBasket(Product,colorid)}>
+      <button className='border-0 text-white p-2 px-3 rounded-1 bg-primary' onClick={() => {addToBasket(Product,colorid);tankUpdates()}}>
             Add to basket
       </button>
     </div>

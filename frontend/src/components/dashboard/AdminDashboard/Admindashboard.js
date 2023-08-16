@@ -7,7 +7,7 @@ import {useStateValue} from '../../../StateProvider'
 import  {toast} from 'react-toastify'
 import CreateProduct from './Createproducts'
 import AdminOrders from './AdminOrders'
-import Uploadlist from './Uploadlist'
+import Uploadlist from './UploadlistFile/Uploadlist'
 import Adminmessage from './Adminmessage'
 export default function Admindashboard() {
   

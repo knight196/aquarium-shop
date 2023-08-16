@@ -16,7 +16,6 @@ export default function Userdashboard() {
 
   const [toggleState,setToggleState] = useState(1)
 
-  console.log(user)
   
 const toggleTab = (index) => {
   setToggleState(index)

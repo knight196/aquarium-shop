@@ -3,33 +3,29 @@ import ProductInfo from './ProductInfo';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import Loaders from '../Loaders'
+import {singleProduct} from '../GraphQLData/GetProducts'
+import {useQuery} from '@apollo/client'
 
-function ProductDetail(props) {
+function ProductDetail() {
+  const { slug }=useParams();
 
-    const {products} = props;
+  const {data} = useQuery(singleProduct, {variables:{slug: slug}})
 
-    const { slug }=useParams();
     const [details, setDetails]=useState([])
 
     const [loading,setloading] = useState(false)
 
-
-
     const fetchData = async () => {
-        const res = await axios.get(`/product/products/slug/${slug}`)
-        setDetails(res.data)
+      if(data){
+        setDetails(data.product)
         setloading(true)
+      }
     }
 
+
         useEffect(()=> {
-        fetchData();
-        },[slug])
-
-        // useEffect(()=> {
-
-        //     setDetails(products.find(item => (item.slug) ===slug ))
-        // },[slug])
-
+        fetchData()
+        },[data])
 
     return (
       <div className="px-2 my-5">

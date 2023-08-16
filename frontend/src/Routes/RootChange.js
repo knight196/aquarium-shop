@@ -165,7 +165,7 @@ export default function RootChange() {
           <Route path="/admin/dashboard" element={<Admindashboard/>}/>
           <Route path="/passwordReset/:id" element={<Passwordreset/>}/>
           <Route path="/Emailconfirm" element={<Emailconfirm/>}/>
-          <Route path="/api/editProduct/:slug" element={<EditProduct/>}/>
+          <Route path="/editProduct/:slug" element={<EditProduct/>}/>
            <Route  path="/api/products/slug/:slug" element={<ProductDetail/>}/>
           <Route path="/api/plants/slug/:slug" element={<PlantsProductDetail/>}/>
            <Route  path="/ordersInfo/:id" element={<UserOrderInfo/>}/>

@@ -3,24 +3,29 @@ import axios from 'axios'
 import {toast} from 'react-toastify'
 import { useStateValue } from '../../../StateProvider'
 import {useParams} from 'react-router-dom'
+import {useQuery} from '@apollo/client'
+import {ordersArray} from '../../GraphQLData/Orders'
+
 
 export default function AdminOrderInfo() {
  
  const [{user},dispatch] = useStateValue();
 
  const {id} = useParams();
+
+const {data} = useQuery(ordersArray,{variables:{orderId:id}}) 
+
  const [orders,setorders] = useState([])
 
- console.log(orders)
-
  const fetchData = async () => {
-  const res = await axios.get(`/api/orders/_id/${id}`)
-  setorders(res.data)
+  if(data){
+    setorders(data.ordersId)
+  }
  }
 
  useEffect(() => {
   fetchData(orders.orders)
- },[orders.orders])
+ },[data])
 
  const [refund,setrefund] = useState(orders)
 

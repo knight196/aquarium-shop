@@ -24,12 +24,17 @@ function Payment() {
   const [disabled,setdisabled] = useState(true)
   const [succeeded,setsucceeded] = useState(false)
 
+
   const [params] = useSearchParams()
 
   const arr = Object.fromEntries(params) 
 
 
   const renderAfterCalled = useRef(false)
+
+  const date = new Date().toISOString()
+  
+  const totalPrice = (getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
 
 
   useEffect(() => {
@@ -59,7 +64,6 @@ function Payment() {
   const elements = useElements();
   const stripe = useStripe();
 
-  const totalPrice = (getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)
   
 
   var today = new Date()
@@ -107,6 +111,7 @@ var someDate = new Date()
       deliveryPrice:deliveryOptions.price,
      deliveryDate: today,
         amount: totalPrice,
+        date:date
       })
       setClientSecret(data.data.clientSecret)
     }
@@ -130,9 +135,9 @@ const handleChange = (e) => {
 
   setdisabled(e.empty)
   seterror(e.error ? e.error.message: '')
-
 }
-  
+
+
   const handlePayment = async (e) => {
     e.preventDefault();
 
@@ -187,8 +192,10 @@ const handleChange = (e) => {
       deliveryOptions:deliveryOptions.options,
       deliveryPrice:deliveryOptions.price,
      deliveryDate: today,
-     paymentConfirm: succeeded
+     paymentConfirm: succeeded,
+     date:date
     })
+
 
       const {paymentIntent} = await stripe.retrievePaymentIntent(cardSecret);
   if (paymentIntent && paymentIntent.status === 'succeeded') {
@@ -205,7 +212,8 @@ const handleChange = (e) => {
       orderId:orderId,
       deliveryOptions:deliveryOptions.options,
       deliveryPrice:deliveryOptions.price,
-      deliveryDate:today
+      deliveryDate:today,
+      date:date
     })
     
     axios.put('/orders/updatepayment', {
@@ -229,6 +237,7 @@ const handleChange = (e) => {
       deliveryOptions:deliveryOptions.options,
       deliveryPrice:deliveryOptions.price,
       deliveryDate:today,
+      date:date
     })
 
     navigate('/')

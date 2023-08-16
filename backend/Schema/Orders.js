@@ -18,7 +18,8 @@ const OrderSchema = mongoose.Schema(
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},
   Return:{type:Boolean,default:false},
-  Dispatch:{type:Boolean,default:false}
+  Dispatch:{type:Boolean,default:false},
+  date:String
 },
 {
   timestamps:true
