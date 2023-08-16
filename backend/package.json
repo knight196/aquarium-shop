@@ -33,7 +33,7 @@
     "stripe": "^10.14.0"
   },
   "engines": {
-    "node": ">=14 <15"
+    "node": "16.17.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
