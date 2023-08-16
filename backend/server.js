@@ -18,11 +18,14 @@ const {GraphQLSchema} = require('graphql')
 const mutation = require('./GraphQLSchema/mutation')
 const query = require('./GraphQLSchema/RootQuery')
 
-const stripe = require('stripe')('sk_test_51LtvUXJI0em1KAyRDVAbiHk3n1U7ZHnm1Jq6ymcpH2E9ccQnSb8avy4f2wiBpbZFizVhTagXOh6ThkIl06cTJPrU002wTxBybg')
+
+dotenv.config({path:path.resolve(__dirname, './.env')});
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 
 const app = express();
-const port = process.env.PORT || 5000
+const port = 5000
 
 const schema = new GraphQLSchema({
   query:query,

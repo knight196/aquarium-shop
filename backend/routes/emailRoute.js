@@ -3,11 +3,14 @@ const Account = require('../Schema/User')
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 const handlebars = require('handlebars')
-
+const dotenv = require('dotenv')
+const path = require('path')
 
 const productRouter = express.Router()
 
 const bcrypt = require('bcryptjs');
+
+dotenv.config({path:path.resolve(__dirname, '../.env')});
 
 //feedback 
 
@@ -21,8 +24,8 @@ try{
   var transporter = nodemailer.createTransport({
     service:'hotmail',
   auth : {  
-    user:'Aquature@outlook.com',
-    pass:'Aqua1234@'
+    user:process.env.user,
+    pass:process.env.pass
   }
 })
 
@@ -39,7 +42,7 @@ const handlebarOptions = {
 transporter.use('compile', hbs(handlebarOptions))
 
 var mailOptions = {
-  from:'Aquature@outook.com',
+  from:process.env.user,
   to:email,
   subject:'Review',
   template:'feedback',
@@ -83,8 +86,8 @@ productRouter.post('/cancelemail', async (req,res) => {
     var transporter = nodemailer.createTransport({
       service:'hotmail',
     auth : {  
-      user:'Aquature@outlook.com',
-      pass:'Aqua1234@'
+      user:process.env.user,
+      pass:process.env.pass
     }
   })
   
@@ -101,7 +104,7 @@ productRouter.post('/cancelemail', async (req,res) => {
   transporter.use('compile', hbs(handlebarOptions))
   
   var mailOptions = {
-    from:'Aquature@outook.com',
+    from:process.env.user,
     to:email,
     subject:'Order Cancel confirmation',
     template:'cancelemail',
@@ -138,8 +141,8 @@ productRouter.post('/sendemail', async (req,res) => {
       var transporter = nodemailer.createTransport({
         service:'hotmail',
       auth : {  
-        user:'Aquature@outlook.com',
-        pass:'Aqua1234@'
+        user:process.env.user,
+        pass:process.env.pass
       }
     })
     
@@ -156,7 +159,7 @@ productRouter.post('/sendemail', async (req,res) => {
     transporter.use('compile', hbs(handlebarOptions))
     
     var mailOptions = {
-      from:'Aquature@outook.com',
+      from:process.env.user,
       to:email,
       subject:'Order confirmation',
       template:'email',
@@ -192,8 +195,8 @@ productRouter.post('/sendemail', async (req,res) => {
         var transporter = nodemailer.createTransport({
           service:'hotmail',
         auth : {  
-          user:'Aquature@outlook.com',
-          pass:'Aqua1234@'
+          user:process.env.user,
+          pass:process.env.pass
         }
       })
       
@@ -210,7 +213,7 @@ productRouter.post('/sendemail', async (req,res) => {
       transporter.use('compile', hbs(handlebarOptions))
       
       var mailOptions = {
-        from:'Aquature@outook.com',
+        from:process.env.user,
         to:email,
         subject:'Order Cancel confirmation',
         template:'cancelemail',
@@ -247,8 +250,8 @@ productRouter.post('/sendemail', async (req,res) => {
         var transporter = nodemailer.createTransport({
           service:'hotmail',
         auth : {  
-          user:'Aquature@outlook.com',
-          pass:'Aqua1234@'
+          user:process.env.user,
+          pass:process.env.pass
         }
       })
       
@@ -265,7 +268,7 @@ productRouter.post('/sendemail', async (req,res) => {
       transporter.use('compile', hbs(handlebarOptions))
       
       var mailOptions = {
-        from:'Aquature@outook.com',
+        from:process.env.user,
         to:email,
         subject:'Order Cancel confirmation',
         template:'orderCanceled',
@@ -302,8 +305,8 @@ productRouter.post('/sendemail', async (req,res) => {
           var transporter = nodemailer.createTransport({
             service:'hotmail',
           auth : {  
-            user:'Aquature@outlook.com',
-            pass:'Aqua1234@'
+            user:process.env.user,
+            pass:process.env.pass
           }
         })
         
@@ -320,7 +323,7 @@ productRouter.post('/sendemail', async (req,res) => {
         transporter.use('compile', hbs(handlebarOptions))
         
         var mailOptions = {
-          from:'Aquature@outook.com',
+          from:process.env.user,
           to:email,
           subject:'Delivered',
           template:'delivered',
@@ -357,8 +360,8 @@ productRouter.post('/sendemail', async (req,res) => {
             var transporter = nodemailer.createTransport({
               service:'hotmail',
             auth : {  
-              user:'Aquature@outlook.com',
-              pass:'Aqua1234@'
+              user:process.env.user,
+              pass:process.env.pass
             }
           })
           
@@ -375,7 +378,7 @@ productRouter.post('/sendemail', async (req,res) => {
           transporter.use('compile', hbs(handlebarOptions))
           
           var mailOptions = {
-            from:'Aquature@outook.com',
+            from:process.env.user,
             to:email,
             subject:'Returned',
             template:'return',
@@ -414,8 +417,8 @@ productRouter.post('/sendemail', async (req,res) => {
           var transporter = nodemailer.createTransport({
             service:'hotmail',
           auth : {  
-            user:'Aquature@outlook.com',
-            pass:'Aqua1234@'
+            user:process.env.user,
+            pass:process.env.pass
           }
         })
         
@@ -432,7 +435,7 @@ productRouter.post('/sendemail', async (req,res) => {
         transporter.use('compile', hbs(handlebarOptions))
         
         var mailOptions = {
-          from:'Aquature@outook.com',
+          from:process.env.user,
           to:email,
           subject:'Refund',
           template:'refund',
@@ -472,8 +475,8 @@ productRouter.post('/sendemail', async (req,res) => {
           var transporter = nodemailer.createTransport({
             service:'hotmail',
           auth : {  
-            user:'Aquature@outlook.com',
-            pass:'Aqua1234@'
+            user:process.env.user,
+            pass:process.env.pass
           }
         })
         
@@ -490,7 +493,7 @@ productRouter.post('/sendemail', async (req,res) => {
         transporter.use('compile', hbs(handlebarOptions))
         
         var mailOptions = {
-          from:'Aquature@outook.com',
+          from:process.env.user,
           to:email,
           subject:'Failed Payment',
           template:'recheckpayment',
@@ -531,8 +534,8 @@ productRouter.post('/sendemail', async (req,res) => {
             var transporter = nodemailer.createTransport({
               service:'hotmail',
             auth : {  
-              user:'Aquature@outlook.com',
-              pass:'Aqua1234@'
+              user:process.env.user,
+              pass:process.env.pass
             }
           })
           
@@ -549,7 +552,7 @@ productRouter.post('/sendemail', async (req,res) => {
           transporter.use('compile', hbs(handlebarOptions))
           
           var mailOptions = {
-            from:'Aquature@outook.com',
+            from:process.env.user,
             to:email,
             subject:'Payment Successful',
             template:'repaymentSuccess',
@@ -588,8 +591,8 @@ productRouter.post('/sendemail', async (req,res) => {
             var transporter = nodemailer.createTransport({
               service:'hotmail',
             auth : {  
-              user:'Aquature@outlook.com',
-              pass:'Aqua1234@'
+              user:process.env.user,
+              pass:process.env.pass
             }
           })
           
@@ -606,7 +609,7 @@ productRouter.post('/sendemail', async (req,res) => {
           transporter.use('compile', hbs(handlebarOptions))
           
           var mailOptions = {
-            from:'Aquature@outook.com',
+            from:process.env.user,
             to:email,
             subject:'Dispatched',
             template:'dispatch',
@@ -649,8 +652,8 @@ productRouter.post('/sendemail', async (req,res) => {
     var transporter = nodemailer.createTransport({
       service:'hotmail',
       auth:{
-        user:'Aquature@outlook.com',
-        pass:'Aqua1234@'
+        user:process.env.user,
+        pass:process.env.pass
       }
     })
     
@@ -686,13 +689,13 @@ productRouter.post('/sendemail', async (req,res) => {
     var transporter = nodemailer.createTransport({
       service:'hotmail',
       auth:{
-        user:'Aquature@outlook.com',
-        pass:'Aqua1234@'
+        user:process.env.user,
+        pass:process.env.pass
       }
     })
     
     var mailOptions = {
-      from:'Aquature@outook.com',
+      from:process.env.user,
       to:email,
       subject:'Password Creation Success',
       html:`
