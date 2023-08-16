@@ -4,13 +4,11 @@ const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 const handlebars = require('handlebars')
 const dotenv = require('dotenv')
-const path = require('path')
+const path = require('path').config({path:'.././.env'})
 
 const productRouter = express.Router()
 
 const bcrypt = require('bcryptjs');
-
-dotenv.config({path:path.resolve(__dirname, '../.env')});
 
 //feedback 
 
