@@ -32,6 +32,7 @@ const deliveries = [
   }
 ]
 
+
 const deliverySelect = (e,price) => {
     setdeliveryOptions(e.target.value)
     setprice(price)
@@ -102,7 +103,7 @@ const deliverySelect = (e,price) => {
 
 <hr/>
 
-  <p>Subtotal({qty(basket)} items): £{getBasketTotal(basket).toFixed(2)}</p>
+  <p>Subtotal({qty(basket)} items): £{parseFloat(getBasketTotal(basket)).toFixed(2)}</p>
   
   <p>Delivery-Options: {deliveryOptions.options} + £{deliveryOptions.price}</p>
   <strong>Total:£{(getTotalBasketQty(basket) + parseFloat(deliveryOptions.price)).toFixed(2)}</strong>

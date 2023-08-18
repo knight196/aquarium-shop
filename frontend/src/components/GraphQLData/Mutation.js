@@ -184,14 +184,10 @@ mutation updateProduct(
         _id
       }
       image{
-        public_id
         url
-        _id
       }
       images{
-        public_id
         url
-        _id
       }
     }
   }

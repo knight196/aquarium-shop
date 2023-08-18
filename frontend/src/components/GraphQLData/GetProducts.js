@@ -20,12 +20,10 @@ query getProducts {
         featureDetails
     },
     image {
-      public_id
       url
     },
     quantity,
     images{
-      public_id
       url
     },
     variants{
@@ -63,11 +61,9 @@ query getProduct($slug:String){
       featureDetails
     },
     image{
-      public_id,
       url
     },
     images{
-      public_id,
       url
     },
     colors{

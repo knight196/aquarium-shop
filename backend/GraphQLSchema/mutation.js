@@ -9,18 +9,14 @@ const addProduct = require('../Schema/addProduct')
     const imageDetail = new GraphQLInputObjectType({
         name:'ImageDetail',
         fields: () => ({
-            public_id:{type:GraphQLString},
             url:{type:GraphQLString},
-            _id:{type:GraphQLID}
         })
     })
     
     const imagesDetail = new GraphQLInputObjectType({
         name:'ImagesDetail',
         fields: () => ({
-            public_id:{type:GraphQLString},
             url:{type:GraphQLString},
-            _id:{type:GraphQLID}
         })
     })
     
@@ -38,7 +34,7 @@ const addProduct = require('../Schema/addProduct')
         name:'ColorDetail',
         fields: () => ({
             colors:{type:GraphQLString},
-            quantity:{type:GraphQLString},
+            quantity:{type:GraphQLInt},
             _id:{type:GraphQLID}
         })
     })

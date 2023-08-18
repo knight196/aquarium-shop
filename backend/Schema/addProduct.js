@@ -10,19 +10,11 @@ var addProductSchema = new mongoose.Schema(
        price:{type:Number},
        quantity:{type:Number},
        image:{
-        public_id:{
-            type:String,
-            
-        },
         url:{
             type:String,
-            
         }
        },
        images:[{
-        public_id:{
-            type:String
-        },
         url:{
             type:String
         }
@@ -34,15 +26,15 @@ var addProductSchema = new mongoose.Schema(
        variants:[
         {
             packaging:{type:String},
-            price:{type:String},
-            quantity:{type:String}
+            price:{type:Number},
+            quantity:{type:Number}
 
     }
 ],
 colors:[
     {
         colors:{type:String},
-        quantity:{type:String}
+        quantity:{type:Number}
 }
 ]
     },

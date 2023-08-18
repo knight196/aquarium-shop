@@ -32,6 +32,9 @@ const [singleuploaded,setSingleUploaded] = useState('')
 
 const [multipleimages,setmultipleimages] = useState([])
 
+const imagesArray = images.map(function(item){delete item._id; return item})
+
+
   const [updateMutation] = useMutation(updateProduct, {
     variables:{
       slug:slugName,
@@ -43,9 +46,9 @@ const [multipleimages,setmultipleimages] = useState([])
       variants:variants,
       colors:colors,
       image:{
-        url:!singleuploaded ? image : singleuploaded
+        url:!singleuploaded ?  image : singleuploaded
       },
-      images:!multipleimages ? images : multipleimages
+      images:!multipleimages.length === [] ? imagesArray : multipleimages
     }, 
   refetchQueries:[{query:GetProducts}]})
 
@@ -61,7 +64,7 @@ const [multipleimages,setmultipleimages] = useState([])
     setvariants(res.data.variants)
     setcolors(res.data.colors)
     setimage(res.data.image.url)
-    setimages(res.data.images.map(item => item.url))
+    setimages(res.data.images)
     // if(data){
     //   setslugName(data.product.slug)
     //   settitle(data.product.title)
@@ -132,7 +135,7 @@ updateMutation()
 
     toast.success('product updated successfully')
       setTimeout(function() {
-        window.location.href="/admin/dashboard"
+        window.location.reload()
       },1500)
       .catch((err) => alert(err))
     
@@ -189,7 +192,7 @@ const handlechange = (e,index) => {
   </form>
 {images?.map(item => (
   
-  <img style={{width:'100px', height:'100px'}} src={item} alt={title}/>
+  <img style={{width:'100px', height:'100px'}} src={item.url} alt={title}/>
   
   ))}
 

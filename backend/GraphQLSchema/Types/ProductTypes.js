@@ -26,18 +26,14 @@ const ProductType = new GraphQLObjectType({
 const imageDetail = new GraphQLObjectType({
     name:'imagedetail',
     fields: () => ({
-        public_id:{type:GraphQLString},
         url:{type:GraphQLString},
-        _id:{type:GraphQLID}
     })
 })
 
 const imagesDetail = new GraphQLObjectType({
     name:'imagesdetail',
     fields: () => ({
-        public_id:{type:GraphQLString},
         url:{type:GraphQLString},
-        _id:{type:GraphQLID}
     })
 })
 
@@ -55,7 +51,7 @@ const colorDetail = new GraphQLObjectType({
     name:'colordetail',
     fields: () => ({
         colors:{type:GraphQLString},
-        quantity:{type:GraphQLString},
+        quantity:{type:GraphQLInt},
         _id:{type:GraphQLID}
     })
 })
