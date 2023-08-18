@@ -27,6 +27,7 @@ const imageDetail = new GraphQLObjectType({
     name:'imagedetail',
     fields: () => ({
         url:{type:GraphQLString},
+        _id:{type:GraphQLID}
     })
 })
 
@@ -34,6 +35,7 @@ const imagesDetail = new GraphQLObjectType({
     name:'imagesdetail',
     fields: () => ({
         url:{type:GraphQLString},
+        _id:{type:GraphQLID}
     })
 })
 

@@ -185,9 +185,11 @@ mutation updateProduct(
       }
       image{
         url
+        _id
       }
       images{
         url
+        _id
       }
     }
   }

@@ -32,9 +32,6 @@ const [singleuploaded,setSingleUploaded] = useState('')
 
 const [multipleimages,setmultipleimages] = useState([])
 
-const imagesArray = images.map(function(item){delete item._id; return item})
-
-
   const [updateMutation] = useMutation(updateProduct, {
     variables:{
       slug:slugName,
@@ -48,7 +45,7 @@ const imagesArray = images.map(function(item){delete item._id; return item})
       image:{
         url:!singleuploaded ?  image : singleuploaded
       },
-      images:!multipleimages.length === [] ? imagesArray : multipleimages
+      images:multipleimages.length === 0 ? images : multipleimages
     }, 
   refetchQueries:[{query:GetProducts}]})
 

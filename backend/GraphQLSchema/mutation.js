@@ -10,6 +10,7 @@ const addProduct = require('../Schema/addProduct')
         name:'ImageDetail',
         fields: () => ({
             url:{type:GraphQLString},
+            _id:{type:GraphQLID}
         })
     })
     
@@ -17,6 +18,7 @@ const addProduct = require('../Schema/addProduct')
         name:'ImagesDetail',
         fields: () => ({
             url:{type:GraphQLString},
+            _id:{type:GraphQLID}
         })
     })
     

@@ -21,10 +21,12 @@ query getProducts {
     },
     image {
       url
+      _id
     },
     quantity,
     images{
       url
+      _id
     },
     variants{
       packaging,
