@@ -9,8 +9,8 @@ mutation addProduct(
     $category:String
     $description:String
     $Company:String
-    $price:String
-    $quantity:String
+    $price:Float
+    $quantity:Int
     $position:String
     $difficulty:String
     $CompanyProductName:String

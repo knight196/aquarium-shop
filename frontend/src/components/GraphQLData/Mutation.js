@@ -146,8 +146,8 @@ mutation updateProduct(
   $details:[FeatureDetails]
   $colors:[ColorDetail]
   $variants:[VariantsDetail]
-  $price:String
-  $quantity:String
+  $price:Float
+  $quantity:Int
   $image:ImageDetail
   $images:[ImagesDetail]
   ){

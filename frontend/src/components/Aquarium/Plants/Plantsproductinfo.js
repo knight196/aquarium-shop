@@ -70,6 +70,9 @@ const plantsvariant = basket.filter(item => item.slug  === Product.slug).map(ite
 const [plantsDec] = useMutation(Plantsdecrement, {variables:{slug:Product.slug,_id:finalId}, refetchQueries:[{query:GetProducts}]})
 const [plantsUpdate] = useMutation(basketPlantsUpdate, {variables:{slug:plantslug,_id:plantsId,quantity:plantsquantity}, refetchQueries:[{query:GetProducts}]})
 
+console.log(finalId)
+console.log(plantsquantity)
+
 const addToBasket= (e,id) =>{
   
   const quantity = 1

@@ -2,6 +2,7 @@ const {GraphQLObjectType,GraphQLInputObjectType,GraphQLEnumType,GraphQLString,Gr
 const ProductType = require('./Types/ProductTypes')
 const ordersType = require('./Types/OrdersType')
 const Orders = require('../Schema/Orders')
+const updateProductTypes = require('./Types/UpdateProductTypes')
 const addProduct = require('../Schema/addProduct')
 
     //create products 
@@ -36,7 +37,7 @@ const addProduct = require('../Schema/addProduct')
         name:'ColorDetail',
         fields: () => ({
             colors:{type:GraphQLString},
-            quantity:{type:GraphQLInt},
+            quantity:{type:GraphQLString},
             _id:{type:GraphQLID}
         })
     })
@@ -63,8 +64,8 @@ const mutation = new GraphQLObjectType({
                 category:{type:GraphQLString},
                 description:{type:GraphQLString},
                 Company:{type:GraphQLString},
-                price:{type:GraphQLString},
-                quantity:{type:GraphQLString},
+                price:{type:GraphQLFloat},
+                quantity:{type:GraphQLInt},
                 position:{type:GraphQLString},
                 difficulty:{type:GraphQLString},
                 image:{type:imageDetail},
@@ -97,13 +98,13 @@ const mutation = new GraphQLObjectType({
             }
         },
         updateProduct:{
-            type:ProductType,
+            type:updateProductTypes,
             args:{
                 slug:{type:GraphQLString},
                 title:{type:GraphQLString},
                 description:{type:GraphQLString},
-                price:{type:GraphQLString},
-                quantity:{type:GraphQLString},
+                price:{type:GraphQLFloat},
+                quantity:{type:GraphQLInt},
                 image:{type:imageDetail},
                 images:{type:new GraphQLList(imagesDetail)},
                 variants:{type:new GraphQLList(variantsDetail)},

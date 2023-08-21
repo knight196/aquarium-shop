@@ -31,8 +31,7 @@ const [review,setreview] = useState([])
     
     const average = scores.reduce((totalRates,score) => totalRates + score,0)
     const averageTotal = parseInt(average / review.length) || 0
-    console.log(averageTotal)
-   
+
     const star =  [...Array(averageTotal).keys()].map(i=> {
     return (
       <i className="bi bi-star-fill text-warning"></i>

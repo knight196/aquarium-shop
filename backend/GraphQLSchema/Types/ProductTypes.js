@@ -43,8 +43,8 @@ const variantsDetail = new GraphQLObjectType({
     name:'variantsdetail',
     fields:() => ({
         packaging: {type: GraphQLString},
-        price:{type:GraphQLString},
-        quantity:{type:GraphQLString},
+        price:{type:GraphQLFloat},
+        quantity:{type:GraphQLInt},
         _id:{type:GraphQLID}
     })
 })

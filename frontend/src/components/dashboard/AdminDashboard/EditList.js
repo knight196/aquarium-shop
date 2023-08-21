@@ -37,8 +37,8 @@ const [multipleimages,setmultipleimages] = useState([])
       slug:slugName,
       title:title,
       description:description,
-      price:price.toString(),
-      quantity:quantity.toString(),
+      price:parseFloat(price),
+      quantity:parseInt(quantity),
       details:details,
       variants:variants,
       colors:colors,
@@ -49,7 +49,7 @@ const [multipleimages,setmultipleimages] = useState([])
     }, 
   refetchQueries:[{query:GetProducts}]})
 
-
+       
   const getproducts = async () => {
     const res = await axios.get(`/product/editProduct/${slug}`)
      setslugName(res.data.slug)
@@ -58,8 +58,8 @@ const [multipleimages,setmultipleimages] = useState([])
     setquantity(res.data.quantity)
     setdescription(res.data.description)
     setdetails(res.data.details)
-    setvariants(res.data.variants)
-    setcolors(res.data.colors)
+    setvariants(res.data.variants.map(a => Object.fromEntries(Object.entries(a).map(([key,val]) => [key, String(val)]))))
+    setcolors(res.data.colors.map(a => Object.fromEntries(Object.entries(a).map(([key,val]) => [key, String(val)]))))
     setimage(res.data.image.url)
     setimages(res.data.images)
     // if(data){
@@ -81,7 +81,7 @@ const [multipleimages,setmultipleimages] = useState([])
   },[])
 
 
-
+  console.log(variants)
 
   const handleImage = async (e) => {
     e.preventDefault()
@@ -110,6 +110,7 @@ const [multipleimages,setmultipleimages] = useState([])
 
   setmultipleimages(arr)
 }
+
 
 
   // const setFileToBase = (file) => {
@@ -144,6 +145,7 @@ const handlecolorchange = (e,index) => {
   const list=[...colors]
   list[index][name] = value;
   setcolors(list)
+  console.log(list)
 }
 
 const plantshandlechange = (e,index) => {
@@ -160,8 +162,6 @@ const handlechange = (e,index) => {
   list[index][name] = value;
   setdetails(list)
 }
-
-
 
   return (
     <div className="text-center py-2">
