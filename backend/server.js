@@ -15,7 +15,7 @@ const dotenv = require('dotenv')
 const path = require('path')
 const {graphqlHTTP} = require('express-graphql')
 const {GraphQLSchema} = require('graphql')
-const mutation = require('./GraphQLSchema/mutation')
+const mutation = require('./GraphQLSchema/Mutation/mutation')
 const query = require('./GraphQLSchema/RootQuery')
 
 

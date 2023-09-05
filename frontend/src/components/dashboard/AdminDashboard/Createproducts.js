@@ -20,9 +20,9 @@ export default function Createproducts() {
     const [position,setposition] = useState('')
     const [details,setdetails] = useState([{featureDetails:''}])
     const [CompanyProductName,setCompanyProductName] = useState('')
-    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:0 }])
+    const [variants,setvariants] = useState([{packaging:'',price:'',quantity:'' }])
     const [images,setimages] = useState([])
-    const [colors,setcolors] = useState([{colors:'',quantity: 0}]) 
+    const [colors,setcolors] = useState([{colors:'',quantity:''}]) 
 
     const [singleuploaded,setSingleUploaded] = useState('')
     

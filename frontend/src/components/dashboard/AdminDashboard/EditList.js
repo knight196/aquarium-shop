@@ -32,6 +32,8 @@ const [singleuploaded,setSingleUploaded] = useState('')
 
 const [multipleimages,setmultipleimages] = useState([])
 
+
+
   const [updateMutation] = useMutation(updateProduct, {
     variables:{
       slug:slugName,
@@ -80,8 +82,6 @@ const [multipleimages,setmultipleimages] = useState([])
     getproducts()
   },[])
 
-
-  console.log(variants)
 
   const handleImage = async (e) => {
     e.preventDefault()
@@ -145,7 +145,6 @@ const handlecolorchange = (e,index) => {
   const list=[...colors]
   list[index][name] = value;
   setcolors(list)
-  console.log(list)
 }
 
 const plantshandlechange = (e,index) => {
