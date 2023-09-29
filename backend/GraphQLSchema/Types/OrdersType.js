@@ -21,7 +21,8 @@ const {GraphQLObjectType,GraphQLBoolean,GraphQLFloat,GraphQLString,GraphQLList} 
         Refund:{type:GraphQLBoolean,default:false},
         Delivered:{type:GraphQLBoolean,default:false},
         Dispatch:{type:GraphQLBoolean,default:false},
-        date:{type:GraphQLString}
+        date:{type:GraphQLString},
+        TrackingNo:{type:GraphQLString}
     })
 
 })

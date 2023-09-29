@@ -84,6 +84,8 @@ query singleOrders($orderId:String){
     Refund,
     Delivered,
     Dispatch
+    date
+    TrackingNo
     }
 }
 
@@ -134,4 +136,17 @@ query orderEmail($email:String){
 
 `
 
-export {ordersArray,ordersEmail,allOrders}
+//update trackingNo
+const updateTrackingNo = gql`
+
+mutation updateTrackingNo($orderId:String $TrackingNo:String){
+
+trackingUpdate(orderId:$orderId TrackingNo:$TrackingNo){
+  TrackingNo
+}
+
+}
+
+`
+
+export {ordersArray,ordersEmail,allOrders,updateTrackingNo}

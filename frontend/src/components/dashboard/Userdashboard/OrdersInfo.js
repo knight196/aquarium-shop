@@ -105,14 +105,17 @@ export default function OrdersInfo() {
           },[1500])
         }
 
-    
+    console.log(orders.date)
 
   return (
     <div>
 
 <div className="d-flex order-details">
 
-<div className="bg-white bg-opacity-50 orders-info p-2">
+
+<div className="w-100 bg-white bg-opacity-50 ">
+
+<div className="orders-info p-2">
 
 <h1>Order Details</h1>
 <hr></hr>
@@ -175,12 +178,12 @@ export default function OrdersInfo() {
   
   <div>
     <h5>Placed Order</h5>
-    <p>Date: {orders.createdAt?.slice(0,10)}</p>
+    <p>Date: {orders.date?.slice(0,10)}</p>
   </div>
 
   <div className="text-center">
     <h5>Time</h5>
-    <p>{orders.createdAt?.slice(11,16)}</p>
+    <p>{orders.date?.slice(11,16)}</p>
   </div>
 
   <div>
@@ -266,7 +269,8 @@ export default function OrdersInfo() {
      
 {/* <p className={cancelOrder=== orders._id === orders.Cancel === true ? 'order-cancelled': 'order-cancelled show'}>{orders.Refund === true ? 'REFUNDED' : 'ORDERCANCELLED'}</p>
    */}
-     
+     </div>
+     {orders.Dispatch === false ?  <></> : <p className="px-2">TrackingNo: {orders.TrackingNo}</p> }
      </div>
 
 <div className="bg-white bg-opacity-50 px-2 py-2 orders-address">

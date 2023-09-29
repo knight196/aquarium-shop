@@ -14,6 +14,7 @@ const OrderSchema = mongoose.Schema(
   deliveryPrice:Number,
   deliveryDate:String,
   paymentConfirm:String,
+  TrackingNo:String,
   Cancel:{type:Boolean,default:false},
   Refund:{type:Boolean,default:false},
   Delivered:{type:Boolean,default:false},

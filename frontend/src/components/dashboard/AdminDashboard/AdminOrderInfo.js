@@ -3,9 +3,9 @@ import axios from 'axios'
 import {toast} from 'react-toastify'
 import { useStateValue } from '../../../StateProvider'
 import {useParams} from 'react-router-dom'
-import {useQuery} from '@apollo/client'
-import {ordersArray} from '../../GraphQLData/Orders'
-
+import {useQuery,useMutation} from '@apollo/client'
+import {ordersArray,updateTrackingNo} from '../../GraphQLData/Orders'
+import {GetProducts} from '../../GraphQLData/GetProducts'
 
 export default function AdminOrderInfo() {
  
@@ -17,6 +17,8 @@ const {data} = useQuery(ordersArray,{variables:{orderId:id}})
 
  const [orders,setorders] = useState([])
 
+ const [tracking,setTracking] = useState('')
+
  const fetchData = async () => {
   if(data){
     setorders(data.ordersId)
@@ -26,6 +28,10 @@ const {data} = useQuery(ordersArray,{variables:{orderId:id}})
  useEffect(() => {
   fetchData(orders.orders)
  },[data])
+
+ console.log(tracking)
+
+ const [updateTracking] = useMutation(updateTrackingNo,{variables:{orderId:id, TrackingNo:tracking},refetchQueries:[{query:GetProducts}]})
 
  const [refund,setrefund] = useState(orders)
 
@@ -158,8 +164,8 @@ setTimeout(function(){
       username:orders?.username,
       message:`You have dispatched ${orders?.username} order`
     })
-  
-
+    
+    
     await axios.post('/emailproduct/dispatchitem', {
       result:orders,
       email:orders.email,
@@ -171,20 +177,29 @@ setTimeout(function(){
       deliveryOptions:orders.deliveryOptions,
       deliveryPrice:orders.deliveryPrice,
       deliveryDate:orders.deliveryDate,
+      trackingNo:tracking
     })
     toast.success("You have dispatched user's orders");
     setTimeout(function(){
-    window.location.href="/admin/dashboard"
+      window.location.href="/admin/dashboard"
     },1000)
+
   }
- 
- 
+
+
+  const editTracking = () => {
+    updateTracking()
+  }
+
+
   return (
     <div>
 
-    <div className="d-flex order-details">
+<div className="d-flex order-details">
+
+    <div className="w-100 bg-white bg-opacity-50 ">
     
-    <div className="bg-white bg-opacity-50 orders-info p-2">
+    <div className="orders-info p-2">
     
     <h1>Order Details</h1>
     <hr></hr>
@@ -247,12 +262,12 @@ setTimeout(function(){
       
       <div>
         <h5>Placed Order</h5>
-        <p>Date: {orders.createdAt?.slice(0,10)}</p>
+        <p>Date: {orders.date?.slice(0,10)}</p>
       </div>
     
       <div className="text-center">
         <h5>Time</h5>
-        <p>{orders.createdAt?.slice(11,16)}</p>
+        <p>{orders.date?.slice(11,16)}</p>
       </div>
     
       <div>
@@ -314,6 +329,7 @@ setTimeout(function(){
     
               </div>
          ))}
+
     
     {/* <p className={orders.Cancel === false ? 'order-cancelled': 'order-cancelled show'}>{orders.Refund === true ? 'REFUNDED' : 'ORDERCANCELLED'}</p>
        */}
@@ -325,6 +341,22 @@ setTimeout(function(){
       <p className={cancelOrder === orders.orderId === orders.Cancel === true ? 'order-cancelled': 'order-cancelled show'}>ORDERCANCELLED</p>
      
          </div>
+
+         {dispatch === false ? 
+<></>
+:
+<>
+<hr></hr>
+<div className="d-flex justify-content-between ">
+  <h5>TrackingNo:</h5>
+  <input type="text" placeholder={orders.TrackingNo} onChange={e=> setTracking(e.target.value)}/>
+  <button className="text-white border-0 px-2 rounded-1 bg-primary" onClick={()=> editTracking()}>Edit</button>
+</div>
+</>
+}
+
+</div>
+     
     
     <div className="bg-white bg-opacity-50 px-2 py-2 orders-address">
         

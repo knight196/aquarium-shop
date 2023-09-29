@@ -24,7 +24,25 @@ const ordersMutation = {
         resolve(parent,args){
             return Orders.findOneAndRemove({orderId:args.orderId})
         }
-    }
-}
+    },
+        trackingUpdate:{
+            type:ordersType,
+            args:{
+                orderId:{type:GraphQLString},
+                TrackingNo:{type:GraphQLString}
+            },
+                resolve(parent,args){
+                    return Orders.findOneAndUpdate(
+                        {orderId:args.orderId},
+                        {
+                            $set:{
+                                TrackingNo:args.TrackingNo
+                            }
+                        },
+                        {new:true}
+                        )
+                }
+            }
+        }
 
 module.exports = {ordersMutation}

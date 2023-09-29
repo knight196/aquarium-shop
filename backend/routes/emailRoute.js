@@ -584,7 +584,7 @@ productRouter.post('/sendemail', async (req,res) => {
 
          productRouter.post('/dispatchitem', async (req,res) => {
 
-          const {email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
+          const {trackingNo,email,result,subtotal,totalAmount,address,paymentCreate,orderId,deliveryOptions,deliveryPrice,deliveryDate}  = req.body;
         
           try{
   
@@ -622,7 +622,8 @@ productRouter.post('/sendemail', async (req,res) => {
               orderId:orderId,
               deliveryOptions:deliveryOptions,
               deliveryPrice:deliveryPrice,
-              deliveryDate:deliveryDate
+              deliveryDate:deliveryDate,
+              trackingNo:trackingNo
             }
           }
           
