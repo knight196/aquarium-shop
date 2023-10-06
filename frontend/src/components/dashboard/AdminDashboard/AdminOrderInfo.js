@@ -19,17 +19,24 @@ const {data} = useQuery(ordersArray,{variables:{orderId:id}})
 
  const [tracking,setTracking] = useState('')
 
+
  const fetchData = async () => {
   if(data){
     setorders(data.ordersId)
   }
  }
+ 
+  const trackingNo = async () => {
+   const res = await axios.get(`/api/TrackingNo/${id}`)
+   setTracking(res.data.TrackingNo)
+  }
 
  useEffect(() => {
   fetchData(orders.orders)
+  trackingNo()
  },[data])
 
- console.log(tracking)
+
 
  const [updateTracking] = useMutation(updateTrackingNo,{variables:{orderId:id, TrackingNo:tracking},refetchQueries:[{query:GetProducts}]})
 
@@ -151,7 +158,12 @@ setTimeout(function(){
 
   const dispatchBtn = async (id) => {
 
-    await axios.put(`/api/dispatch/${id}`)
+    if(tracking === ''){
+      toast.warning('Please enter the customer tracking No')
+    }else{
+
+      
+      await axios.put(`/api/dispatch/${id}`)
 
     await axios.post('/orders/addusermessage',{
       orderId:orders?.orderId,
@@ -183,6 +195,7 @@ setTimeout(function(){
     setTimeout(function(){
       window.location.href="/admin/dashboard"
     },1000)
+  }
 
   }
 
@@ -349,7 +362,7 @@ setTimeout(function(){
 <hr></hr>
 <div className="d-flex justify-content-between ">
   <h5>TrackingNo:</h5>
-  <input type="text" placeholder={orders.TrackingNo} onChange={e=> setTracking(e.target.value)}/>
+  <input type="text" value={tracking}  onChange={e=> setTracking(e.target.value)}/>
   <button className="text-white border-0 px-2 rounded-1 bg-primary" onClick={()=> editTracking()}>Edit</button>
 </div>
 </>

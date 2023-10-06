@@ -64,6 +64,23 @@ try{
 
 })
 
+//tracking No dispatch item 
+
+router.get('/TrackingNo/:id', async (req,res) => {
+
+  try{
+
+    const ItemTrackingNo = await Orders.findOne({orderId:req.params.id})
+
+    return res.status(200).send(ItemTrackingNo)
+
+  }catch(err){
+    console.log(err)
+    res.status(500).send(err)
+  }
+
+})
+
 //refund option from admindashboard
 router.put('/orders/:id', async(req,res)=> {
     try{
@@ -183,6 +200,7 @@ router.delete('/adminmessage/:id', async (req,res)=> {
     res.status(500).send(err)
   }
 })
+
 
   
 
