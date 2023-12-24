@@ -4,7 +4,6 @@ const {
     signupValidator,
     signinValidator,
     validatorResult,
-    passwordreset
 } = require('../validator');
 const { signupController,signinController } = require('../controllersauth');
 

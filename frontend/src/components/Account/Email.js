@@ -1,6 +1,7 @@
 import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import  {useNavigate} from 'react-router-dom'
 
 export default function Email() {
 
@@ -8,6 +9,8 @@ export default function Email() {
 
 
   const [signedemail,setSignedEmail] = useState([])
+
+  const navigate = useNavigate()
 
   const getverified = async () => {
 
@@ -20,17 +23,20 @@ export default function Email() {
   },[email])
 
   console.log(signedemail)
- 
   
   const emailaddress = async (e) => {
     
     e.preventDefault()
 
+    const OTP = Math.floor(Math.random() * 9000 + 1000)
+   
     if(signedemail === null){
       toast.warning('Email not found')
     }else{ 
-      axios.post('/emailproduct/emailPassword', {id:signedemail._id,email})
-      toast.success('Your password reset link has been sent')
+      axios.put('emailproduct/OTPCode',{id:signedemail._id,OTP:OTP})
+      axios.post('/emailproduct/emailPassword', {id:signedemail._id,email,OTP:OTP})
+      toast.success('Your OTP code has been sent')
+      navigate(`/OTPConfirm/${signedemail._id}`)
     }
     
     

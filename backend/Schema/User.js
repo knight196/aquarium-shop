@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema(
         role: {
             type: Number,
             default: 0,
+        },
+        OTP: {
+            type:String,
+            default:''
         }
     },
     { timestamps: true }

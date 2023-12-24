@@ -26,9 +26,36 @@ form {
   margin: 50px auto;
 }
 
+.otp-input i {
+  font-size: 30px;
+}
+
+.otp-input input {
+  width: 10%;
+  height: 50px;
+  margin: 0 10px;
+  text-align: center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media screen and (max-width: 720px) {
   .account-box {
     margin: 10px;
+  }
+  .otp-input input {
+    width: 10%;
+    height: 50px;
   }
 }
 

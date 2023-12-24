@@ -12,6 +12,7 @@ const bcrypt = require('bcryptjs');
 
 dotenv.config({path:path.resolve(__dirname, '../.env')});
 
+
 //feedback 
 
 productRouter.post('/reviewEmail', async (req,res) => {
@@ -637,8 +638,30 @@ productRouter.post('/sendemail', async (req,res) => {
   
         })
   
-      
 
+
+      //OTP code will be created for specific user forgot password
+      
+    productRouter.put('/OTPCode', async (req,res) => {
+
+const {id,OTP} = req.body
+
+try{
+
+const code = await Account.findByIdAndUpdate(
+  {_id: id},
+  {$set:{OTP:OTP}}
+)
+
+res.status(200).json({code})
+
+}catch(err){
+
+  res.status(404).send(err.message)
+
+}
+
+    })
    
     
 
@@ -646,7 +669,7 @@ productRouter.post('/sendemail', async (req,res) => {
     productRouter.post('/emailPassword', async (req,res) => {
     
     
-      const {id,email} = req.body
+      const {id,email,OTP} = req.body
     
     try{
     
@@ -663,8 +686,11 @@ productRouter.post('/sendemail', async (req,res) => {
       to:email,
       subject:'Password Reset',
       html:`
-      Click on the link below to change your new password
-      https://aquarium-shop-t2o8.onrender.com/passwordReset/${id}
+      Verify your OTP code from the link down below 
+      https://aquarium-shop-t2o8.onrender.com/OTPConfirm/${id}
+
+      <br></br>
+      Verification Code : ${OTP}
       `
     }
     await transporter.sendMail(mailOptions)
@@ -678,6 +704,7 @@ productRouter.post('/sendemail', async (req,res) => {
     }
     
     })
+  
     
     //user will be redirected to the new password page
     productRouter.post('/confirmresetPwd', async (req,res) => {
@@ -767,6 +794,6 @@ productRouter.get('/useremail/:email', async (req,res) => {
     }
   
   })
-  
+
 
     module.exports = productRouter

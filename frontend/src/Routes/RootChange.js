@@ -57,14 +57,19 @@ import Fertiliser from '../components/Aquarium/PlantFertiliser/Fertiliser'
 
 // aquarium product ends
 
-
+//account
 import Login from '../components/Account/Login'
+import Signup from '../components/Account/SignUp'
+import Emailconfirm from '../components/Account/Email'
+import Passwordreset from '../components/Account/Passwordreset'
+import OTP from '../components/Account/OTP'
+//end of account section
+
 import Home from '../components/Home/Home'
 import ProductDetail from '../components/Product/ProductDetail'
 import Checkout from '../components/Checkout/Checkout'
 import Payment from '../components/Payment/Payment'
 import Address from '../components/Address/Address'
-import Signup from '../components/Account/SignUp'
 import Userdashboard from '../components/dashboard/Userdashboard/Userdashboard'
 import Admindashboard from '../components/dashboard/AdminDashboard/Admindashboard' 
 import UserOrderInfo from '../components/dashboard/Userdashboard/OrdersInfo'
@@ -74,15 +79,13 @@ import Usercontactmsg from '../components/dashboard/Userdashboard/Usercontactmsg
 import AdminContactmsg from '../components/dashboard/AdminDashboard/AdminContactmsg'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
-import Passwordreset from '../components/Account/Passwordreset'
-import Emailconfirm from '../components/Account/Email'
 import EditProduct from '../components/dashboard/AdminDashboard/EditList'
-
 import FailedPayment from '../components/dashboard/Userdashboard/FailedPayment'
 
 //review of the products
 import PlantsReview from '../components/Aquarium/Plants/PlantsProductReview'
 import ProductReview from '../components/Product/Productreview'
+
 
 
 export default function RootChange() {
@@ -159,12 +162,15 @@ export default function RootChange() {
           <Route path="/Checkout"  element={<Checkout/>}></Route>
       
           <Route path="/Address" element={<Address/>}></Route>
+          
           <Route path="/Login"  element={<Login />}></Route>
           <Route path="/Signup"  element={<Signup />}></Route>
           <Route path="/user/dashboard" element={<Userdashboard/>}/>
           <Route path="/admin/dashboard" element={<Admindashboard/>}/>
           <Route path="/passwordReset/:id" element={<Passwordreset/>}/>
           <Route path="/Emailconfirm" element={<Emailconfirm/>}/>
+          <Route path="/OTPConfirm/:id" element={<OTP/>}/>
+
           <Route path="/editProduct/:slug" element={<EditProduct/>}/>
            <Route  path="/api/products/slug/:slug" element={<ProductDetail/>}/>
           <Route path="/api/plants/slug/:slug" element={<PlantsProductDetail/>}/>
@@ -174,9 +180,7 @@ export default function RootChange() {
            <Route  path="/api/orders/_id/:id" element={<AdminOrderInfo/>}/>
            <Route  path="/payment" element={<Elements stripe={stripePromise}><Payment/></Elements>}/>
            <Route  path="/Contact" element={<Contact/>}/>
-
            <Route path="/failedpayment/:id" element={<Elements stripe={stripePromise}><FailedPayment/></Elements>}/>
-
           <Route path="/api/plants/slug/:slug/WriteProductReview" element={<PlantsReview/>}/>
           <Route path="/api/tanks/slug/:slug/WriteProductReview" element={<PlantsReview/>}/>
           <Route path="/api/products/slug/:slug/WriteProductReview" element={<ProductReview/>}/>
