@@ -688,7 +688,7 @@ res.status(200).json({code})
       html:`
       Verify your OTP code from the link down below 
       https://aquarium-shop-t2o8.onrender.com/OTPConfirm/${id}
-
+  
       <br></br>
       Verification Code : ${OTP}
       `
